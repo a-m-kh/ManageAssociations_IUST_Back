@@ -16,7 +16,8 @@ namespace DataBase.Configuration.Mapper
 		{
 			CreateMap<Event , EventCreateDto>().ReverseMap();
 			CreateMap<Event , EventUpdateDto>().ReverseMap();
-			CreateMap<EventViewDto, EntityEntry<Event>>()
+			CreateMap<Association , AssociationCreateDto>().ReverseMap();
+			/*CreateMap<EventViewDto, EntityEntry<Event>>()
 				.ForMember(a => a.Entity.Issue,
 				m => m.MapFrom(u => u.Issue))
 				.ForMember(a => a.Entity.EndTime,
@@ -37,7 +38,7 @@ namespace DataBase.Configuration.Mapper
 					m => m.MapFrom(u => u.Period))
 				.ForMember(a => a.Entity.TypeOfEvent,
 					m => m.MapFrom(u => u.TypeOfEvent))
-				.ReverseMap();
+				.ReverseMap();*/
 
 				
 		}

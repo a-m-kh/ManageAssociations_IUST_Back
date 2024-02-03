@@ -20,20 +20,21 @@ namespace DataBase.Repository.Repositories
 			_mapper = mapper;
 		}
 
-		public async Task<EventViewDto> CreateAsync(EventCreateDto Model)
+		public async Task<bool> CreateAsync(EventCreateDto Model)
 		{
 			if (Model == null)
-				return null;
+				return false; 
 
 			var newEvent = _mapper.Map<Event>(Model);
 			if (newEvent == null)
-				return null;
+				return false;
 
 			var DbEntity = await TEntity.AddAsync(newEvent);
-			if (DbEntity == null)
-				return null;
+			if (DbEntity == null || DbEntity.Entity == null || DbEntity.Entity.ID == 0)
+				return false;
+			
 
-			return(_mapper.Map<EventViewDto>(DbEntity));
+			return (true);
 		}
 
 		public async Task<bool> UpdateAsync(EventUpdateDto Model)
@@ -44,10 +45,10 @@ namespace DataBase.Repository.Repositories
 			if(entity == null)
 				return false;
 
-			entity.Period = Model.Period == null ? (entity.Period) : (Model.Period ?? 0);
-			entity.TypeOfEvent = Model.TypeOfEvent == null ? (entity.TypeOfEvent) : (Model.TypeOfEvent ?? 0);
-			entity.Issue = Model.Issue == null ? (entity.Issue) : (Model.Issue ?? 0);
-			entity.Title = Model.Title == null ? (entity.Title) : (Model.Title) ;
+			entity.PeriodID = Model.PeriodID == null ? (entity.PeriodID) : (Model.PeriodID ?? 0);
+			entity.TypeOfEventID = Model.TypeOfEventID == null ? (entity.TypeOfEventID) : (Model.TypeOfEventID ?? 0);
+			entity.IssueID = Model.IssueID == null ? (entity.IssueID) : (Model.IssueID ?? 0);
+			entity.Title = Model.Title == null ? (entity.Title) : (Model.Title);
 			entity.Price = Model.Price == null ? (entity.Price) : (Model.Price ?? 0);
 			entity.StartTime = Model.StartTime == null ? (entity.StartTime) : (Model.StartTime ?? DateTime.Now);
 			entity.EndTime = Model.EndTime == null ? (entity.EndTime) : (Model.EndTime ?? DateTime.Now);
@@ -71,31 +72,79 @@ namespace DataBase.Repository.Repositories
 
 		public async Task<EventViewDto> GetByIdAsync(int Id)
 		{
-			var entity = await TEntity.Where(a => a.ID == Id && !a.IsDelete).FirstOrDefaultAsync();
+			var entity = await TEntity.Where(a => a.ID == Id && !a.IsDelete).Select(a=>new EventViewDto()
+			{
+				Description = a.Description,
+				EndTime = a.EndTime,
+				ID= a.ID,
+				StartTime = a.StartTime,
+				ImageUrl = a.ImageUrl,
+				Issue = a.issue == null ?(""):(a.issue.Title),
+				Period = a.period == null ?(""):(a.period.Title),
+				TypeOfEvent = a.typeOfEvent == null ?(""):(a.typeOfEvent.Title),
+				Price = a.Price,
+				Title = a.Title
+			}).FirstOrDefaultAsync();
 			if (entity == null)
 				return null;
-			return (_mapper.Map<EventViewDto>(entity));
+			return (entity);
 
 		}
 
-		public async Task<List<EventViewDto>> GetByAssociationIdAsync(int Id, int Page = 1)
+		public async Task<GeneralPaginationModel<EventViewDto>> GetByAssociationIdAsync(int Id, int Page = 1)
 		{
+			
 			var total =  TEntity.Where(a => a.association.ID == Id && a.IsDelete).Count();
 			var entities = TEntity.Where(a => !a.IsDelete && a.association.ID == Id)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
-				.Take(4);
-			return (_mapper.Map<List<EventViewDto>>(entities));
+				.Take(4).Select(a => new EventViewDto()
+				{
+					Description = a.Description,
+					EndTime = a.EndTime,
+					ID = a.ID,
+					StartTime = a.StartTime,
+					ImageUrl = a.ImageUrl,
+					Issue = a.issue == null ? ("") : (a.issue.Title),
+					Period = a.period == null ? ("") : (a.period.Title),
+					TypeOfEvent = a.typeOfEvent == null ? ("") : (a.typeOfEvent.Title),
+					Price = a.Price,
+					Title = a.Title
+				}).ToList();
+			var res = new GeneralPaginationModel<EventViewDto>(total,entities);
+			return (res);
 		}
 
-		public async Task<List<EventViewDto>> GetLastEvent(int Page = 1)
+		public async Task<GeneralPaginationModel<EventViewDto>> GetLastEvent(int Page = 1)
 		{
 			var total = TEntity.Where(a => a.IsConfirm && a.IsDelete).Count();
 			var entities = TEntity.Where(a => !a.IsDelete && a.IsConfirm)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
-				.Take(4);
-			return (_mapper.Map<List<EventViewDto>>(entities));
+				.Take(4).Select(a => new EventViewDto()
+			{
+				Description = a.Description,
+				EndTime = a.EndTime,
+				ID = a.ID,
+				StartTime = a.StartTime,
+				ImageUrl = a.ImageUrl,
+				Issue = a.issue == null ? ("") : (a.issue.Title),
+				Period = a.period == null ? ("") : (a.period.Title),
+				TypeOfEvent = a.typeOfEvent == null ? ("") : (a.typeOfEvent.Title),
+				Price = a.Price,
+				Title = a.Title
+			}).ToList();
+			var res = new GeneralPaginationModel<EventViewDto>(total, entities);
+			return (res);
+		}
+		public bool ConfirmEvent(int Id)
+		{
+			var entity = TEntity.Where(a => a.ID == Id && !a.IsDelete).FirstOrDefault();
+			if (entity == null)
+				return false;
+			entity.IsConfirm = true;
+			var IsUpdate = _uow.SaveChanges();
+			return (IsUpdate > 0);
 		}
 	}
 }

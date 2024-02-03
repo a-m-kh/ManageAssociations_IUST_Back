@@ -17,11 +17,14 @@ namespace DataBase.Configuration.Domain
 		public int AssociationID { get; set; }
 		public int Price { get;set; }
 		public string Title { get; set; }
-		public int TypeOfEvent { get; set; }
-		public int Issue { get; set; }
+		public int TypeOfEventID { get; set; }
+		public int IssueID { get; set; }
 		public string ImageUrl { get; set; }
-		public int Period { get; set; }
+		public int PeriodID { get; set; }
 		public bool IsDelete { get; set; }=false;
 		public Association association { get; set; }
+		public BaseInfo period { get; set; }
+		public BaseInfo typeOfEvent { get; set; }
+		public BaseInfo issue { get; set; }
 	}
 }

@@ -15,9 +15,22 @@ namespace DataBase.Configuration.ConfigEntities
 		{
 			builder.ToTable("Events");
 			builder.HasKey(a => a.ID);
+
 			builder.HasOne(e => e.association)
 				.WithMany(a => a.Events)
 				.HasForeignKey(e => e.AssociationID);
+
+			builder.HasOne(e => e.typeOfEvent)
+				.WithMany(b => b.TypeOfEvents)
+				.HasForeignKey(e => e.TypeOfEventID);
+
+			builder.HasOne(e => e.issue)
+				.WithMany(b => b.issues)
+				.HasForeignKey(e => e.IssueID);
+
+			builder.HasOne(e => e.period)
+				.WithMany(b => b.Periods)
+				.HasForeignKey(e => e.PeriodID);
 		}
 	}
 }
