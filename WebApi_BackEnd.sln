@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi_BackEnd", "WebApi_BackEnd\WebApi_BackEnd.csproj", "{A72167F8-D8E0-4B81-AF3F-9B3886FB23D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi_BackEnd", "WebApi_BackEnd\WebApi_BackEnd.csproj", "{A72167F8-D8E0-4B81-AF3F-9B3886FB23D3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{62AB3389-C80C-4FC0-8AB5-FEA7B7B820C9}"
 EndProject
@@ -11,15 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataBase", "DataBase", "{1A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logic", "Logic", "{7279122C-856E-42C6-93AE-66174BA3AC78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{7DEC5C4E-EBCA-43E4-BA02-FEB30C681EEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{7DEC5C4E-EBCA-43E4-BA02-FEB30C681EEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{74523378-BFA2-4CB3-B2D9-17803BE66239}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utility", "Utility\Utility.csproj", "{74523378-BFA2-4CB3-B2D9-17803BE66239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBase.Repository", "DataBase.Repository\DataBase.Repository.csproj", "{DB0BFD48-EC29-4A76-937D-F0CE6783CAA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase.Repository", "DataBase.Repository\DataBase.Repository.csproj", "{DB0BFD48-EC29-4A76-937D-F0CE6783CAA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBase.Configuration", "DataBase.Configuration\DataBase.Configuration.csproj", "{1E3FABA5-2733-4EB0-9455-F6B69B4E8429}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase.Configuration", "DataBase.Configuration\DataBase.Configuration.csproj", "{1E3FABA5-2733-4EB0-9455-F6B69B4E8429}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Service", "Logic.Service\Logic.Service.csproj", "{8FB02472-3FD4-472F-8E1B-BC1052EB6613}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic.Service", "Logic.Service\Logic.Service.csproj", "{8FB02472-3FD4-472F-8E1B-BC1052EB6613}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
