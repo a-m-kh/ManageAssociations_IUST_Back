@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Logic.Service.Services.Interface;
+using Logic.Service.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi_BackEnd.Controllers
@@ -9,16 +11,23 @@ namespace WebApi_BackEnd.Controllers
 	
 	public class AdminController : Controller
 	{
+		private readonly IAccountService _accountService;
 
-		[HttpPost("edit_profile")]
-		[Authorize]
+		public AdminController(IAccountService accountService)
+		{
+			_accountService = accountService;
+		}
+
+		[HttpPost("Register")]
+		//[Authorize]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public IActionResult Index()
+		public async Task<IActionResult> Index([FromBody] SignUpViewModel Model)
 		{
-			return Ok();
+
+			return Ok(await _accountService.SignUp(Model));
 		}
 	}
 }

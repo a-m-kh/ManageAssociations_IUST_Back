@@ -13,14 +13,15 @@ namespace DataBase.Configuration.DBContexts;
 
 public class MainContext : BaseDBContext , IMainUnitOfWork
 {
-	public DbSet<Event>Events { get; set; }	
-	public DbSet<Association> Associations { get;set; }
-
+	public virtual DbSet<Event>Events { get; set; }
+	public virtual DbSet<Association> Associations { get;set; }
+	public virtual DbSet<BaseInfo> BaseInfos { get; set; }
 
 	public MainContext(DbContextOptions<MainContext> options):base(options) { }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
+		modelBuilder.ApplyConfiguration(new BaseInfoConfiguration());
 		modelBuilder.ApplyConfiguration(new EventConfiguration());
 		modelBuilder.ApplyConfiguration(new AssociationConfiguration());
 	}

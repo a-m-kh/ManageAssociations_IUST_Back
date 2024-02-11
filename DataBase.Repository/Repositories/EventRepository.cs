@@ -79,9 +79,9 @@ namespace DataBase.Repository.Repositories
 				ID= a.ID,
 				StartTime = a.StartTime,
 				ImageUrl = a.ImageUrl,
-				Issue = a.issue == null ?(""):(a.issue.Title),
-				Period = a.period == null ?(""):(a.period.Title),
-				TypeOfEvent = a.typeOfEvent == null ?(""):(a.typeOfEvent.Title),
+				//Issue = a.Issue == null ?(""):(a.Issue.Title),
+				//Period = a.Period == null ?(""):(a.Period.Title),
+				//TypeOfEvent = a.TypeOfEvent == null ?(""):(a.TypeOfEvent.Title),
 				Price = a.Price,
 				Title = a.Title
 			}).FirstOrDefaultAsync();
@@ -105,9 +105,9 @@ namespace DataBase.Repository.Repositories
 					ID = a.ID,
 					StartTime = a.StartTime,
 					ImageUrl = a.ImageUrl,
-					Issue = a.issue == null ? ("") : (a.issue.Title),
-					Period = a.period == null ? ("") : (a.period.Title),
-					TypeOfEvent = a.typeOfEvent == null ? ("") : (a.typeOfEvent.Title),
+					//Issue = a.Issue == null ? ("") : (a.Issue.Title),
+					//Period = a.Period == null ? ("") : (a.Period.Title),
+					//TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
 					Price = a.Price,
 					Title = a.Title
 				}).ToList();
@@ -128,9 +128,9 @@ namespace DataBase.Repository.Repositories
 				ID = a.ID,
 				StartTime = a.StartTime,
 				ImageUrl = a.ImageUrl,
-				Issue = a.issue == null ? ("") : (a.issue.Title),
-				Period = a.period == null ? ("") : (a.period.Title),
-				TypeOfEvent = a.typeOfEvent == null ? ("") : (a.typeOfEvent.Title),
+				//Issue = a.Issue == null ? ("") : (a.Issue.Title),
+				//Period = a.Period == null ? ("") : (a.Period.Title),
+				//TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
 				Price = a.Price,
 				Title = a.Title
 			}).ToList();

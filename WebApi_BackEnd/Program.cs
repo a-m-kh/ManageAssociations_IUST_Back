@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Logic.Service.Services.Interface;
 using Utility.Customize;
+using Logic.Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,20 +18,20 @@ var connectionStr = builder.Configuration.GetConnectionString("DefaultConnection
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddTransient<IUserValidator<User>, OptionalEmailUserValidator<User>>();
 builder.Services.AddDbContext<UserDBContext>(opt =>
 {
-	opt.UseSqlServer(connectionStr, b=>b.MigrationsAssembly("WebApi_BackEnd"));
-}); 
+	opt.UseSqlServer(connectionStr/*, b=>b.MigrationsAssembly("WebApi_BackEnd")*/);
+});
 builder.Services.AddDbContext<MainContext>(opt =>
 {
 	opt.UseSqlServer(connectionStr);
 });
 builder.Services.AddIdentity<User, IdentityRole<string>>().AddEntityFrameworkStores<UserDBContext>();
-
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-
 
 builder.Services.AddAuthentication(opt =>
 {

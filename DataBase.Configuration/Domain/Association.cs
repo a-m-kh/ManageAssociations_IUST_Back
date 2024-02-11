@@ -10,11 +10,11 @@ namespace DataBase.Configuration.Domain
 {
 	public class Association : EntityWithTypedId<int>
 	{
-		public string Name { get;set; }
-		public string LogoUrl { get; set; }
+		public string? Name { get;set; }
+		public string? LogoUrl { get; set; }
 		public bool IsDelete { get; set; } = false;
-		public string AdminID { get; set; }
-		public User Admin { get; set; }
-		public List<Event> Events { get;set;}
+		public string? AdminID { get; set; }
+		public User? Admin { get; set; }
+		public List<Event>? Events { get;set;}
 	}
 }

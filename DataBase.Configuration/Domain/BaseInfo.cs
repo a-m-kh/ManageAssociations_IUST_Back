@@ -10,9 +10,9 @@ namespace DataBase.Configuration.Domain
 	public class BaseInfo : EntityWithTypedId<int>
 	{
 		public int? ParrentID { get; set; }
-		public string Title { get; set; }
-		public ICollection<Event> issues { get; set; }
-		public ICollection<Event> Periods { get; set; }
-		public ICollection<Event> TypeOfEvents { get; set; }
+		public string? Title { get; set; }
+		//public ICollection<Event>? Issues { get; set; }
+		//public virtual ICollection<Event> Periods { get; set; }
+		//public virtual ICollection<Event> TypeOfEvents { get; set; }
 	}
 }

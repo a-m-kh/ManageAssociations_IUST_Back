@@ -9,5 +9,5 @@ namespace DataBase.Configuration.Domain;
 
 public class User : IdentityUser<string>
 {
-	public Association Association { get; set; }
+	public Association? Association { get; set; }
 }

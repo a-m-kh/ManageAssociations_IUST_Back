@@ -16,21 +16,29 @@ namespace DataBase.Configuration.ConfigEntities
 			builder.ToTable("Events");
 			builder.HasKey(a => a.ID);
 
-			builder.HasOne(e => e.association)
+			builder.Property(a => a.PeriodID).HasColumnName("PeriodID");
+			builder.Property(a => a.TypeOfEventID).HasColumnName("TypeOfEventID");
+
+
+			/*builder.HasOne(e => e.association)
 				.WithMany(a => a.Events)
 				.HasForeignKey(e => e.AssociationID);
 
 			builder.HasOne(e => e.typeOfEvent)
 				.WithMany(b => b.TypeOfEvents)
-				.HasForeignKey(e => e.TypeOfEventID);
+				.HasForeignKey(nameof(Event.TypeOfEventID));*/
 
-			builder.HasOne(e => e.issue)
-				.WithMany(b => b.issues)
-				.HasForeignKey(e => e.IssueID);
+			/*builder.HasOne(e => e.Issue)
+				.WithMany(b => b.Issues)
+				.HasForeignKey(e => e.IssueID);*/
 
-			builder.HasOne(e => e.period)
+			/*builder.HasOne(e => e.period)
 				.WithMany(b => b.Periods)
-				.HasForeignKey(e => e.PeriodID);
+				.HasForeignKey(e => e.PeriodID);*/
+			/*builder.HasOne(e => e.period)
+				.WithMany()
+				.HasForeignKey(nameof(Event.PeriodID))
+				.IsRequired();*/
 		}
 	}
 }
