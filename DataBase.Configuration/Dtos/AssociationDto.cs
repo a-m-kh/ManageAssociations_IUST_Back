@@ -12,7 +12,7 @@ namespace DataBase.Configuration.Dtos
 
 	public class BaseAssociation
 	{
-		public string? Name { get; set; }
+		public string Name { get; set; }
 		public string? LogoUrl { get; set; }
 	}
 	public class AssociationCreateDto : BaseAssociation 
@@ -22,11 +22,12 @@ namespace DataBase.Configuration.Dtos
 
 	public class AssociationUpdateDto : BaseAssociation
 	{
-		public int ID { get; set; }
+		public int Id { get; set; }
 	}
 	public class AssociationViewDto : BaseAssociation
 	{
 		public int ID { get; set; }
-
+		public string AdminUserName { get; set; }
+		public string AdminId { get; set; }
 	}
 }

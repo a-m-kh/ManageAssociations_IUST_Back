@@ -21,23 +21,24 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 		_mapper = mapper;
 	}
 
-	public async Task<bool> CreateAsync(AssociationCreateDto Model)
+	public async Task<int> CreateAsync(AssociationCreateDto Model)
 	{
 		if (Model == null)
-			return false;
+			return 0;
 		var entity = _mapper.Map<Association>(Model);
 		if(entity == null)
-			return false;
+			return 0;
 		var DbEntity =  await TEntity.AddAsync(entity);
+		await _uow.SaveChangesAsync();
 		if(DbEntity == null || DbEntity.Entity == null || DbEntity.Entity.ID == 0)
-			return false;
+			return 0;
 
-		return true;
+		return DbEntity.Entity.ID;
 	}
 
 	public async Task<bool> UpdateAsync(AssociationUpdateDto Model)
 	{
-		var entity = await TEntity.Where(a => a.ID == Model.ID && !a.IsDelete).FirstOrDefaultAsync();
+		var entity = await TEntity.Where(a => a.ID == Model.Id && !a.IsDelete).FirstOrDefaultAsync();
 		if(entity == null)
 			return false;
 
@@ -68,12 +69,26 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 			{
 				ID= a.ID,
 				LogoUrl = a.LogoUrl,
-				Name = a.Name
+				Name = a.Name,
+				AdminId = a.AdminID
 			})
 			.FirstOrDefaultAsync();
 		return (entity);
 	}
 
+
+	public async Task<AssociationViewDto> GetByNameAsync(string Name)
+	{
+		var entity = await TEntity.Where(a => a.Name == Name && !a.IsDelete)
+			.Select(a => new AssociationViewDto()
+			{
+				ID = a.ID,
+				LogoUrl = a.LogoUrl,
+				Name = a.Name
+			})
+			.FirstOrDefaultAsync();
+		return (entity);
+	}
 	public async Task<GeneralPaginationModel<AssociationViewDto>> GetAllAsync(int Page = 1)
 	{
 		var total = TEntity.Where( a=> a.IsDelete).Count();
@@ -88,6 +103,20 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 			}).ToListAsync();
 		var res = new GeneralPaginationModel<AssociationViewDto>(total, entities);
 		return(res);
+	}
+
+	public async Task<List<AssociationViewDto>> GetAll()
+	{
+		var total = TEntity.Where(a => a.IsDelete).Count();
+		var entities =  TEntity.Where(a => !a.IsDelete)
+			.OrderByDescending(a => a.ID)
+			.Select(a => new AssociationViewDto()
+			{
+				ID = a.ID,
+				LogoUrl = a.LogoUrl,
+				Name = a.Name
+			}).ToList();
+		return (entities);
 	}
 
 	public async Task<bool> AssignAdminAsync(User user, int AssociationID)

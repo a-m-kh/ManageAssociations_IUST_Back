@@ -12,10 +12,10 @@ namespace DataBase.Configuration.Domain
 	{
 		//public string Name { get; set; }
 		public DateTime? StartTime { get; set; }
-		public DateTime? EndTime { get; set; }	
-		public bool IsConfirm { get; set; }
+		public DateTime? EndTime { get; set; }
+		public bool IsConfirm { get; set; } = false;
 		public string? Description { get; set; }
-		public int? AssociationID { get; set; }
+		public int AssociationID { get; set; }
 		public int? Price { get;set; }
 		public string? Title { get; set; }
 		public int? TypeOfEventID { get; set; }
@@ -23,11 +23,15 @@ namespace DataBase.Configuration.Domain
 		public string? ImageUrl { get; set; }
 		public int? PeriodID { get; set; }
 		public bool IsDelete { get; set; }=false;
-		public Association? association { get; set; }
-		//[ForeignKey("PeriodID")]
-		//public virtual BaseInfo period { get; set; }
-		//[ForeignKey("TypeOfEventID")]
-		//public virtual BaseInfo typeOfEvent { get; set; }
-		//public BaseInfo? issue { get; set; }
+		public bool IsPublic { get; set; } = false;
+		public Association association { get; set; }
+
+
+		[ForeignKey(nameof(Event.PeriodID))]
+		public BaseInfo Period { get; set; }
+		[ForeignKey(nameof(Event.TypeOfEventID))]
+		public BaseInfo TypeOfEvent { get; set; }
+		[ForeignKey(nameof(Event.IssueID))]
+		public BaseInfo Issue { get; set; }
 	}
 }

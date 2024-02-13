@@ -13,4 +13,5 @@ public interface IAccountService
 	Task<GeneralResponse<LoginResponse>> Login(LoginViewModel VModel);
 	Task<GeneralResponse<SignUpResponse>>SignUp(SignUpViewModel VModel);
 	Task<GeneralResponse<EditProfileResponse>> EditProfile(EditProfileViewModel VModel, string userId);
+	Task<GeneralResponse<bool>> Assign(string userId, int AssociationId);
 }

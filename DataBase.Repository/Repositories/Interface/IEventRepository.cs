@@ -11,7 +11,7 @@ namespace DataBase.Repository.Repositories.Interface
 {
 	public interface IEventRepository: IGeneralRepository<Event>
 	{
-		Task<bool> CreateAsync(EventCreateDto Model);
+		Task<int> CreateAsync(EventCreateDto Model);
 		Task<bool> UpdateAsync(EventUpdateDto Model);
 		Task<bool> DeleteAsync(int Id);
 		Task<EventViewDto> GetByIdAsync(int Id);

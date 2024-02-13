@@ -31,7 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\Images\Associations\Logo\" />
+    <Folder Include="wwwroot\Images\Events\" />
   </ItemGroup>
 
 </Project>

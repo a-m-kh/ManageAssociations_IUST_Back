@@ -15,9 +15,9 @@ namespace DataBase.Configuration.ConfigEntities
 		{
 			builder.ToTable("Associations");
 			builder.HasKey(a => a.ID);
-			builder.HasOne(a => a.Admin)
+			/*builder.HasOne(a => a.Admin)
 				.WithOne(u => u.Association)
-				.HasForeignKey<Association>(a => a.AdminID);
+				.HasForeignKey<Association>(a => a.AdminID);*/
 
 			builder.HasMany(a => a.Events)
 				.WithOne(e => e.association)

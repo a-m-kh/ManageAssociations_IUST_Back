@@ -20,21 +20,22 @@ namespace DataBase.Repository.Repositories
 			_mapper = mapper;
 		}
 
-		public async Task<bool> CreateAsync(EventCreateDto Model)
+		public async Task<int> CreateAsync(EventCreateDto Model)
 		{
 			if (Model == null)
-				return false; 
+				return 0; 
 
 			var newEvent = _mapper.Map<Event>(Model);
 			if (newEvent == null)
-				return false;
+				return 0;
 
 			var DbEntity = await TEntity.AddAsync(newEvent);
+			await _uow.SaveChangesAsync();
 			if (DbEntity == null || DbEntity.Entity == null || DbEntity.Entity.ID == 0)
-				return false;
+				return 0;
 			
 
-			return (true);
+			return (DbEntity.Entity.ID);
 		}
 
 		public async Task<bool> UpdateAsync(EventUpdateDto Model)
@@ -79,9 +80,10 @@ namespace DataBase.Repository.Repositories
 				ID= a.ID,
 				StartTime = a.StartTime,
 				ImageUrl = a.ImageUrl,
-				//Issue = a.Issue == null ?(""):(a.Issue.Title),
-				//Period = a.Period == null ?(""):(a.Period.Title),
-				//TypeOfEvent = a.TypeOfEvent == null ?(""):(a.TypeOfEvent.Title),
+				Issue = a.Issue == null ?(""):(a.Issue.Title),
+				Period = a.Period == null ?(""):(a.Period.Title),
+				TypeOfEvent = a.TypeOfEvent == null ?(""):(a.TypeOfEvent.Title),
+				AssociationId = a.AssociationID,
 				Price = a.Price,
 				Title = a.Title
 			}).FirstOrDefaultAsync();
@@ -143,6 +145,16 @@ namespace DataBase.Repository.Repositories
 			if (entity == null)
 				return false;
 			entity.IsConfirm = true;
+			var IsUpdate = _uow.SaveChanges();
+			return (IsUpdate > 0);
+		}
+
+		public bool ChangePublicState(int Id, bool IsPublic)
+		{
+			var entity = TEntity.Where(a => a.ID == Id && !a.IsDelete).FirstOrDefault();
+			if (entity == null)
+				return false;
+			entity.IsPublic = IsPublic;
 			var IsUpdate = _uow.SaveChanges();
 			return (IsUpdate > 0);
 		}

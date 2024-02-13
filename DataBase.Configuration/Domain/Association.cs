@@ -1,6 +1,7 @@
 ﻿using Repository.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -14,6 +15,7 @@ namespace DataBase.Configuration.Domain
 		public string? LogoUrl { get; set; }
 		public bool IsDelete { get; set; } = false;
 		public string? AdminID { get; set; }
+		[ForeignKey(nameof(Association.AdminID))]
 		public User? Admin { get; set; }
 		public List<Event>? Events { get;set;}
 	}

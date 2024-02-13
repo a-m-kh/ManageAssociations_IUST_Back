@@ -11,12 +11,14 @@ namespace DataBase.Repository.Repositories.Interface
 {
 	public interface IAssociationRepository : IGeneralRepository<Association>
 	{
-		Task<bool> CreateAsync(AssociationCreateDto Model);
+		Task<int> CreateAsync(AssociationCreateDto Model);
 		Task<bool> UpdateAsync(AssociationUpdateDto Model);
 		Task<bool> DeleteAsync(int Id);
 		Task<AssociationViewDto> GetAsync(int Id);
 		Task<GeneralPaginationModel<AssociationViewDto>>GetAllAsync(int Page = 1);
 		Task<bool> AssignAdminAsync(User user, int AssociationID);
+		Task<AssociationViewDto> GetByNameAsync(string Name);
+		Task<List<AssociationViewDto>> GetAll();
 
 	}
 }

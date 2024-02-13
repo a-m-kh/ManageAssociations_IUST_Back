@@ -20,25 +20,9 @@ namespace DataBase.Configuration.ConfigEntities
 			builder.Property(a => a.TypeOfEventID).HasColumnName("TypeOfEventID");
 
 
-			/*builder.HasOne(e => e.association)
+			builder.HasOne(e => e.association)
 				.WithMany(a => a.Events)
 				.HasForeignKey(e => e.AssociationID);
-
-			builder.HasOne(e => e.typeOfEvent)
-				.WithMany(b => b.TypeOfEvents)
-				.HasForeignKey(nameof(Event.TypeOfEventID));*/
-
-			/*builder.HasOne(e => e.Issue)
-				.WithMany(b => b.Issues)
-				.HasForeignKey(e => e.IssueID);*/
-
-			/*builder.HasOne(e => e.period)
-				.WithMany(b => b.Periods)
-				.HasForeignKey(e => e.PeriodID);*/
-			/*builder.HasOne(e => e.period)
-				.WithMany()
-				.HasForeignKey(nameof(Event.PeriodID))
-				.IsRequired();*/
 		}
 	}
 }

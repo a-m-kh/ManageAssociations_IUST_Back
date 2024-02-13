@@ -22,6 +22,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataBase.Configuration\DataBase.Configuration.csproj" />
+    <ProjectReference Include="..\DataBase.Repository\DataBase.Repository.csproj" />
+    <ProjectReference Include="..\Utility\Utility.csproj" />
   </ItemGroup>
 
 </Project>

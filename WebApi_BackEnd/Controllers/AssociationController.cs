@@ -1,5 +1,4 @@
-﻿using DataBase.Configuration.Domain;
-using Logic.Service.Responses;
+﻿using Logic.Service.Responses;
 using Logic.Service.Services;
 using Logic.Service.Services.Interface;
 using Logic.Service.ViewModels;
@@ -9,28 +8,27 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi_BackEnd.Controllers
 {
+
 	[ApiController]
 	[Route("api/[controller]")]
-	public class EventController : Controller
+	public class AssociationController : Controller
 	{
-		private readonly IEventService _eventService;
-		private readonly UserManager<User> _userManager;
 		private readonly IWebHostEnvironment _environment;
+		private readonly IAssociationService _associationService;
 
-		public EventController(IEventService eventService, UserManager<User> userManager , IWebHostEnvironment environment)
+		public AssociationController(IWebHostEnvironment environment, IAssociationService associationService)
 		{
-			_eventService = eventService;
-			_userManager = userManager;
 			_environment = environment;
+			_associationService = associationService;
 		}
 
 		[HttpPost("Create")]
-		[Authorize]
+		[Authorize(Roles ="SuperAdmin")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<IActionResult> Create([FromForm] EventCreateViewModel Model)
+		public async Task<IActionResult> Create([FromForm] CreateAssociationViewModel Model)
 		{
 
 
@@ -44,25 +42,39 @@ namespace WebApi_BackEnd.Controllers
 				response.Message = errors;
 				return Ok(response);
 			}
-			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
-			var user = await _userManager.GetUserAsync(User);
-
-			if (user == null)
-			{
-				response.IsSuccess = false;
-				response.Message = "همچین کاربری یافت نشد";
-				return Ok(response);
-			}
-			return Ok(await _eventService.CreateEventsAsync(Model, user, _environment.WebRootPath));
+			return Ok(await _associationService.CreateAsync(Model, _environment.WebRootPath));
 		}
 
 		[HttpPost("Update")]
-		[Authorize]
-		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+		[Authorize(Roles = "SuperAdmin")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<IActionResult> Update([FromForm] EventUpdateViewModel Model)
+		public async Task<IActionResult> Update([FromForm] UpdateAssociationViewModel Model)
+		{
+
+
+			var response = new GeneralResponse<int>();
+			if (!ModelState.IsValid)
+			{
+				var errors = string.Join(" | ", ModelState.Values
+					.SelectMany(v => v.Errors)
+					.Select(e => e.ErrorMessage));
+				response.IsSuccess = false;
+				response.Message = errors;
+				return Ok(response);
+			}
+			return Ok(await _associationService.Update(Model, _environment.WebRootPath));
+		}
+
+		[HttpGet("Get/{id}")]
+		[Authorize(Roles = "SuperAdmin")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GetAssociationResponse>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> Get(int id)
 		{
 			var response = new GeneralResponse<int>();
 			if (!ModelState.IsValid)
@@ -74,25 +86,16 @@ namespace WebApi_BackEnd.Controllers
 				response.Message = errors;
 				return Ok(response);
 			}
-			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
-			//var userId = _userManager.GetUserId(User);
-			var user = await _userManager.GetUserAsync(User);
-			if (user == null)
-			{
-				response.IsSuccess = false;
-				response.Message = "همچین کاربری یافت نشد";
-				return Ok(response);
-			}
-			return Ok(await _eventService.UpdateEventsAsync(Model, user, _environment.WebRootPath));
+			return Ok(await _associationService.GetByIdAsync(id));
 		}
 
-		[HttpDelete("Delete/{EventId}")]
-		[Authorize]
-		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+		[HttpDelete("Delete/{id}")]
+		[Authorize(Roles = "SuperAdmin")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GetAssociationResponse>))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<IActionResult> Delete(int EventId)
+		public async Task<IActionResult> Delete(int id)
 		{
 			var response = new GeneralResponse<int>();
 			if (!ModelState.IsValid)
@@ -104,24 +107,17 @@ namespace WebApi_BackEnd.Controllers
 				response.Message = errors;
 				return Ok(response);
 			}
-			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
-			var user = await _userManager.GetUserAsync(User);
-			if (user == null)
-			{
-				response.IsSuccess = false;
-				response.Message = "همچین کاربری یافت نشد";
-				return Ok(response);
-			}
-			return Ok(await _eventService.DeleteEventsAsync(EventId , user));
+			return Ok(await _associationService.DeleteByIdAsync(id));
 		}
 
-		[HttpGet("Get/{EventId}")]
-		[Authorize]
-		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+
+
+		[HttpGet("GetAll")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<List<GetAssociationResponse>>))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public async Task<IActionResult> Last_Events(int EventId)
+		public async Task<IActionResult> GetAll()
 		{
 			var response = new GeneralResponse<int>();
 			if (!ModelState.IsValid)
@@ -133,9 +129,7 @@ namespace WebApi_BackEnd.Controllers
 				response.Message = errors;
 				return Ok(response);
 			}
-			
-			return Ok(await _eventService.GetEventsAsync(EventId));
+			return Ok(await _associationService.GetAll());
 		}
-
 	}
 }

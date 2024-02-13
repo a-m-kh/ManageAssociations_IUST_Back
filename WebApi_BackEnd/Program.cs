@@ -8,6 +8,11 @@ using System.Text;
 using Logic.Service.Services.Interface;
 using Utility.Customize;
 using Logic.Service.Services;
+using Microsoft.OpenApi.Models;
+using DataBase.Repository.Repositories.Interface;
+using DataBase.Repository.Repositories;
+using Repository;
+using Logic.Service.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +23,18 @@ var connectionStr = builder.Configuration.GetConnectionString("DefaultConnection
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IUnitOfWork, MainContext>();
+
+builder.Services.AddScoped<IAssociationRepository, AssociationRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+
+
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddScoped<IAssociationService, AssociationService>();
+builder.Services.AddScoped<IEventService, EventService>();
+//builder.Services.AddScoped<IAccountService, AccountService>();
+
+builder.Services.AddAutoMapper(typeof(Logic.Service.Mapper.AutoMapper));
 
 builder.Services.AddTransient<IUserValidator<User>, OptionalEmailUserValidator<User>>();
 builder.Services.AddDbContext<UserDBContext>(opt =>
@@ -50,6 +65,36 @@ builder.Services.AddAuthentication(opt =>
 		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
 	};
 });
+
+builder.Services.AddSwaggerGen(option =>
+{
+	option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
+	option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+	{
+		In = ParameterLocation.Header,
+		Description = "Please enter a valid token",
+		Name = "Authorization",
+		Type = SecuritySchemeType.Http,
+		BearerFormat = "JWT",
+		Scheme = "Bearer"
+	});
+	option.AddSecurityRequirement(new OpenApiSecurityRequirement
+	{
+		{
+			new OpenApiSecurityScheme
+			{
+				Reference = new OpenApiReference
+				{
+					Type=ReferenceType.SecurityScheme,
+					Id="Bearer"
+				}
+			},
+			new string[]{}
+		}
+	});
+});
+
+
 
 builder.Services.AddCors(options => {
 	options.AddPolicy("test",

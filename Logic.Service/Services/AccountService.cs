@@ -12,6 +12,8 @@ using Logic.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
+using System.Security.Claims;
+using DataBase.Repository.Repositories.Interface;
 
 namespace Logic.Service.Services;
 
@@ -19,11 +21,13 @@ public class AccountService:IAccountService
 {
 	private readonly UserManager<User> _userManager;
 	private readonly IConfiguration _configuration;
+	private readonly IAssociationRepository _associationRepository;
 
-	public AccountService(UserManager<User> userManage,IConfiguration configuration)
+	public AccountService(UserManager<User> userManage,IConfiguration configuration, IAssociationRepository associationRepository)
 	{
 		_userManager = userManage;
 		_configuration = configuration;
+		_associationRepository = associationRepository;
 	}
 	public async Task<GeneralResponse<LoginResponse>> Login(LoginViewModel VModel)
 	{
@@ -33,6 +37,11 @@ public class AccountService:IAccountService
 		if(user != null && await _userManager.CheckPasswordAsync(user,VModel.Password))
 		{
 			var claims = _userManager.GetClaimsAsync(user).Result.ToList();
+			var roles = _userManager.GetRolesAsync(user).Result.ToList();
+			foreach (var role in roles)
+			{
+				claims.Add(new Claim(ClaimTypes.Role, role));
+			}
 			var claimsDto = new List<UserClaimDto>();
 			foreach (var claim in claims)
 			{
@@ -42,6 +51,7 @@ public class AccountService:IAccountService
 					ClaimValue = claim.Value
 				});
 			}
+
 			var token = GenerateToken(user, claimsDto);
 			response.Data = new LoginResponse()
 			{
@@ -66,7 +76,7 @@ public class AccountService:IAccountService
 		};
 
 		var roleClaims = userClaims.Select(c => new System.Security.Claims.Claim(c.ClaimType, c.ClaimValue));
-		claims.AddRange(claims);
+		claims.AddRange(roleClaims);
 		var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("JwtSettings").GetSection("securityKey").Value));
 		var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -139,5 +149,38 @@ public class AccountService:IAccountService
 		response.IsSuccess = false;
 		response.Message = "همچین کاربری پیدا نشد";
 		return response;
+	}
+
+	public async Task<GeneralResponse<bool>>Assign(string userId, int AssociationId)
+	{
+		var res = new GeneralResponse<bool>();
+		res.IsSuccess = false;
+		var user = await _userManager.FindByIdAsync(userId);
+		if(user== null)
+		{
+			res.Message = "همچین کاربری یافت نشد";
+			return res;
+		}
+		
+		var association = await _associationRepository.GetAsync(AssociationId);
+
+		if(association == null)
+		{
+			res.Message = "همچین انجمنی وجود ندارد";
+			return res;
+		}
+		if (user.Id == association.AdminId)
+		{
+			res.Message = "این کاربر، ادمین انجمن دیگری است. نمیتوان همزمان به یک کاربر، دسترسی دو انجمن را داد";
+			return res;
+		}
+		var isAssign = await _associationRepository.AssignAdminAsync(user, AssociationId);
+		if (isAssign)
+		{
+			res.IsSuccess = true;
+			return res;
+		}
+		res.Message = "ذخیره نشد. لطفا مجددا اقدام نمایید";
+		return res;
 	}
 }
