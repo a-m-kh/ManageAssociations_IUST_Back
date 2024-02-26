@@ -17,6 +17,9 @@ namespace DataBase.Configuration.Dtos
 		public string? ImageUrl { get; set; }
 		public int AssociationId { get; set; }
 		public bool IsPublic { get; set; } = false;
+		public string? Place { get; set; }
+		public int? Capacity { get; set; }
+		public string? Providers { get; set; }
 	}
 
 	public class EventCreateDto : EventBase

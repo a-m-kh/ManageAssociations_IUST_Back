@@ -27,11 +27,12 @@ builder.Services.AddScoped<IUnitOfWork, MainContext>();
 
 builder.Services.AddScoped<IAssociationRepository, AssociationRepository>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
-
+builder.Services.AddScoped<IBaseInfoRepository, BaseInfoRepository>();
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAssociationService, AssociationService>();
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IBaseInfoService, BaseInfoService>();
 //builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddAutoMapper(typeof(Logic.Service.Mapper.AutoMapper));

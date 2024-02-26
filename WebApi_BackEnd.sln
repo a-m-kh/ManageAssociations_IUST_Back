@@ -21,6 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase.Configuration", "D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic.Service", "Logic.Service\Logic.Service.csproj", "{8FB02472-3FD4-472F-8E1B-BC1052EB6613}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{509E06E5-6AEA-4357-8EAB-C0A34ADC1D7A}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Documents\script_1402_12_7.sql = ..\..\..\..\Documents\script_1402_12_7.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

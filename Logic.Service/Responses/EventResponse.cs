@@ -25,6 +25,9 @@ namespace Logic.Service.Responses
 		public string? AssociationName { get; set; }
 		public int? Price { get; set; }
 		public string Title { get; set; }
+		public string? Place { get; set; }
+		public int? Capacity { get; set; }
+		public string? Providers { get; set; }
 		public int? TypeOfEventID { get; set; }
 		public int? IssueID { get; set; }
 		public string? ImageUrl { get; set; }

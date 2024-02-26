@@ -21,6 +21,9 @@ namespace DataBase.Configuration.Domain
 		public int? TypeOfEventID { get; set; }
 		public int? IssueID { get; set; }
 		public string? ImageUrl { get; set; }
+		public string? Place { get; set; }
+		public int? Capacity { get; set; }
+		public string? Providers { get; set; }
 		public int? PeriodID { get; set; }
 		public bool IsDelete { get; set; }=false;
 		public bool IsPublic { get; set; } = false;

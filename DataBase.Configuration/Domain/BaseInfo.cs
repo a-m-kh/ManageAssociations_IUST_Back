@@ -12,6 +12,7 @@ namespace DataBase.Configuration.Domain
 	{
 		public int? ParrentID { get; set; }
 		public string? Title { get; set; }
+		public bool IsDelete { get; set; } = false;
 		[InverseProperty(nameof(Event.Issue))]
 		public ICollection<Event>? Issues { get; set; }
 		[InverseProperty(nameof(Event.Period))]

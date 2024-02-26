@@ -20,6 +20,9 @@ namespace Logic.Service.ViewModels
 		public DateTime? EndTime { get; set; }
 		public string? Description { get; set; }
 		public int? Price { get; set; }
+		public string? Place { get; set; }
+		public int? Capacity { get; set; }
+		public string? Providers { get; set; }
 		public IFormFile? Image { get; set; }
 		public int AssociationId { get; set; }
 	}

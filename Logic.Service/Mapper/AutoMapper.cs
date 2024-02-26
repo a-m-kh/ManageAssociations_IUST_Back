@@ -23,6 +23,8 @@ namespace Logic.Service.Mapper
 			CreateMap<EventCreateViewModel, EventCreateDto>();
 			CreateMap<EventCreateDto, Event>();
 			CreateMap<GetAssociationResponse, AssociationViewDto>().ReverseMap();
+			CreateMap<BaseInfoDto, BaseInfoResponse>();
+			CreateMap<BaseInfoResponse, BaseInfoDto>();
 			CreateMap<AssociationUpdateDto, UpdateAssociationViewModel>().ReverseMap()
 				.ForMember(res => res.LogoUrl, m => m
 					.MapFrom(u => (string)null));

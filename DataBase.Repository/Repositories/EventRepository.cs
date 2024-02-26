@@ -85,7 +85,10 @@ namespace DataBase.Repository.Repositories
 				TypeOfEvent = a.TypeOfEvent == null ?(""):(a.TypeOfEvent.Title),
 				AssociationId = a.AssociationID,
 				Price = a.Price,
-				Title = a.Title
+				Title = a.Title,
+				Place = a.Place,
+				Capacity = a.Capacity,
+				Providers = a.Providers
 			}).FirstOrDefaultAsync();
 			if (entity == null)
 				return null;
@@ -107,11 +110,14 @@ namespace DataBase.Repository.Repositories
 					ID = a.ID,
 					StartTime = a.StartTime,
 					ImageUrl = a.ImageUrl,
-					//Issue = a.Issue == null ? ("") : (a.Issue.Title),
-					//Period = a.Period == null ? ("") : (a.Period.Title),
-					//TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
+					Issue = a.Issue == null ? ("") : (a.Issue.Title),
+					Period = a.Period == null ? ("") : (a.Period.Title),
+					TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
 					Price = a.Price,
-					Title = a.Title
+					Title = a.Title,
+					Place = a.Place,
+					Capacity = a.Capacity,
+					Providers = a.Providers
 				}).ToList();
 			var res = new GeneralPaginationModel<EventViewDto>(total,entities);
 			return (res);
@@ -130,12 +136,15 @@ namespace DataBase.Repository.Repositories
 				ID = a.ID,
 				StartTime = a.StartTime,
 				ImageUrl = a.ImageUrl,
-				//Issue = a.Issue == null ? ("") : (a.Issue.Title),
-				//Period = a.Period == null ? ("") : (a.Period.Title),
-				//TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
+				Issue = a.Issue == null ? ("") : (a.Issue.Title),
+				Period = a.Period == null ? ("") : (a.Period.Title),
+				TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
 				Price = a.Price,
-				Title = a.Title
-			}).ToList();
+				Title = a.Title,
+				Place = a.Place,
+				Capacity = a.Capacity,
+				Providers = a.Providers
+				}).ToList();
 			var res = new GeneralPaginationModel<EventViewDto>(total, entities);
 			return (res);
 		}
