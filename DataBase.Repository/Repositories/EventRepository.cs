@@ -80,9 +80,9 @@ namespace DataBase.Repository.Repositories
 				ID= a.ID,
 				StartTime = a.StartTime,
 				ImageUrl = a.ImageUrl,
-				Issue = a.Issue == null ?(""):(a.Issue.Title),
-				Period = a.Period == null ?(""):(a.Period.Title),
-				TypeOfEvent = a.TypeOfEvent == null ?(""):(a.TypeOfEvent.Title),
+				Issue = a.IssueID == null ?(""):(a.Issue.Title),
+				Period = a.PeriodID == null ?(""):(a.Period.Title),
+				TypeOfEvent = a.TypeOfEventID == null ?(""):(a.TypeOfEvent.Title),
 				AssociationId = a.AssociationID,
 				Price = a.Price,
 				Title = a.Title,
@@ -95,7 +95,38 @@ namespace DataBase.Repository.Repositories
 			return (entity);
 
 		}
+		public EventViewDto GetById(int Id)
+		{
+			try
+			{
+				var entity = TEntity.Where(a => a.ID == Id && !a.IsDelete).Select(a => new EventViewDto()
+				{
+					Description = a.Description,
+					EndTime = a.EndTime,
+					ID = a.ID,
+					StartTime = a.StartTime,
+					ImageUrl = a.ImageUrl,
+					Issue = a.Issue == null ? ("") : (a.Issue.Title),
+					Period = a.Period == null ? ("") : (a.Period.Title),
+					TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
+					AssociationId = a.AssociationID,
+					Price = a.Price,
+					Title = a.Title,
+					Place = a.Place,
+					Capacity = a.Capacity,
+					Providers = a.Providers,
+				}).FirstOrDefault();
+				if (entity == null)
+					return null;
+				return (entity);
+			}
+			catch(Exception ex)
+			{
+				return null;
+			}
+			
 
+		}
 		public async Task<GeneralPaginationModel<EventViewDto>> GetByAssociationIdAsync(int Id, int Page = 1)
 		{
 			

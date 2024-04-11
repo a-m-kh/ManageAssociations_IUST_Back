@@ -31,10 +31,13 @@ namespace DataBase.Configuration.Domain
 
 
 		[ForeignKey(nameof(Event.PeriodID))]
-		public BaseInfo Period { get; set; }
+		public BaseInfo? Period { get; set; }
 		[ForeignKey(nameof(Event.TypeOfEventID))]
-		public BaseInfo TypeOfEvent { get; set; }
+		public BaseInfo? TypeOfEvent { get; set; }
 		[ForeignKey(nameof(Event.IssueID))]
-		public BaseInfo Issue { get; set; }
+		public BaseInfo? Issue { get; set; }
+
+		[InverseProperty(nameof(Guest.Event))]
+		public virtual ICollection<Guest> Guests { get; set; }
 	}
 }

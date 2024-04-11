@@ -11,6 +11,9 @@ using AutoMapper;
 using Utility;
 using DataBase.Configuration.Dtos;
 using Azure.Core;
+using DataBase.Configuration.Domain;
+using Microsoft.AspNetCore.Identity;
+using Azure;
 
 namespace Logic.Service.Services
 {
@@ -18,11 +21,19 @@ namespace Logic.Service.Services
 	{
 		private readonly IAssociationRepository _associationRepository;
 		private readonly IMapper _mapper;
-
-		public AssociationService(IAssociationRepository associationRepository, IMapper mapper)
+		private readonly ICommunicationRepository _communicationRepository;
+		private readonly UserManager<User> _userManager;
+		public AssociationService(
+			IAssociationRepository associationRepository,
+			IMapper mapper,
+			ICommunicationRepository communicationRepository,
+			UserManager<User> userManager
+			)
 		{
 			_associationRepository = associationRepository;
 			_mapper = mapper;
+			_communicationRepository = communicationRepository;	
+			_userManager = userManager;
 		}
 		public async Task<GeneralResponse<GetAssociationResponse>> GetByIdAsync(int id)
 		{
@@ -54,7 +65,7 @@ namespace Logic.Service.Services
 			url = null;
 			if(VModel.Logo != null)
 			{
-				var uploadImage = GeneralFunctions.UploadImage(VModel.Logo, "AssociationLogo", WrPath, "Image/Associations/Logo");
+				var uploadImage = GeneralFunctions.Upload(VModel.Logo, "AssociationLogo", WrPath, "Image/Associations/Logo");
 				if (uploadImage.Item2)
 					url = uploadImage.Item1;
 			}
@@ -85,7 +96,7 @@ namespace Logic.Service.Services
 			url = null;
 			if (VModel.Logo != null)
 			{
-				var uploadImage = GeneralFunctions.UploadImage(VModel.Logo, "AssociationLogo", WrPath, "Images/Associations/Logo");
+				var uploadImage = GeneralFunctions.Upload(VModel.Logo, "AssociationLogo", WrPath, "Images/Associations/Logo");
 				if (uploadImage.Item2)
 					url = uploadImage.Item1;
 			}
@@ -136,6 +147,128 @@ namespace Logic.Service.Services
 
 			var model = _mapper.Map<List<GetAssociationResponse>>(lFindModel);
 			res.Data = model;
+			return res;
+		}
+
+		public async Task<GeneralResponse<int>> CreateCommunication(CreateCommunicationViewModel VModel, User user)
+		{
+			var response = new GeneralResponse<int>()
+			{
+				IsSuccess = false
+			};
+			var statusOfUser = GeneralFunctions.CheckPermission(VModel.AssociationId, user, _userManager, _associationRepository);
+			if (!statusOfUser.Item1)
+			{
+				response.Message = statusOfUser.Item2;
+				return response;
+			}
+			var modelDto = _mapper.Map<CreateCommunicationDto>(VModel);
+			if (_communicationRepository.Create(modelDto) > 0)
+			{
+				response.IsSuccess = true;
+				return response;
+			}
+			response.Message = "اضافه کردن لینک با مشکل مواجه شد. لطفا مجددا اقدام نمایید.";
+			return response;
+
+		}
+
+		public async Task<GeneralResponse<bool>> UpdateCommunication(UpdateCommunicationViewModel VModel, User user)
+		{
+			var response = new GeneralResponse<bool>()
+			{
+				IsSuccess = false
+			};
+			var statusOfUser = GeneralFunctions.CheckPermission(VModel.AssociationId, user, _userManager, _associationRepository);
+			if (!statusOfUser.Item1)
+			{
+				response.Message = statusOfUser.Item2;
+				return response;
+			}
+			var modelDto = _mapper.Map<UpdateCommunicationDto>(VModel);
+			if (_communicationRepository.Update(modelDto))
+			{
+				response.IsSuccess = true;
+				return response;
+			}
+			response.Message = "مجددا اقدام نمایید";
+			return response;
+
+		}
+
+		public GeneralResponse<bool> DeleteCommunication(int Id, User user)
+		{
+			var res = new GeneralResponse<bool>()
+			{
+				IsSuccess = false
+			};
+
+			var entity= _communicationRepository.Get(Id);
+			if(entity == null)
+			{
+				res.Message = "همچین لینکی وجود ندارد";
+				return res;
+			}
+			var statusOfUser = GeneralFunctions.CheckPermission(entity.association.ID, user, _userManager, _associationRepository);
+			if (!statusOfUser.Item1)
+			{
+				res.Message = statusOfUser.Item2;
+				return res;
+			}
+
+			if (!_communicationRepository.Delete(entity.Id))
+			{
+				res.Message = "مشکلی به وجود آمده است. لطفا مجددا اقدام کنید";
+				return res;
+			}
+			res.IsSuccess = true;
+			return res;
+		}
+
+		public GeneralResponse<GetCommunicationResponse> GetCommunication(int Id)
+		{
+			var res = new GeneralResponse<GetCommunicationResponse>()
+			{
+				IsSuccess = false
+			};
+
+			var entity = _communicationRepository.Get(Id);
+			if (entity == null)
+			{
+				res.Message = "همچین لینکی وجود ندارد";
+				return res;
+			}
+
+			var data  = _mapper.Map<GetCommunicationResponse>(entity);
+			res.IsSuccess = true;
+			res.Data = data;
+			return res;
+		}
+
+		public GeneralResponse<List<GetCommunicationResponse>> GetAllCommunication(int associationId)
+		{
+			var res = new GeneralResponse<List<GetCommunicationResponse>>
+			{
+				IsSuccess = false
+			};
+
+			var asEntity = _associationRepository.Get(associationId);
+			if(asEntity ==null)
+			{
+				res.Message = "همچین انجمنی وجود ندارد.";
+				return res;
+			}
+
+			var entity = _communicationRepository.GetAll(associationId);
+			if (entity == null)
+			{
+				res.Message = "همچین لینکی وجود ندارد";
+				return res;
+			}
+
+			var data = _mapper.Map<List<GetCommunicationResponse>>(entity);
+			res.IsSuccess = true;
+			res.Data = data;
 			return res;
 		}
 	}

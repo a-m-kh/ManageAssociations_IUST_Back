@@ -19,7 +19,17 @@ namespace DataBase.Configuration.Domain
 		public virtual ICollection<Event> Periods { get; set; }
 		[InverseProperty(nameof(Event.TypeOfEvent))]
 		public virtual ICollection<Event> TypeOfEvents { get; set; }
+		[InverseProperty(nameof(Communication.TypeOfLink))]
+		public virtual ICollection<Communication> TypeOfLinks { get; set; }
 
+		[InverseProperty(nameof(Certification.Status))]
+		public virtual ICollection<Certification> Statuses { get; set; }
 
+		[InverseProperty(nameof(CertificateOfAbsence.Status))]
+		public virtual ICollection<CertificateOfAbsence> CertificateOfAbsenceStatuses { get; set; }
+		[InverseProperty(nameof(GuestLicense.Status))]
+		public virtual ICollection<GuestLicense> GuestLicenseStatuses { get; set; }
+		[InverseProperty(nameof(News.Status))]
+		public virtual ICollection<News> NewsStatuses { get; set; }
 	}
 }

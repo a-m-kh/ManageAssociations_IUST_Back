@@ -20,7 +20,7 @@ namespace WebApi_BackEnd.Controllers
 		}
 
 		[HttpPost("Register")]
-		[Authorize(Roles ="SuperAdmin")]
+		//[Authorize(Roles ="SuperAdmin")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]

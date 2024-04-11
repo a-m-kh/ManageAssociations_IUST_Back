@@ -19,6 +19,7 @@ namespace DataBase.Repository.Repositories.Interface
 		Task<bool> AssignAdminAsync(User user, int AssociationID);
 		Task<AssociationViewDto> GetByNameAsync(string Name);
 		Task<List<AssociationViewDto>> GetAll();
+		AssociationViewDto Get(int Id);
 
 	}
 }

@@ -28,11 +28,20 @@ builder.Services.AddScoped<IUnitOfWork, MainContext>();
 builder.Services.AddScoped<IAssociationRepository, AssociationRepository>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<IBaseInfoRepository, BaseInfoRepository>();
+builder.Services.AddScoped<ICommunicationRepository, CommunicationRepository>();
+builder.Services.AddScoped<IGuestRepository, GuestRepository>();
+builder.Services.AddScoped<IAssociationMemberRepository, AssociationMemberRepository>();
+builder.Services.AddScoped<IJournalRepository, JournalRepository>();
+
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAssociationService, AssociationService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IBaseInfoService, BaseInfoService>();
+builder.Services.AddScoped<IGuestService, GuestService>();
+builder.Services.AddScoped<IAssociationMemberService, AssociationMemberService>();
+builder.Services.AddScoped<IJournalService, JournalService>();
+
 //builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddAutoMapper(typeof(Logic.Service.Mapper.AutoMapper));

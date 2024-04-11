@@ -18,6 +18,6 @@ namespace DataBase.Repository.Repositories.Interface
 		Task<GeneralPaginationModel<EventViewDto>> GetByAssociationIdAsync(int Id, int Page = 1);
 		Task<GeneralPaginationModel<EventViewDto>> GetLastEvent(int Page = 1);
 		bool ConfirmEvent(int Id);
-
+		EventViewDto GetById(int Id);
 	}
 }

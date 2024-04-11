@@ -16,9 +16,6 @@ namespace DataBase.Configuration.ConfigEntities
 			builder.ToTable("Events");
 			builder.HasKey(a => a.ID);
 
-			builder.Property(a => a.PeriodID).HasColumnName("PeriodID");
-			builder.Property(a => a.TypeOfEventID).HasColumnName("TypeOfEventID");
-
 
 			builder.HasOne(e => e.association)
 				.WithMany(a => a.Events)

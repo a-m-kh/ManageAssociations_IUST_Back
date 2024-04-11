@@ -78,7 +78,7 @@ namespace Logic.Service.Services
 				var imageUrl = (string.Empty, false);
 				if (VModel.Image != null)
 				{
-					imageUrl = GeneralFunctions.UploadImage(VModel.Image, "Event", WrPath, "Images/Events");
+					imageUrl = GeneralFunctions.Upload(VModel.Image, "Event", WrPath, "Images/Events");
 				}
 				if (imageUrl.Item2)
 				{
@@ -143,7 +143,7 @@ namespace Logic.Service.Services
 
 			if(VModel.Image!= null)
 			{
-				var uploadImage = GeneralFunctions.UploadImage(VModel.Image, "Event", WrPath, "Images/Events");
+				var uploadImage = GeneralFunctions.Upload(VModel.Image, "Event", WrPath, "Images/Events");
 				if (uploadImage.Item2)
 					url = uploadImage.Item1;
 			}

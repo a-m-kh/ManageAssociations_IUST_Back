@@ -24,4 +24,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataBase.Configuration\DataBase.Configuration.csproj" />
+    <ProjectReference Include="..\DataBase.Repository\DataBase.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

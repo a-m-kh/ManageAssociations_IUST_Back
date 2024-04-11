@@ -31,8 +31,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Excels\Certifications\" />
     <Folder Include="wwwroot\Images\Associations\Logo\" />
-    <Folder Include="wwwroot\Images\Events\" />
+    <Folder Include="wwwroot\Images\Associations\Members\" />
+    <Folder Include="wwwroot\Images\Events\Guests\" />
+    <Folder Include="wwwroot\Pdfs\Journals\" />
   </ItemGroup>
 
 </Project>

@@ -75,6 +75,19 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 			.FirstOrDefaultAsync();
 		return (entity);
 	}
+	public  AssociationViewDto Get(int Id)
+	{
+		var entity =  TEntity.Where(a => a.ID == Id && !a.IsDelete)
+			.Select(a => new AssociationViewDto()
+			{
+				ID = a.ID,
+				LogoUrl = a.LogoUrl,
+				Name = a.Name,
+				AdminId = a.AdminID
+			})
+			.FirstOrDefault();
+		return (entity);
+	}
 
 
 	public async Task<AssociationViewDto> GetByNameAsync(string Name)

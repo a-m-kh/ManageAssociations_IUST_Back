@@ -18,5 +18,14 @@ namespace DataBase.Configuration.Domain
 		[ForeignKey(nameof(Association.AdminID))]
 		public User? Admin { get; set; }
 		public List<Event>? Events { get;set;}
+
+		[InverseProperty(nameof(Communication.Association))]
+		public virtual ICollection<Communication> Communications { get; set; }
+
+		[InverseProperty(nameof(AssociationMember.Association))]
+		public virtual ICollection<AssociationMember> AssociationMembers { get; set; }
+
+		[InverseProperty(nameof(Journal.Association))]
+		public virtual ICollection<Journal> Journals { get; set; }
 	}
 }

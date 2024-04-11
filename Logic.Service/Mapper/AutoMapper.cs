@@ -33,14 +33,42 @@ namespace Logic.Service.Mapper
 				.ForMember(res => res.LogoUrl, m => m
 					.MapFrom(u =>(string)null));
 
-			/*CreateMap<AssociationCreateDto, CreateAssociationViewModel>()
-				.ForMember(res => res.Logo, m => m
-					.MapFrom(u => (IFormFile)null));*/
+			CreateMap<Communication, CreateCommunicationDto>();
+			CreateMap<CreateCommunicationDto, Communication>();
+			CreateMap<CreateCommunicationDto, CreateCommunicationViewModel>();
+			CreateMap<CreateCommunicationViewModel, CreateCommunicationDto>();
+			CreateMap<UpdateCommunicationDto, UpdateCommunicationViewModel>();
+			CreateMap<UpdateCommunicationViewModel, UpdateCommunicationDto>();
+			CreateMap<GetCommunicationResponse, GetCommunicationDto>();
+			CreateMap<GetCommunicationDto, GetCommunicationResponse>();
 
+			CreateMap<Guest, CreateGuestDto>();
+			CreateMap<CreateGuestDto, Guest>();
+			CreateMap<CreateGuestDto, Communication>();
+			CreateMap<CreateGuestDto, CreateGuestViewModel>();
+			CreateMap<CreateGuestViewModel, CreateGuestDto>();
+			CreateMap<UpdateGuestDto, UpdateGuestViewModel>();
+			CreateMap<UpdateGuestViewModel, UpdateGuestDto>();
+			CreateMap<GetGuestResponse, GetGuestDto>();
+			CreateMap<GetGuestDto, GetGuestResponse>();
 
+			CreateMap<AssociationMember, CreateAssociationMemberDto>();
+			CreateMap<CreateAssociationMemberDto, AssociationMember>();
+			CreateMap<CreateAssociationMemberDto, CreateAssociationMemberViewModel>();
+			CreateMap<CreateAssociationMemberViewModel, CreateAssociationMemberDto>();
+			CreateMap<UpdateAssociationMemberDto, UpdateAssociationMemberViewModel>();
+			CreateMap<UpdateAssociationMemberViewModel, UpdateAssociationMemberDto>();
+			CreateMap<GetAssociationMemberResponse, GetAssociationMemberDto>();
+			CreateMap<GetAssociationMemberDto, GetAssociationMemberResponse>();
 
-
-			//CreateMap<List<AssociationViewDto>, List<GetAssociationResponse>>().ReverseMap();
+			CreateMap<Journal, CreateJournalDto>();
+			CreateMap<CreateJournalDto, Journal>();
+			CreateMap<CreateJournalDto, CreateJournalViewModel>();
+			CreateMap<CreateJournalViewModel, CreateJournalDto>();
+			CreateMap<UpdateJournalDto, UpdateJournalViewModel>();
+			CreateMap<UpdateJournalViewModel, UpdateJournalDto>();
+			CreateMap<GetJournalResponse, GetJournalDto>();
+			CreateMap<GetJournalDto, GetJournalResponse>();
 		}
 	}
 }
