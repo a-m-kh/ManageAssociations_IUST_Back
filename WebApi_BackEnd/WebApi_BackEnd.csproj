@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="EPPlus" Version="7.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2" />
@@ -35,6 +36,7 @@
     <Folder Include="wwwroot\Images\Associations\Logo\" />
     <Folder Include="wwwroot\Images\Associations\Members\" />
     <Folder Include="wwwroot\Images\Events\Guests\" />
+    <Folder Include="wwwroot\Images\Events\Reports\" />
     <Folder Include="wwwroot\Pdfs\Journals\" />
   </ItemGroup>
 

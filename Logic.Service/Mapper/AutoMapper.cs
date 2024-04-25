@@ -69,6 +69,25 @@ namespace Logic.Service.Mapper
 			CreateMap<UpdateJournalViewModel, UpdateJournalDto>();
 			CreateMap<GetJournalResponse, GetJournalDto>();
 			CreateMap<GetJournalDto, GetJournalResponse>();
+
+			CreateMap<Certification, CreateCertificationDto>();
+			CreateMap<CreateCertificationDto, Certification>();
+			CreateMap<CreateCertificationDto, CreateCertificationViewModel>();
+			CreateMap<CreateCertificationViewModel, CreateCertificationDto>();
+			CreateMap<UpdateCertificationDto, UpdateCertificationViewModel>();
+			CreateMap<UpdateCertificationViewModel, UpdateCertificationDto>();
+			CreateMap<GetCertificationResponse, GetCertificationDto>();
+			CreateMap<GetCertificationDto, GetCertificationResponse>();
+
+
+			CreateMap<Report, CreateReportDto>();
+			CreateMap<CreateReportDto, Report>();
+			CreateMap<CreateReportDto, CreateReportViewModel>();
+			CreateMap<CreateReportViewModel, CreateReportDto>();
+			CreateMap<UpdateReportDto, UpdateReportViewModel>();
+			CreateMap<UpdateReportViewModel, UpdateReportDto>();
+			//CreateMap<GetReportResponse, GetCertificationDto>();
+			//CreateMap<GetCertificationDto, GetCertificationResponse>();
 		}
 	}
 }

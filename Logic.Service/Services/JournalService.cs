@@ -95,7 +95,7 @@ namespace Logic.Service.Services
 			}
 
 			////////////////// delete Image
-			if (journalDto.PdfUrl != null)
+			if (journalDto.PdfUrl != null && vm.Pdf != null)
 			{
 				//var url = WrPath + @"\";
 				GeneralFunctions.DeleteImage($@"{WrPath}\{journalDto.PdfUrl}");

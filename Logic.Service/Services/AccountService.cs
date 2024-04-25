@@ -108,7 +108,9 @@ public class AccountService:IAccountService
 			}
 			res.Data = new SignUpResponse()
 			{
-				Username = newUser.UserName
+				Username = newUser.UserName,
+				userId = newUser.Id
+				
 			};
 			return res;
 		}catch(Exception ex)

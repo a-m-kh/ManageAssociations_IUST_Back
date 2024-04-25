@@ -13,6 +13,6 @@ public class SignUpViewModel
 	public string UserName { get; set; }
 	[Required(ErrorMessage = "لطفا برای کاربر، رمز انتخاب کنید.")]
 	public string Password { get; set; }
-	public string Email { get; set; }
+	public string? Email { get; set; }
 	public string? PhoneNumber { get; set; }
 }

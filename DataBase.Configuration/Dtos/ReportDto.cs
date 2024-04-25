@@ -1,14 +1,16 @@
-﻿using Repository.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataBase.Configuration.Domain
+namespace DataBase.Configuration.Dtos
 {
-	public class Report: EntityWithTypedId<int>
+	internal class ReportDto
+	{
+	}
+
+	public class ReportDtoBase
 	{
 		public string? ApplicationLevel { get; set; }
 		public string? HoldingPeriod { get; set; }
@@ -20,12 +22,23 @@ namespace DataBase.Configuration.Domain
 		public string? AssociateCollections { get; set; }
 		public string? ExecutiveColleagues { get; set; }
 		public string? DetailsAndPanels { get; set; }
-		public int? EventId { get; set; }
+		///public int EventId { get; set; }
+	}
 
-		[ForeignKey(nameof(Report.EventId))]
-		public Event? Event { get; set; }
+	public class CreateReportDto : ReportDtoBase
+	{
+		public int EventId { get; set; }
+	}
 
-		[InverseProperty(nameof(ImageOfReport.Report))]
-		public virtual ICollection<ImageOfReport> Images { get; set; }
+	public class UpdateReportDto : ReportDtoBase
+	{
+		public int Id { get; set; }
+	}
+
+	public class GetReportDto : ReportDtoBase
+	{
+		public int Id { get; set; }
+		public List<string> ImagesUrl { get; set; }
+		public int AssociationId { get; set; }
 	}
 }

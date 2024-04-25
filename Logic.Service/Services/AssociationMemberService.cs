@@ -101,7 +101,7 @@ namespace Logic.Service.Services
 			}
 
 			////////////////// delete Image
-			if (associationMember.ImageUrl != null)
+			if (associationMember.ImageUrl != null && vm.Image != null)
 			{
 				//var url = WrPath + @"\";
 				GeneralFunctions.DeleteImage($@"{WrPath}\{associationMember.ImageUrl}");

@@ -23,17 +23,20 @@ namespace Logic.Service.Services
 		private readonly IMapper _mapper;
 		private readonly ICommunicationRepository _communicationRepository;
 		private readonly UserManager<User> _userManager;
+		private readonly IAccountService _accountService;
 		public AssociationService(
 			IAssociationRepository associationRepository,
 			IMapper mapper,
 			ICommunicationRepository communicationRepository,
-			UserManager<User> userManager
+			UserManager<User> userManager,
+			IAccountService accountService
 			)
 		{
 			_associationRepository = associationRepository;
 			_mapper = mapper;
 			_communicationRepository = communicationRepository;	
 			_userManager = userManager;
+			_accountService= accountService;
 		}
 		public async Task<GeneralResponse<GetAssociationResponse>> GetByIdAsync(int id)
 		{
@@ -60,7 +63,7 @@ namespace Logic.Service.Services
 				res.Message = "همچین انجمنی وجود ندارد.";
 				return res;
 			}
-
+			
 			var url = string.Empty;
 			url = null;
 			if(VModel.Logo != null)
@@ -92,6 +95,22 @@ namespace Logic.Service.Services
 				res.Message = "در حال حاظر انجمنی با این نام وجود دارد. نام دیگری وارد نمایید.";
 				return res;
 			}
+
+			var user = await _accountService.SignUp(new SignUpViewModel()
+			{
+				Password = VModel.Password,
+				UserName = VModel.UserName
+			});
+
+			if (!user.IsSuccess)
+			{
+				res.IsSuccess= false;
+				res.Message = user.Message;
+				return res;
+			}
+
+
+
 			var url = string.Empty;
 			url = null;
 			if (VModel.Logo != null)
@@ -111,6 +130,9 @@ namespace Logic.Service.Services
 					res.Message = "انجمن ساخته نشد. دوباره تلاش نمایید";
 					return res;
 				}
+
+				var assign = await _accountService.Assign(user.Data.userId, id);
+
 				res.Data = id;
 				return res;
 			}catch(Exception ex)

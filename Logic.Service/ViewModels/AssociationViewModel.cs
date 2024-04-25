@@ -21,7 +21,10 @@ public class AssociationViewModelBase
 
 public class CreateAssociationViewModel : AssociationViewModelBase
 {
-
+	[Required(ErrorMessage = "لطفا نام کاربری را وارد نمایید.")]
+	public string UserName { get; set; }
+	[Required(ErrorMessage = "لطفا رمز را وارد نمایید.")]
+	public string Password { get; set; }
 }
 
 public class UpdateAssociationViewModel : AssociationViewModelBase

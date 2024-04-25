@@ -32,6 +32,10 @@ builder.Services.AddScoped<ICommunicationRepository, CommunicationRepository>();
 builder.Services.AddScoped<IGuestRepository, GuestRepository>();
 builder.Services.AddScoped<IAssociationMemberRepository, AssociationMemberRepository>();
 builder.Services.AddScoped<IJournalRepository, JournalRepository>();
+builder.Services.AddScoped<ICertificationRepository, CertificationRepository>();
+builder.Services.AddScoped<IParticipantsOfCertificateRepository,ParticipantsOfCertificateRepository>();
+builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<IImageOfReportRepository, ImageOfReportRepository>();
 
 
 builder.Services.AddScoped<IAccountService, AccountService>();
@@ -41,7 +45,8 @@ builder.Services.AddScoped<IBaseInfoService, BaseInfoService>();
 builder.Services.AddScoped<IGuestService, GuestService>();
 builder.Services.AddScoped<IAssociationMemberService, AssociationMemberService>();
 builder.Services.AddScoped<IJournalService, JournalService>();
-
+builder.Services.AddScoped<ICertificationService, CertificationService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 //builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddAutoMapper(typeof(Logic.Service.Mapper.AutoMapper));

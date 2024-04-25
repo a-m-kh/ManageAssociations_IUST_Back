@@ -115,6 +115,10 @@ namespace DataBase.Repository.Repositories
 					Place = a.Place,
 					Capacity = a.Capacity,
 					Providers = a.Providers,
+					ReportDto = new GetReportDto()
+					{
+						Id= a.Report == null ? (0) : (a.Report.ID)
+					},
 				}).FirstOrDefault();
 				if (entity == null)
 					return null;

@@ -102,7 +102,7 @@ namespace Logic.Service.Services
 			}
 			
 			////////////////// delete Image
-			if(guest.ImageUrl != null)
+			if(guest.ImageUrl != null && vm.Image != null)
 			{
 				//var url = WrPath + @"\";
 				GeneralFunctions.DeleteImage($@"{WrPath}\{guest.ImageUrl}");

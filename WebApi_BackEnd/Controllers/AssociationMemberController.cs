@@ -45,12 +45,12 @@ namespace WebApi_BackEnd.Controllers
 
 
 		[HttpPost("Create")]
-		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<bool>))]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<int>))]
 		[ProducesDefaultResponseType]
 		[Authorize]
 		public async Task<IActionResult> Create([FromForm] CreateAssociationMemberViewModel Vm)
 		{
-			var response = new GeneralResponse<List<GetAssociationMemberResponse>>();
+			var response = new GeneralResponse<int>();
 			if (!ModelState.IsValid)
 			{
 				var errors = string.Join(" | ", ModelState.Values
@@ -62,7 +62,6 @@ namespace WebApi_BackEnd.Controllers
 			}
 
 			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
-			//var userId = _userManager.GetUserId(User);
 			var user = await _userManager.GetUserAsync(User);
 			if (user == null)
 			{

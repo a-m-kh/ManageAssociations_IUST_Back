@@ -39,5 +39,8 @@ namespace DataBase.Configuration.Domain
 
 		[InverseProperty(nameof(Guest.Event))]
 		public virtual ICollection<Guest> Guests { get; set; }
+
+		[InverseProperty(nameof(DataBase.Configuration.Domain.Report.Event))]
+		public virtual Report Report { get; set; }
 	}
 }

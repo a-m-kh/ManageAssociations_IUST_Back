@@ -11,4 +11,5 @@ namespace Logic.Service.Responses;
 public class SignUpResponse
 {
 	public string Username { get; set; }
+	public string userId { get; set; }
 }

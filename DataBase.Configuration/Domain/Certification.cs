@@ -13,6 +13,7 @@ namespace DataBase.Configuration.Domain
 		public string Title { get; set; }
 		public DateTime RegistrationDate { get; set; }
 		public string? ExcelUrl { get; set; }
+		public string? Organizer { get; set; }
 		public bool IsDelete { get; set; } = false;
 		public int Number { get; set; }
 		public int StatusId { get; set; }
@@ -25,6 +26,6 @@ namespace DataBase.Configuration.Domain
 		public BaseInfo Status { get; set; }
 
 		[InverseProperty(nameof(ParticipantsOfCertificate.Certification))]
-		public virtual ICollection<Certification> Certifications { get; set; }
+		public virtual ICollection<ParticipantsOfCertificate> People { get; set; }
 	}
 }
