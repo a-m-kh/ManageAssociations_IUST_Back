@@ -23,6 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic.Service", "Logic.Serv
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{509E06E5-6AEA-4357-8EAB-C0A34ADC1D7A}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Documents\2024_script.sql = ..\..\..\..\Documents\2024_script.sql
 		..\..\..\..\Documents\script_1402_12_7.sql = ..\..\..\..\Documents\script_1402_12_7.sql
 	EndProjectSection
 EndProject
