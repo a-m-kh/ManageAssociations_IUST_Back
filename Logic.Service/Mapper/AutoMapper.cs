@@ -88,6 +88,40 @@ namespace Logic.Service.Mapper
 			CreateMap<UpdateReportViewModel, UpdateReportDto>();
 			//CreateMap<GetReportResponse, GetCertificationDto>();
 			//CreateMap<GetCertificationDto, GetCertificationResponse>();
+
+
+			CreateMap<News, CreateNewsDto>();
+			CreateMap<CreateNewsDto, News>();
+			CreateMap<CreateNewsDto, CreateNewsViewModel>();
+			CreateMap<CreateNewsViewModel, CreateNewsDto>();
+			CreateMap<UpdateNewsDto, UpdateNewsViewModel>();
+			CreateMap<UpdateNewsViewModel, UpdateNewsDto>();
+			CreateMap<GetNewsResponse, GetNewsDto>();
+			CreateMap<GetNewsDto, GetNewsResponse>();
+
+			CreateMap<GuestLicense, CreateGuestLicenseDto>();
+			CreateMap<CreateGuestLicenseDto, GuestLicense>();
+			CreateMap<CreateGuestLicenseDto, CreateGuestLicenseViewModel>();
+			CreateMap<CreateGuestLicenseViewModel, CreateGuestLicenseDto>();
+			CreateMap<UpdateGuestLicenseDto, UpdateGuestLicenseViewModel>();
+			CreateMap<UpdateGuestLicenseViewModel, UpdateGuestLicenseDto>();
+			CreateMap<GetGuestLicenseResponse, GetGuestLicenseDto>();
+			CreateMap<GetGuestLicenseDto, GetGuestLicenseResponse>();
+			CreateMap<GetListGuestLicenseResponse, GetGuestLicenseDto>();
+			CreateMap<GetGuestLicenseDto, GetListGuestLicenseResponse>();
+
+			CreateMap<CertificateOfAbsence, CreateCertificateOfAbsenceDto>();
+			CreateMap<CreateCertificateOfAbsenceDto, CertificateOfAbsence>();
+			CreateMap<CreateCertificateOfAbsenceDto, CreateCertificateOfAbsenceViewModel>();
+			CreateMap<CreateCertificateOfAbsenceViewModel, CreateCertificateOfAbsenceDto>();
+			CreateMap<UpdateCertificateOfAbsenceDto, UpdateCertificateOfAbsenceViewModel>();
+			CreateMap<UpdateCertificateOfAbsenceViewModel, UpdateCertificateOfAbsenceDto>();
+			CreateMap<GetCertificateOfAbsenceResponse, GetCertificateOfAbsenceDto>();
+			CreateMap<GetCertificateOfAbsenceDto, GetCertificateOfAbsenceResponse>();
+			CreateMap<GetListCertificateOfAbsenceResponse, GetCertificateOfAbsenceDto>();
+			CreateMap<GetCertificateOfAbsenceDto, GetListCertificateOfAbsenceResponse>();
+
+
 		}
 	}
 }

@@ -19,8 +19,15 @@ namespace DataBase.Configuration.Domain
 		public string ExcelUrl { get; set; }
 		public DateTime AbsenceDate { get; set; }
 		public bool IsDelete { get; set; }
+		public int AssociationId { get; set; }
+
 		[ForeignKey(nameof(CertificateOfAbsence.StatusId))]
 		public BaseInfo Status { get; set; }
 
+		[ForeignKey(nameof(CertificateOfAbsence.AssociationId))]
+		public Association Association { get; set; }
+
+		[InverseProperty(nameof(ParticipantOfCertificateOfAbsence.Certification))]
+		public virtual ICollection<ParticipantOfCertificateOfAbsence> People { get; set; }
 	}
 }

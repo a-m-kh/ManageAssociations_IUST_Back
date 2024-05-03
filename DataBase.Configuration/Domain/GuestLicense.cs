@@ -14,14 +14,18 @@ namespace DataBase.Configuration.Domain
 		public string NationalCode { get; set; }
 		public string JobTitle { get; set; }
 
-		public DateTime RegistrationDate { get; set; }
-		public int StatusId { get; set; }
+		public DateTime RegistrationDate { get; set; } = DateTime.Now;
+		public int StatusId { get; set; } 
 		public bool IsGuest { get; set; }
 		public bool IsDelete { get; set; } = false;
 		public bool IsFromIust { get; set; }
+		public int AssociationId { get; set; }
 
 		[ForeignKey(nameof(GuestLicense.StatusId))]
 		public BaseInfo Status { get; set; }
+
+		[ForeignKey(nameof(GuestLicense.AssociationId))]
+		public Association Association { get; set; }
 
 	}
 }

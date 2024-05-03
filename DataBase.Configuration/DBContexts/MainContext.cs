@@ -37,5 +37,6 @@ public class MainContext : BaseDBContext , IMainUnitOfWork
 		modelBuilder.ApplyConfiguration(new ReportConfiguration());
 		modelBuilder.ApplyConfiguration(new NewsConfiguration());
 		modelBuilder.ApplyConfiguration(new NewsImagesConfiguration());
+		modelBuilder.ApplyConfiguration(new ParticipantsOfCertificateOfAbsenceConfiguration());
 	}
 }

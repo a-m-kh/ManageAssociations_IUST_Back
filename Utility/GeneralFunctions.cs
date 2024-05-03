@@ -90,6 +90,53 @@ namespace Utility
 
 			return ("", true,images);
 		}
+
+
+		public static (string, bool, List<NewsImage>) UploadImage_Newss(List<IFormFile> formFiles, string prefix, string UploadPath, string folderName, int NewsId)
+		{
+			List<NewsImage> images = new List<NewsImage>();
+
+			foreach (var formFile in formFiles)
+			{
+				var randome = new Random();
+				var number = randome.Next(1, 1000000000);
+				var uniqueFileName = $"{prefix}_{number}_{formFile.FileName}";
+				var pathOfFile = $"{folderName}/{uniqueFileName}";
+				try
+				{
+					if (formFile != null)
+					{
+						using (FileStream filestream = System.IO.File.Create($"{UploadPath}/{pathOfFile}"))
+						{
+							formFile.CopyTo(filestream);
+							filestream.Flush();
+						}
+					}
+					else
+					{
+						return ("فایل خالی میباشد", false, null);
+					}
+				}
+				catch (Exception ex)
+				{
+					return ("مشکلی پیش آمده. لطفا مجددا تلاش نمایید", false, null);
+				}
+				images.Add(new NewsImage()
+				{
+					NewsId = NewsId,
+					Url = pathOfFile
+				});
+			}
+
+
+
+
+
+			return ("", true, images);
+		}
+
+
+
 		public static void DeleteImage(string url)
 		{
 			try
@@ -170,6 +217,37 @@ namespace Utility
 			}
 			return res;
 		}
+
+		public static List<ParticipantOfCertificateOfAbsence> ReadExcel_CertificateOfAbsence(string filePath, int CertificationId)
+		{
+			var res = new List<ParticipantOfCertificateOfAbsence>();
+			int total = 0;
+
+			using (var stream = new MemoryStream())
+			{
+				ExcelPackage.LicenseContext = LicenseContext.Commercial;
+				var package = new ExcelPackage(new FileInfo(filePath));
+				ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+				var rowCount = worksheet.Dimension.Rows;
+				for (int i = 2; i <= rowCount; i++)
+				{
+					if (worksheet.Cells[i, 1].Value != null && worksheet.Cells[i, 2].Value != null && worksheet.Cells[i, 3].Value != null)
+					{
+						res.Add(new ParticipantOfCertificateOfAbsence()
+						{
+							FirstName = worksheet.Cells[i, 1].Value.ToString(),
+							LastName = worksheet.Cells[i, 2].Value.ToString(),
+							StudentId = worksheet.Cells[i, 3].Value.ToString(),
+							CertificationId = CertificationId
+						}) ;
+					}
+
+				}
+			}
+			return res;
+		}
+
+
 
 		public static (bool,string) CheckPermission(int associationId , User user, UserManager<User> userManager, IAssociationRepository associationRepository )
 		{

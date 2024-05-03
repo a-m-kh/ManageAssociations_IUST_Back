@@ -14,9 +14,13 @@ namespace DataBase.Configuration.Domain
 		public string? Description { get; set; }
 		public bool IsActive { get; set; } = false;
 		public int StatusId { get; set; }
-		public int Views { get; set; }
-		public DateTime RegistrationDate { get; set; }
+		public int Views { get; set; } = 0;
+		public DateTime RegistrationDate { get; set; } = DateTime.Now;
 		public bool IsDelete { get; set; } = false;
+		public int AssociationId { get; set; }
+
+		[ForeignKey(nameof(News.AssociationId))]
+		public Association Association { get; set; }
 
 		[ForeignKey(nameof(News.StatusId))]
 		public BaseInfo Status { get; set; }

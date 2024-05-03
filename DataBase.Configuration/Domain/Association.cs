@@ -27,5 +27,14 @@ namespace DataBase.Configuration.Domain
 
 		[InverseProperty(nameof(Journal.Association))]
 		public virtual ICollection<Journal> Journals { get; set; }
+
+		[InverseProperty(nameof(DataBase.Configuration.Domain.News.Association))]
+		public virtual ICollection<News> News { get; set; }
+
+		[InverseProperty(nameof(DataBase.Configuration.Domain.GuestLicense.Association))]
+		public virtual ICollection<GuestLicense> GuestLicenses { get; set; }
+
+		[InverseProperty(nameof(DataBase.Configuration.Domain.CertificateOfAbsence.Association))]
+		public virtual ICollection<CertificateOfAbsence> CertificateOfAbsences { get; set; }
 	}
 }
