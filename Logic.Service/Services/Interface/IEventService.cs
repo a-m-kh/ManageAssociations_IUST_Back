@@ -21,7 +21,7 @@ namespace Logic.Service.Services.Interface
 		Task<GeneralResponse<List<GetForUserEventDto>>> GetAllForUser(int AssociationId);
 		GeneralResponse<GeneralPaginationModel<GetEventDto>> GetAllForSuperAdmin(int Page = 1);
 		Task<GeneralResponse<bool>> ChangePublic(int Id, User user, int AssociationId);
-		GeneralResponse<bool> ChangeConfirm(int Id);
+		GeneralResponse<bool> ChangeConfirm(EventChangeConfirmViewModel Vm);
 
 	}
 }

@@ -23,6 +23,6 @@ namespace DataBase.Repository.Repositories.Interface
 		List<GetForUserEventDto> GetAllEventsForUser(int AssociationId);
 		GeneralPaginationModel<GetEventDto> GetAllEventsForAdmin(int AssociationId, int Page = 1);
 		bool ChangePublic(int Id);
-		bool ChangeConfirm(int Id);
+		bool ChangeConfirm(int Id, bool? ConfirmStatus);
 	}
 }

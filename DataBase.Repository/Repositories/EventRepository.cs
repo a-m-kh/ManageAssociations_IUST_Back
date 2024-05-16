@@ -161,8 +161,8 @@ namespace DataBase.Repository.Repositories
 
 		public async Task<GeneralPaginationModel<EventViewDto>> GetLastEvent(int Page = 1)
 		{
-			var total = TEntity.Where(a => a.IsConfirm && a.IsDelete).Count();
-			var entities = TEntity.Where(a => !a.IsDelete && a.IsConfirm)
+			var total = TEntity.Where(a => a.IsPublic && a.IsDelete).Count();
+			var entities = TEntity.Where(a => !a.IsDelete && a.IsPublic)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
 				.Take(4).Select(a => new EventViewDto()
@@ -208,7 +208,7 @@ namespace DataBase.Repository.Repositories
 		public List<GetForUserEventDto> GetAllEventsForUser(int AssociationId) 
 		{
 			//var total = TEntity.Where(a => a.IsConfirm && a.IsDelete && a.IsPublic && a.AssociationID == AssociationId).Count();
-			var entities = TEntity.Where(a => a.IsConfirm && !a.IsDelete && a.IsPublic && a.AssociationID == AssociationId)
+			var entities = TEntity.Where(a => a.IsConfirm == true && !a.IsDelete && a.IsPublic && a.AssociationID == AssociationId)
 				.OrderByDescending(a => a.ID)
 				.Select(a => new GetForUserEventDto()
 				{
@@ -272,14 +272,14 @@ namespace DataBase.Repository.Repositories
 			return isSave > 0;
 		}
 
-		public bool ChangeConfirm(int Id)
+		public bool ChangeConfirm(int Id, bool? ConfirmStatus)
 		{
 			var entity = TEntity.Where(a => !a.IsDelete).FirstOrDefault();
 			if (entity == null)
 			{
 				return false;
 			}
-			entity.IsConfirm = !entity.IsConfirm;
+			entity.IsConfirm = ConfirmStatus;
 			var isSave = _uow.SaveChanges();
 			return isSave > 0;
 		}

@@ -198,10 +198,10 @@ namespace WebApi_BackEnd.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public IActionResult ChangeCofirm(int EventId)
+		public IActionResult ChangeCofirm([FromBody] EventChangeConfirmViewModel Vm)
 		{
 			var res = new GeneralResponse<bool>();
-			return Ok(_eventService.ChangeConfirm(EventId));
+			return Ok(_eventService.ChangeConfirm(Vm));
 		}
 
 		[HttpPut("ChangePublic")]

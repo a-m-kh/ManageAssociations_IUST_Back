@@ -13,7 +13,7 @@ namespace DataBase.Configuration.Domain
 		//public string Name { get; set; }
 		public DateTime? StartTime { get; set; }
 		public DateTime? EndTime { get; set; }
-		public bool IsConfirm { get; set; } = false;
+		public bool? IsConfirm { get; set; } 
 		public string? Description { get; set; }
 		public int AssociationID { get; set; }
 		public int? Price { get;set; }

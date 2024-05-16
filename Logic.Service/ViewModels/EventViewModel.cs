@@ -61,4 +61,11 @@ namespace Logic.Service.ViewModels
 		[Required(ErrorMessage ="لطفا آیدی انجمن مورد نظر را وارد نمایید")]	
 		public int AssociationId { get; set; }
 	}
+
+	public class EventChangeConfirmViewModel
+	{
+		public bool? ConfirmStatus { get; set; }
+		[Required(ErrorMessage ="لطفا آیدی رویداد مد نظر را وارد نمایید.")]
+		public int EventId { get; set; }
+	}
 }

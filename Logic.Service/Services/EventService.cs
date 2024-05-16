@@ -247,18 +247,18 @@ namespace Logic.Service.Services
 		}
 
 
-		public GeneralResponse<bool> ChangeConfirm(int Id)
+		public GeneralResponse<bool> ChangeConfirm(EventChangeConfirmViewModel Vm)
 		{
 			var res = new GeneralResponse<bool>();
 			res.IsSuccess = false;
 
-			var eventDto = _eventRepository.GetById(Id);
+			var eventDto = _eventRepository.GetById(Vm.EventId);
 			if (eventDto == null)
 			{
 				res.Message = "همچین رویدادی وجود ندارد";
 				return res;
 			}
-			if (_eventRepository.ChangeConfirm(Id))
+			if (_eventRepository.ChangeConfirm(Vm.EventId,Vm.ConfirmStatus))
 			{
 				res.IsSuccess = true;
 				return res;
