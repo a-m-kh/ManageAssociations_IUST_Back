@@ -235,7 +235,7 @@ namespace DataBase.Repository.Repositories
 		public GeneralPaginationModel<GetEventDto> GetAllEventsForAdmin(int AssociationId, int Page = 1)
 		{
 			var total = TEntity.Where(a =>  !a.IsDelete && a.AssociationID == AssociationId).Count();
-			var entities = TEntity.Where(a => a.IsDelete && a.AssociationID == AssociationId)
+			var entities = TEntity.Where(a => !a.IsDelete && a.AssociationID == AssociationId)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
 				.Take(4).Select(a => new GetEventDto()
@@ -287,7 +287,7 @@ namespace DataBase.Repository.Repositories
 		public GeneralPaginationModel<GetEventDto> GetAllEventsForSuperAdmin(int Page = 1)
 		{
 			var total = TEntity.Where(a => !a.IsDelete).Count();
-			var entities = TEntity.Where(a => a.IsDelete )
+			var entities = TEntity.Where(a => !a.IsDelete )
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
 				.Take(4).Select(a => new GetEventDto()
