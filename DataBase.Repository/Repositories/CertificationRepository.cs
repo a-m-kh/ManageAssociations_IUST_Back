@@ -102,6 +102,30 @@ namespace DataBase.Repository.Repositories
 			return (res);
 		}
 
+
+		public async Task<GeneralPaginationModel<GetCertificationDto>> GetAllForAdminAsync(int Page = 1)
+		{
+			var total = TEntity.Where(a => a.IsDelete).Count();
+			var entities = await TEntity.Where(a => !a.IsDelete)
+				.OrderByDescending(a => a.ID)
+				.Skip((Page - 1) * 4)
+				.Take(4).Select(a => new GetCertificationDto()
+				{
+					ExcelUrl = a.ExcelUrl,
+					Id = a.ID,
+					Title = a.Title,
+					Status = a.Status.Title,
+					AssociationId = a.AssociationId,
+					Number = a.Number,
+					Organizer = a.Organizer,
+					StatusId = a.StatusId
+				}).ToListAsync();
+			var res = new GeneralPaginationModel<GetCertificationDto>(total, entities);
+			return (res);
+		}
+
+
+
 		public bool UpdateStatus(int Id, int StatusId)
 		{
 			var entity = TEntity.Where(a => a.ID == Id && !a.IsDelete).FirstOrDefault();

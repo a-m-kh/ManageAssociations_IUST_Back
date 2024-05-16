@@ -257,6 +257,28 @@ namespace Logic.Service.Services
 			return res;
 		}
 
+
+		public async Task<GeneralResponse<GeneralPaginationModel<GetCertificationDto>>> GetAllForAdmin(User user, int page = 1)
+		{
+			var res = new GeneralResponse<GeneralPaginationModel<GetCertificationDto>>()
+			{
+				IsSuccess = false
+			};
+
+			/*var statusOfUser = GeneralFunctions.CheckPermission(AssociationId, user, _userManager, _associationRepository);
+			if (!statusOfUser.Item1)
+			{
+				res.Message = statusOfUser.Item2;
+				return res;
+			}*/
+
+			res.Data = await _certificationRepository.GetAllForAdminAsync(page);
+			res.IsSuccess = true;
+			return res;
+		}
+
+
+
 		public GeneralResponse<bool> ChangeState(int CertificateId,int StatusId,string WrPath)
 		{
 			var res = new GeneralResponse<bool>()

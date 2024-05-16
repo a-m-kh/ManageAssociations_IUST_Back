@@ -16,5 +16,6 @@ namespace DataBase.Repository.Repositories.Interface
 		GetCertificationDto Get(int Id);
 		Task<GeneralPaginationModel<GetCertificationDto>> GetAllAsync(int AssociationId,int Page = 1);
 		bool UpdateStatus(int Id, int StatusId);
+		Task<GeneralPaginationModel<GetCertificationDto>> GetAllForAdminAsync(int Page = 1);
 	}
 }

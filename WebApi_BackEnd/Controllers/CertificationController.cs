@@ -189,6 +189,43 @@ namespace WebApi_BackEnd.Controllers
 		}
 
 
+
+
+		[HttpGet("GetAllForAdmin/{Page}")]
+		[Authorize(Roles ="SuperAdmin")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GeneralPaginationModel<GetCertificationDto>>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> GetAllForAdmin(int Page)
+		{
+			var response = new GeneralResponse<GeneralPaginationModel<GetCertificationDto>>();
+			if (!ModelState.IsValid)
+			{
+				var errors = string.Join(" | ", ModelState.Values
+					.SelectMany(v => v.Errors)
+					.Select(e => e.ErrorMessage));
+				response.IsSuccess = false;
+				response.Message = errors;
+				return Ok(response);
+			}
+
+			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null)
+			{
+				response.IsSuccess = false;
+				response.Message = "همچین کاربری یافت نشد";
+				return Ok(response);
+			}
+
+
+			return Ok(await _certificationService.GetAllForAdmin(user, Page));
+		}
+
+
+
+
 		[HttpPost("ChangeState")]
 		[Authorize(Roles ="SuperAdmin")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<bool>))]

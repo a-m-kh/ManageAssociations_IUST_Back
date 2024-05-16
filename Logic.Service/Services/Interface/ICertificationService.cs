@@ -18,5 +18,6 @@ namespace Logic.Service.Services.Interface
 		GeneralResponse<GetCertificationResponse> Get(int Id, User user);
 		Task<GeneralResponse<GeneralPaginationModel<GetCertificationDto>>> GetAll(int AssociationId, User user, int page = 1);
 		GeneralResponse<bool> ChangeState(int CertificateId, int StatusId, string WrPath);
+		Task<GeneralResponse<GeneralPaginationModel<GetCertificationDto>>> GetAllForAdmin(User user, int page = 1);
 	}
 }
