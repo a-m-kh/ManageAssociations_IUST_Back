@@ -51,4 +51,14 @@ namespace Logic.Service.ViewModels
 		[Required(ErrorMessage = "آیدی رویداد موردنظر را وارد کنید")]
 		public int Id { get; set; }
 	}
+
+
+	public class EventChangePusblicViewModel
+	{
+		[Required(ErrorMessage = "آیدی رویداد موردنظر را وارد کنید")]
+		public int Id { get; set; }
+
+		[Required(ErrorMessage ="لطفا آیدی انجمن مورد نظر را وارد نمایید")]	
+		public int AssociationId { get; set; }
+	}
 }

@@ -24,6 +24,7 @@ namespace DataBase.Configuration.Dtos
 		public int AssociationId { get; set; }
 		public string Status { get; set; }
 		public int StatusId { get; set; }
+		public DateTime RegistrationDate { get; set; }
 	}
 
 	public class CreateCertificationDto 

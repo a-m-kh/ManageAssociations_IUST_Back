@@ -115,6 +115,7 @@ namespace DataBase.Repository.Repositories
 					Place = a.Place,
 					Capacity = a.Capacity,
 					Providers = a.Providers,
+					IsConfirm = a.IsConfirm,
 					ReportDto = new GetReportDto()
 					{
 						Id= a.Report == null ? (0) : (a.Report.ID)
@@ -202,5 +203,114 @@ namespace DataBase.Repository.Repositories
 			var IsUpdate = _uow.SaveChanges();
 			return (IsUpdate > 0);
 		}
+
+
+		public List<GetForUserEventDto> GetAllEventsForUser(int AssociationId) 
+		{
+			//var total = TEntity.Where(a => a.IsConfirm && a.IsDelete && a.IsPublic && a.AssociationID == AssociationId).Count();
+			var entities = TEntity.Where(a => a.IsConfirm && !a.IsDelete && a.IsPublic && a.AssociationID == AssociationId)
+				.OrderByDescending(a => a.ID)
+				.Select(a => new GetForUserEventDto()
+				{
+					Description = a.Description,
+					EndTime = a.EndTime,
+					Id = a.ID,
+					StartTime = a.StartTime,
+					ImageUrl = a.ImageUrl,
+					Issue = a.Issue == null ? ("") : (a.Issue.Title),
+					Period = a.Period == null ? ("") : (a.Period.Title),
+					TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
+					Price = a.Price,
+					Title = a.Title,
+					Place = a.Place,
+					Capacity = a.Capacity,
+					Providers = a.Providers,
+					AssociationId = a.AssociationID,
+				}).ToList();
+			//var res = new GeneralPaginationModel<GetForUserEventDto>(total, entities);
+			return (entities);
+		}
+
+
+		public GeneralPaginationModel<GetEventDto> GetAllEventsForAdmin(int AssociationId, int Page = 1)
+		{
+			var total = TEntity.Where(a =>  !a.IsDelete && a.AssociationID == AssociationId).Count();
+			var entities = TEntity.Where(a => a.IsDelete && a.AssociationID == AssociationId)
+				.OrderByDescending(a => a.ID)
+				.Skip((Page - 1) * 4)
+				.Take(4).Select(a => new GetEventDto()
+				{
+					Description = a.Description,
+					EndTime = a.EndTime,
+					ID = a.ID,
+					StartTime = a.StartTime,
+					ImageUrl = a.ImageUrl,
+					Issue = a.Issue == null ? ("") : (a.Issue.Title),
+					Period = a.Period == null ? ("") : (a.Period.Title),
+					TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
+					Price = a.Price,
+					Title = a.Title,
+					Place = a.Place,
+					Capacity = a.Capacity,
+					Providers = a.Providers,
+					AssociationId = a.AssociationID,
+					IsPublic = a.IsPublic
+				}).ToList();
+			var res = new GeneralPaginationModel<GetEventDto>(total, entities);
+			return (res);
+		}
+
+		public bool ChangePublic(int Id)
+		{
+			var entity  = TEntity.Where(a => !a.IsDelete).FirstOrDefault();
+			if(entity == null)
+			{
+				return false;
+			}
+			entity.IsPublic = !entity.IsPublic;
+			var isSave = _uow.SaveChanges();
+			return isSave > 0;
+		}
+
+		public bool ChangeConfirm(int Id)
+		{
+			var entity = TEntity.Where(a => !a.IsDelete).FirstOrDefault();
+			if (entity == null)
+			{
+				return false;
+			}
+			entity.IsConfirm = !entity.IsConfirm;
+			var isSave = _uow.SaveChanges();
+			return isSave > 0;
+		}
+
+		public GeneralPaginationModel<GetEventDto> GetAllEventsForSuperAdmin(int Page = 1)
+		{
+			var total = TEntity.Where(a => !a.IsDelete).Count();
+			var entities = TEntity.Where(a => a.IsDelete )
+				.OrderByDescending(a => a.ID)
+				.Skip((Page - 1) * 4)
+				.Take(4).Select(a => new GetEventDto()
+				{
+					Description = a.Description,
+					EndTime = a.EndTime,
+					ID = a.ID,
+					StartTime = a.StartTime,
+					ImageUrl = a.ImageUrl,
+					Issue = a.Issue == null ? ("") : (a.Issue.Title),
+					Period = a.Period == null ? ("") : (a.Period.Title),
+					TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
+					Price = a.Price,
+					Title = a.Title,
+					Place = a.Place,
+					Capacity = a.Capacity,
+					Providers = a.Providers,
+					AssociationId = a.AssociationID,
+					IsPublic = a.IsPublic
+				}).ToList();
+			var res = new GeneralPaginationModel<GetEventDto>(total, entities);
+			return (res);
+		}
+
 	}
 }

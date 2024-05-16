@@ -22,6 +22,35 @@ namespace DataBase.Configuration.Dtos
 		public string? Providers { get; set; }
 	}
 
+
+
+
+	public class GetEventDto : EventBase
+	{
+		public int ID { get; set; }
+		public string? Period { get; set; }
+		public string? TypeOfEvent { get; set; }
+		public string? Issue { get; set; }
+	}
+
+	public class GetForUserEventDto
+	{
+		public int Id { get; set; }
+		public string? Title { get; set; }
+		public DateTime? StartTime { get; set; }
+		public DateTime? EndTime { get; set; }
+		public string? Description { get; set; }
+		public int? Price { get; set; }
+		public string? ImageUrl { get; set; }
+		public int AssociationId { get; set; }
+		public string? Place { get; set; }
+		public int? Capacity { get; set; }
+		public string? Providers { get; set; }
+		public string? Period { get; set; }
+		public string? TypeOfEvent { get; set; }
+		public string? Issue { get; set; }
+	}
+
 	public class EventCreateDto : EventBase
 	{
 		public int? PeriodID { get; set; }
@@ -40,6 +69,7 @@ namespace DataBase.Configuration.Dtos
 		public string? Period { get; set; }
 		public string? TypeOfEvent { get; set; }
 		public string? Issue { get; set; }
+		public bool? IsConfirm { get; set; }
 		public GetReportDto ReportDto { get; set; }
 	}
 }

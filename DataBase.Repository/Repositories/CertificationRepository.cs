@@ -118,7 +118,9 @@ namespace DataBase.Repository.Repositories
 					AssociationId = a.AssociationId,
 					Number = a.Number,
 					Organizer = a.Organizer,
-					StatusId = a.StatusId
+					StatusId = a.StatusId,
+					RegistrationDate = a.RegistrationDate
+					
 				}).ToListAsync();
 			var res = new GeneralPaginationModel<GetCertificationDto>(total, entities);
 			return (res);

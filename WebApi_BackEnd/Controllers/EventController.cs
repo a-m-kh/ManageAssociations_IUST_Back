@@ -1,4 +1,6 @@
-﻿using DataBase.Configuration.Domain;
+﻿using Azure;
+using DataBase.Configuration.Domain;
+using DataBase.Configuration.Dtos;
 using Logic.Service.Responses;
 using Logic.Service.Services;
 using Logic.Service.Services.Interface;
@@ -136,6 +138,102 @@ namespace WebApi_BackEnd.Controllers
 			
 			return Ok(await _eventService.GetEventsAsync(EventId));
 		}
+
+
+
+		[HttpGet("GetAllForUser/{AssociationId}")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<List<GetForUserEventDto>>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> GetAllForUser(int AssociationId)
+		{
+			return Ok(await _eventService.GetAllForUser(AssociationId));
+		}
+
+
+
+
+
+		[HttpGet("GetAllForAdmin/{AssociationId}/{Page}")]
+		[Authorize]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GeneralPaginationModel<GetEventDto>>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> GetAllForUser(int AssociationId, int Page)
+		{
+			var res = new GeneralResponse<GeneralPaginationModel<GetEventDto>>();
+
+			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null)
+			{
+				res.IsSuccess = false;
+				res.Message = "همچین کاربری یافت نشد";
+				return Ok(res);
+			}
+
+
+			return Ok(await _eventService.GetAllForAdmin(AssociationId,user, Page));
+		}
+
+
+		[HttpGet("GetAllForSuperAdmin/{Page}")]
+		[Authorize(Roles = "SuperAdmin")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GeneralPaginationModel<GetEventDto>>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public IActionResult GetAllForSuperAdmin(int Page)
+		{
+			var res = new GeneralResponse<GeneralPaginationModel<GetEventDto>>();
+			return Ok(_eventService.GetAllForSuperAdmin(Page));
+		}
+
+
+		[HttpPut("ChangeCofirm/{EventId}")]
+		[Authorize(Roles = "SuperAdmin")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<bool>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public IActionResult ChangeCofirm(int EventId)
+		{
+			var res = new GeneralResponse<bool>();
+			return Ok(_eventService.ChangeConfirm(EventId));
+		}
+
+		[HttpPut("ChangePublic")]
+		[Authorize]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<bool>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> ChangePublic([FromBody] EventChangePusblicViewModel Vm)
+		{
+			var res = new GeneralResponse<bool>();
+			var response = new GeneralResponse<int>();
+			if (!ModelState.IsValid)
+			{
+				var errors = string.Join(" | ", ModelState.Values
+					.SelectMany(v => v.Errors)
+					.Select(e => e.ErrorMessage));
+				response.IsSuccess = false;
+				response.Message = errors;
+				return Ok(response);
+			}
+			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null)
+			{
+				response.IsSuccess = false;
+				response.Message = "همچین کاربری یافت نشد";
+				return Ok(response);
+			}
+			return Ok(_eventService.ChangePublic(Vm.Id,user, Vm.AssociationId));
+		}
+
 
 	}
 }

@@ -164,5 +164,107 @@ namespace Logic.Service.Services
 		{
 			throw new NotImplementedException();
 		}
+
+
+		public async Task<GeneralResponse<GeneralPaginationModel<GetEventDto>>> GetAllForAdmin(int AssociationId,User user, int Page=1)
+		{
+			var res = new GeneralResponse<GeneralPaginationModel<GetEventDto>>();
+			res.IsSuccess = false;
+			var roles = _userManager.GetRolesAsync(user).Result.ToList();
+			var association = await _associationRepository.GetAsync(AssociationId);
+
+			if ((association == null || user.Id != association.AdminId) &&
+			    roles.Find(a => a == "SuperAdmin") == null)
+			{
+				res.Message = "شما به این انجمن دسترسی ندارید.";
+				return res;
+			}
+
+			var data = _eventRepository.GetAllEventsForAdmin(AssociationId, Page);
+			res.Data = data;
+			res.IsSuccess = true;
+			return res;
+		}
+		public async Task<GeneralResponse<List<GetForUserEventDto>>> GetAllForUser(int AssociationId)
+		{
+			var res = new GeneralResponse<List<GetForUserEventDto>>();
+			res.IsSuccess = false;
+			//var roles = _userManager.GetRolesAsync(user).Result.ToList();
+			var association = await _associationRepository.GetAsync(AssociationId);
+
+			if(association == null)
+			{
+				res.Message = "همچین انجمنی وجود ندارد";
+				return res;
+			}
+			var data = _eventRepository.GetAllEventsForUser(AssociationId);
+			res.Data = data;
+			return res;
+		}
+
+		public GeneralResponse<GeneralPaginationModel<GetEventDto>> GetAllForSuperAdmin(int Page=1)
+		{
+			var res = new GeneralResponse<GeneralPaginationModel<GetEventDto>>();
+			var data = _eventRepository.GetAllEventsForSuperAdmin(Page);
+			res.Data = data;
+			return res;
+		}
+
+
+
+		public async Task<GeneralResponse<bool>> ChangePublic(int Id, User user, int AssociationId)
+		{
+			var res = new GeneralResponse<bool>();
+			res.IsSuccess = false;
+			var roles = _userManager.GetRolesAsync(user).Result.ToList();
+			var association = await _associationRepository.GetAsync(AssociationId);
+
+			if ((association == null || user.Id != association.AdminId) &&
+			    roles.Find(a => a == "SuperAdmin") == null)
+			{
+				res.Message = "شما به این انجمن دسترسی ندارید.";
+				return res;
+			}
+
+			var eventDto = _eventRepository.GetById(Id);
+			if(eventDto == null)
+			{
+				res.Message = "همچین رویدادی وجود ندارد";
+				return res;
+			}
+			if(eventDto.IsConfirm == null || eventDto.IsConfirm == false)
+			{
+				res.Message = "این رویداد توسط ادمین تایید نشده است. بنابراین قابلیت عمومی شدن را ندارد.";
+				return res;
+			}
+			if (_eventRepository.ChangePublic(Id))
+			{
+				res.IsSuccess = true;
+				return res;
+			}
+			res.Message = "مشکلی پیش آمده، لطفا مجددا اقدام نمایید";
+			return res;
+		}
+
+
+		public GeneralResponse<bool> ChangeConfirm(int Id)
+		{
+			var res = new GeneralResponse<bool>();
+			res.IsSuccess = false;
+
+			var eventDto = _eventRepository.GetById(Id);
+			if (eventDto == null)
+			{
+				res.Message = "همچین رویدادی وجود ندارد";
+				return res;
+			}
+			if (_eventRepository.ChangeConfirm(Id))
+			{
+				res.IsSuccess = true;
+				return res;
+			}
+			res.Message = "مشکلی پیش آمده، لطفا مجددا اقدام نمایید";
+			return res;
+		}
 	}
 }
