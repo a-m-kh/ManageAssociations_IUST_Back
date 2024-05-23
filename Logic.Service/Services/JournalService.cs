@@ -58,8 +58,18 @@ namespace Logic.Service.Services
 					pdfUrl = upload.Item1;
 			}
 
+			string imageUrl = null;
+			if (vm.Image != null)
+			{
+				var upload = GeneralFunctions.Upload(vm.Image, "Association_Journal", WrPath, "Images/Journals");
+				if (upload.Item2)
+					imageUrl = upload.Item1;
+			}
+
+
 			var entity = _mapper.Map<CreateJournalDto>(vm);
 			entity.PdfUrl = pdfUrl;
+			entity.ImageUrl = imageUrl;
 			var Id = _journalRepository.Create(entity);
 			if (Id > 0)
 			{
@@ -94,13 +104,36 @@ namespace Logic.Service.Services
 				return res;
 			}
 
-			////////////////// delete Image
+			////////////////// delete pdf
 			if (journalDto.PdfUrl != null && vm.Pdf != null)
 			{
 				//var url = WrPath + @"\";
 				GeneralFunctions.DeleteImage($@"{WrPath}\{journalDto.PdfUrl}");
 			}
 			///////////////////////////////////////////////////////////
+
+
+			////////////////// delete pdf
+			if (journalDto.ImageUrl != null && vm.Image != null)
+			{
+				//var url = WrPath + @"\";
+				GeneralFunctions.DeleteImage($@"{WrPath}\{journalDto.ImageUrl}");
+			}
+			///////////////////////////////////////////////////////////
+
+
+
+			//////////////// Upload New pdf
+			string imageUrl = null;
+			if (vm.Image != null)
+			{
+				var upload = GeneralFunctions.Upload(vm.Image, "Association_Journal", WrPath, "Images/Journals");
+				if (upload.Item2)
+					imageUrl = upload.Item1;
+			}
+
+			/////////////////////////////////
+
 
 
 			//////////////// Upload New Image
@@ -118,6 +151,7 @@ namespace Logic.Service.Services
 
 			var entity = _mapper.Map<UpdateJournalDto>(vm);
 			journalDto.PdfUrl = pdfUrl;
+			journalDto.ImageUrl = imageUrl;
 			var status = _journalRepository.Update(entity);
 			if (status)
 			{
@@ -152,12 +186,21 @@ namespace Logic.Service.Services
 				return res;
 			}
 
-			////////////////// delete Image
+			////////////////// delete pdf
 			if (journalDto.PdfUrl != null)
 			{
 				GeneralFunctions.DeleteImage($@"{WrPath}\{journalDto.PdfUrl}");
 			}
 			///////////////////////////////////////////////////////////
+			///////////////////// delete image
+			if (journalDto.ImageUrl != null)
+			{
+				GeneralFunctions.DeleteImage($@"{WrPath}\{journalDto.ImageUrl}");
+			}
+			///////////////////////////////////////////////////////////
+			
+
+
 			if (_journalRepository.Delete(Id))
 			{
 				res.IsSuccess = true;

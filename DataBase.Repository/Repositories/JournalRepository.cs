@@ -43,6 +43,7 @@ namespace DataBase.Repository.Repositories
 
 			entity.PdfUrl = Model.PdfUrl == null ? (entity.PdfUrl) : (Model.PdfUrl);
 			entity.NoAndDate = Model.NoAndDate == null ? (entity.NoAndDate) : (Model.NoAndDate);
+			entity.ImageUrl = Model.ImageUrl == null ? (entity.ImageUrl) :(Model.ImageUrl);
 			entity.Name = Model.Name ?? entity.Name;
 			var IsUpdate = _uow.SaveChanges();
 			return (IsUpdate > 0);
@@ -68,7 +69,8 @@ namespace DataBase.Repository.Repositories
 					Name = a.Name,
 					NoAndDate = a.NoAndDate,
 					PdfUrl = a.PdfUrl,
-					AssoiciationId = a.Association.ID
+					AssoiciationId = a.Association.ID,
+					ImageUrl = a.ImageUrl
 				})
 				.FirstOrDefault();
 			return (entity);
@@ -83,6 +85,7 @@ namespace DataBase.Repository.Repositories
 					Name = a.Name,
 					NoAndDate = a.NoAndDate,
 					PdfUrl = a.PdfUrl,
+					ImageUrl = a.ImageUrl
 				})
 				.ToList();
 			return (entity);

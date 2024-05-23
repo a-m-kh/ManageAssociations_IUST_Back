@@ -15,6 +15,7 @@ namespace DataBase.Configuration.Domain
 		public string? PdfUrl { get; set; }
 		public bool IsDelete { get; set; } = false;
 		public int AssociationId { get; set; }
+		public string? ImageUrl { get; set; }
 
 		[ForeignKey(nameof(Journal.AssociationId))]
 		public Association Association { get; set; }

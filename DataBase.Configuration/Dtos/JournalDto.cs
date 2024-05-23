@@ -15,6 +15,7 @@ namespace DataBase.Configuration.Dtos
 		public string Name { get; set; }
 		public string? NoAndDate { get; set; }
 		public string? PdfUrl { get; set; }
+		public string? ImageUrl { get; set; }
 	}
 
 	public class GetJournalDto : JournalDtoBase

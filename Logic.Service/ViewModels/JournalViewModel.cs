@@ -17,6 +17,7 @@ namespace Logic.Service.ViewModels
 		public virtual string? Name { get; set; }
 		public virtual string? NoAndDate { get; set; }
 		public virtual IFormFile? Pdf { get; set; }
+		public virtual IFormFile? Image { get; set; }
 	}
 	public class CreateJournalViewModel : JournalViewModelBase
 	{
