@@ -282,5 +282,17 @@ namespace Logic.Service.Services
 			res.Message = "مشکلی پیش آمده، لطفا مجددا اقدام نمایید";
 			return res;
 		}
+		public GeneralResponse<GeneralPaginationModel<GetCertificateOfAbsenceDto>> GetAllForAdmin(int page = 1)
+		{
+			var res = new GeneralResponse<GeneralPaginationModel<GetCertificateOfAbsenceDto>>()
+			{
+				IsSuccess = false
+			};
+			var date = _certificateOfAbsenceRepository.GetAllForAdmin(page);
+			res.Data = _mapper.Map<GeneralPaginationModel<GetCertificateOfAbsenceDto>>(date);
+			res.IsSuccess = true;
+			return res;
+		}
+
 	}
 }

@@ -85,7 +85,7 @@ namespace DataBase.Repository.Repositories
 
 		public GeneralPaginationModel<GetCertificateOfAbsenceDto> GetAll(int AssociationId, int Page = 1)
 		{
-			var total = TEntity.Where(a => a.IsDelete && a.AssociationId == AssociationId).Count();
+			var total = TEntity.Where(a => !a.IsDelete && a.AssociationId == AssociationId).Count();
 			var entities =  TEntity.Where(a => !a.IsDelete)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
@@ -117,6 +117,30 @@ namespace DataBase.Repository.Repositories
 			var IsUpdate = _uow.SaveChanges();
 
 			return (IsUpdate > 0);
+		}
+
+		public GeneralPaginationModel<GetCertificateOfAbsenceDto> GetAllForAdmin(int Page = 1)
+		{
+			var total = TEntity.Where(a => !a.IsDelete).Count();
+			var entities = TEntity.Where(a => !a.IsDelete)
+				.OrderByDescending(a => a.ID)
+				.Skip((Page - 1) * 4)
+				.Take(4).Select(a => new GetCertificateOfAbsenceDto()
+				{
+					ExcelUrl = a.ExcelUrl,
+					Id = a.ID,
+					Title = a.Title,
+					AbsenceDate = a.AbsenceDate,
+					CourseName = a.CourseName,
+					ProfessorName = a.ProfessorName,
+					Reason = a.Reason,
+					RegistrationDate = a.RegistrationDate,
+					Status = a.Status != null ? (a.Status.Title) : (""),
+					StatusId = a.StatusId,
+					AssociationId = a.AssociationId
+				}).ToList();
+			var res = new GeneralPaginationModel<GetCertificateOfAbsenceDto>(total, entities);
+			return (res);
 		}
 	}
 }

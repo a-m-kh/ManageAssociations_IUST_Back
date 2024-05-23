@@ -18,5 +18,6 @@ namespace Logic.Service.Services.Interface
 		GeneralResponse<GetCertificateOfAbsenceResponse> Get(int Id, User user);
 		GeneralResponse<GeneralPaginationModel<GetCertificateOfAbsenceDto>> GetAll(int AssociationId, User user, int page = 1);
 		GeneralResponse<bool> ChangeState(int CertificateId, int StatusId, string WrPath);
+		GeneralResponse<GeneralPaginationModel<GetCertificateOfAbsenceDto>> GetAllForAdmin(int page = 1);
 	}
 }

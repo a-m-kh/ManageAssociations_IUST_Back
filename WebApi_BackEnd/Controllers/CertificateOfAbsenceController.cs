@@ -186,6 +186,22 @@ namespace WebApi_BackEnd.Controllers
 			return Ok( _certificateOfAbsenceService.GetAll(AssociationId, user, Page));
 		}
 
+
+
+		[HttpGet("GetAllForAdmin/{Page}")]
+		[Authorize(Roles = "SuperAdmin")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GeneralPaginationModel<GetListCertificateOfAbsenceResponse>>))]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> GetAllForAdmin(int Page)
+		{
+			var response = new GeneralResponse<GeneralPaginationModel<GetListCertificateOfAbsenceResponse>>();
+			return Ok(_certificateOfAbsenceService.GetAllForAdmin(Page));
+		}
+
+
+
+
 		[HttpPost("ChangeState")]
 		[Authorize(Roles = "SuperAdmin")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<bool>))]

@@ -15,5 +15,7 @@ namespace DataBase.Repository.Repositories.Interface
 		GetCertificateOfAbsenceDto Get(int Id);
 		GeneralPaginationModel<GetCertificateOfAbsenceDto> GetAll(int AssociationId, int Page = 1);
 		bool ChangeStatus(int Id, int StatusId);
+		GeneralPaginationModel<GetCertificateOfAbsenceDto> GetAllForAdmin(int Page = 1);
+
 	}
 }
