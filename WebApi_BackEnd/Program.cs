@@ -13,6 +13,7 @@ using DataBase.Repository.Repositories.Interface;
 using DataBase.Repository.Repositories;
 using Repository;
 using Logic.Service.Mapper;
+using DataBase.Configuration.ConfigEntities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,11 @@ builder.Services.AddScoped<IImageNewsRepository, ImageNewsRepository>();
 builder.Services.AddScoped<IGuestLicenseRepository,GuestLicenseRepository>();
 builder.Services.AddScoped<ICertificateOfAbsenceRepository, CertificateOfAbsenceRepository>();
 builder.Services.AddScoped<IParticipantsOfCertificateOfAbsenceRepository, ParticipantsOfCertificateOfAbsenceRepository>();
+builder.Services.AddScoped<IPositionRepository, PositionRepository>();
+builder.Services.AddScoped<ICompetitiveFieldRepository, CompetitiveFieldRepository>();
+builder.Services.AddScoped<IMovementFestivalRepository, MovementFestivalRepository>();
+builder.Services.AddScoped<ISliderImageRepository, SliderImageRepository>();
+
 
 
 builder.Services.AddScoped<IAccountService, AccountService>();
@@ -54,6 +60,8 @@ builder.Services.AddScoped<ICertificationService, CertificationService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<ICertificateOfAbsenceService, CertificateOfAbsenceService>();
+builder.Services.AddScoped<IMovementFestivalService, MovementFestivalService>();
+builder.Services.AddScoped<ISliderImageService, SliderImageService>();
 //builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddAutoMapper(typeof(Logic.Service.Mapper.AutoMapper));

@@ -39,6 +39,7 @@
     <Folder Include="wwwroot\Images\Events\Guests\" />
     <Folder Include="wwwroot\Images\Events\Reports\" />
     <Folder Include="wwwroot\Images\Journals\" />
+    <Folder Include="wwwroot\Images\Sliders\" />
     <Folder Include="wwwroot\Images\News\" />
     <Folder Include="wwwroot\Pdfs\Journals\" />
   </ItemGroup>

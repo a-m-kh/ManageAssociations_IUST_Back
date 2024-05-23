@@ -113,7 +113,7 @@ namespace Logic.Service.Services
 			///////////////////////////////////////////////////////////
 
 
-			////////////////// delete pdf
+			////////////////// delete image
 			if (journalDto.ImageUrl != null && vm.Image != null)
 			{
 				//var url = WrPath + @"\";

@@ -121,7 +121,8 @@ namespace Logic.Service.Mapper
 			CreateMap<GetListCertificateOfAbsenceResponse, GetCertificateOfAbsenceDto>();
 			CreateMap<GetCertificateOfAbsenceDto, GetListCertificateOfAbsenceResponse>();
 
-
+			CreateMap<GetForUserSliderImageResponse, SliderImage>();
+			CreateMap<SliderImage, GetForUserSliderImageResponse>();
 		}
 	}
 }

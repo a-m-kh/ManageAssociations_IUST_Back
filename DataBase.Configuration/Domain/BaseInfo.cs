@@ -31,5 +31,8 @@ namespace DataBase.Configuration.Domain
 		public virtual ICollection<GuestLicense> GuestLicenseStatuses { get; set; }
 		[InverseProperty(nameof(News.Status))]
 		public virtual ICollection<News> NewsStatuses { get; set; }
+
+		[InverseProperty(nameof(Position.Title))]
+		public virtual ICollection<Position> Positions { get; set; }
 	}
 }

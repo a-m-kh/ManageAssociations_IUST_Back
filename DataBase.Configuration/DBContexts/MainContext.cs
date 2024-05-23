@@ -16,6 +16,7 @@ public class MainContext : BaseDBContext , IMainUnitOfWork
 	public virtual DbSet<Event>Events { get; set; }
 	public virtual DbSet<Association> Associations { get;set; }
 	public virtual DbSet<BaseInfo> BaseInfos { get; set; }
+	public virtual DbSet<MovementFestival> MovementFestivals { get; set; }
 	//public virtual DbSet<Communication> Communications { get; set; }
 	//public virtual DbSet<Guest> Guests { get; set; }
 
@@ -38,5 +39,9 @@ public class MainContext : BaseDBContext , IMainUnitOfWork
 		modelBuilder.ApplyConfiguration(new NewsConfiguration());
 		modelBuilder.ApplyConfiguration(new NewsImagesConfiguration());
 		modelBuilder.ApplyConfiguration(new ParticipantsOfCertificateOfAbsenceConfiguration());
+		modelBuilder.ApplyConfiguration(new MovementFestivalConfiguration());
+		modelBuilder.ApplyConfiguration(new CompetitiveFieldConfiguration());
+		modelBuilder.ApplyConfiguration(new PositionConfiguration());
+		modelBuilder.ApplyConfiguration(new SliderImageConfiguration());
 	}
 }
