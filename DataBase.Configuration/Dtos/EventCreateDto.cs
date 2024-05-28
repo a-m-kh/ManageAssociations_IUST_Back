@@ -31,6 +31,7 @@ namespace DataBase.Configuration.Dtos
 		public string? Period { get; set; }
 		public string? TypeOfEvent { get; set; }
 		public string? Issue { get; set; }
+		public bool? IsConfirm { get; set; }
 	}
 
 	public class GetForUserEventDto

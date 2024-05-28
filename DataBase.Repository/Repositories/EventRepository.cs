@@ -254,7 +254,8 @@ namespace DataBase.Repository.Repositories
 					Capacity = a.Capacity,
 					Providers = a.Providers,
 					AssociationId = a.AssociationID,
-					IsPublic = a.IsPublic
+					IsPublic = a.IsPublic,
+					IsConfirm = a.IsConfirm
 				}).ToList();
 			var res = new GeneralPaginationModel<GetEventDto>(total, entities);
 			return (res);
