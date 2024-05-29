@@ -44,6 +44,9 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 
 		entity.LogoUrl = Model.LogoUrl == null ? (entity.LogoUrl) : (Model.LogoUrl);
 		entity.Name = Model.Name == null ? (entity.Name) : (Model.Name);
+		entity.Address = Model.Address == null ? (entity.Address) : (Model.Address);
+		entity.Phone = Model.Phone == null ? (entity.Phone) : (Model.Phone);
+		entity.Email = Model.Email == null ? (entity.Email) : (Model.Email);
 
 		var IsUpdate = await _uow.SaveChangesAsync();
 		return (IsUpdate > 0);
@@ -83,7 +86,10 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 				ID = a.ID,
 				LogoUrl = a.LogoUrl,
 				Name = a.Name,
-				AdminId = a.AdminID
+				AdminId = a.AdminID,
+				Address = a.Address,
+				Email = a.Email,
+				Phone = a.Phone
 			})
 			.FirstOrDefault();
 		return (entity);
@@ -97,7 +103,10 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 			{
 				ID = a.ID,
 				LogoUrl = a.LogoUrl,
-				Name = a.Name
+				Name = a.Name,
+				Address = a.Address,
+				Email = a.Email,
+				Phone = a.Phone
 			})
 			.FirstOrDefaultAsync();
 		return (entity);
@@ -112,7 +121,10 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 			{
 				ID = a.ID,
 				LogoUrl = a.LogoUrl,
-				Name = a.Name
+				Name = a.Name,
+				Address = a.Address,
+				Email = a.Email,
+				Phone = a.Phone
 			}).ToListAsync();
 		var res = new GeneralPaginationModel<AssociationViewDto>(total, entities);
 		return(res);
@@ -127,7 +139,10 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 			{
 				ID = a.ID,
 				LogoUrl = a.LogoUrl,
-				Name = a.Name
+				Name = a.Name,
+				Address = a.Address,
+				Email = a.Email,
+				Phone = a.Phone
 			}).ToList();
 		return (entities);
 	}

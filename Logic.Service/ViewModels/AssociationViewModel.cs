@@ -17,6 +17,9 @@ public class AssociationViewModelBase
 	[Required(ErrorMessage ="لطفا نام انجمن را وارد نمایید.")]
 	public virtual string Name { get; set; }
 	public IFormFile? Logo { get; set; }
+	public string? Phone { get; set; }
+	public string? Email { get; set; }
+	public string? Address { get; set; }
 }
 
 public class CreateAssociationViewModel : AssociationViewModelBase

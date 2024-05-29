@@ -14,6 +14,9 @@ namespace DataBase.Configuration.Domain
 		public string? Name { get;set; }
 		public string? LogoUrl { get; set; }
 		public bool IsDelete { get; set; } = false;
+		public string? Phone { get; set; }
+		public string? Email { get; set; }
+		public string? Address { get; set; }
 		public string? AdminID { get; set; }
 		[ForeignKey(nameof(Association.AdminID))]
 		public User? Admin { get; set; }
