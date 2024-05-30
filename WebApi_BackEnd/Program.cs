@@ -46,7 +46,7 @@ builder.Services.AddScoped<IPositionRepository, PositionRepository>();
 builder.Services.AddScoped<ICompetitiveFieldRepository, CompetitiveFieldRepository>();
 builder.Services.AddScoped<IMovementFestivalRepository, MovementFestivalRepository>();
 builder.Services.AddScoped<ISliderImageRepository, SliderImageRepository>();
-
+builder.Services.AddScoped<IFormRepository, FormRepository>();
 
 
 builder.Services.AddScoped<IAccountService, AccountService>();
@@ -62,6 +62,7 @@ builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<ICertificateOfAbsenceService, CertificateOfAbsenceService>();
 builder.Services.AddScoped<IMovementFestivalService, MovementFestivalService>();
 builder.Services.AddScoped<ISliderImageService, SliderImageService>();
+builder.Services.AddScoped<IFormService, FormService>();
 //builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddAutoMapper(typeof(Logic.Service.Mapper.AutoMapper));

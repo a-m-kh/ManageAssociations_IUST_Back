@@ -42,6 +42,7 @@
     <Folder Include="wwwroot\Images\Sliders\" />
     <Folder Include="wwwroot\Images\News\" />
     <Folder Include="wwwroot\Pdfs\Journals\" />
+    <Folder Include="wwwroot\Pdfs\Forms\" />
   </ItemGroup>
 
 </Project>
