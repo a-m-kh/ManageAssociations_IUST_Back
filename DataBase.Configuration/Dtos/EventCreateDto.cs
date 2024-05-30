@@ -32,6 +32,7 @@ namespace DataBase.Configuration.Dtos
 		public string? TypeOfEvent { get; set; }
 		public string? Issue { get; set; }
 		public bool? IsConfirm { get; set; }
+		public string AssociationName { get; set; }
 	}
 
 	public class GetForUserEventDto
@@ -50,6 +51,7 @@ namespace DataBase.Configuration.Dtos
 		public string? Period { get; set; }
 		public string? TypeOfEvent { get; set; }
 		public string? Issue { get; set; }
+		public string? AssociationName { get; set; }
 	}
 
 	public class EventCreateDto : EventBase
@@ -72,5 +74,6 @@ namespace DataBase.Configuration.Dtos
 		public string? Issue { get; set; }
 		public bool? IsConfirm { get; set; }
 		public GetReportDto ReportDto { get; set; }
+		public string? AssociationName { get; set; }
 	}
 }

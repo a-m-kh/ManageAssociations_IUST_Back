@@ -116,6 +116,7 @@ namespace DataBase.Repository.Repositories
 					Capacity = a.Capacity,
 					Providers = a.Providers,
 					IsConfirm = a.IsConfirm,
+					AssociationName = a.association != null ? (a.association.Name) : (""),
 					ReportDto = new GetReportDto()
 					{
 						Id= a.Report == null ? (0) : (a.Report.ID)
@@ -153,7 +154,8 @@ namespace DataBase.Repository.Repositories
 					Title = a.Title,
 					Place = a.Place,
 					Capacity = a.Capacity,
-					Providers = a.Providers
+					Providers = a.Providers,
+					AssociationName = a.association != null ? (a.association.Name) : ("")
 				}).ToList();
 			var res = new GeneralPaginationModel<EventViewDto>(total,entities);
 			return (res);
@@ -179,7 +181,8 @@ namespace DataBase.Repository.Repositories
 				Title = a.Title,
 				Place = a.Place,
 				Capacity = a.Capacity,
-				Providers = a.Providers
+				Providers = a.Providers,
+				AssociationName = a.association != null ? (a.association.Name) : ("")
 				}).ToList();
 			var res = new GeneralPaginationModel<EventViewDto>(total, entities);
 			return (res);
@@ -226,6 +229,7 @@ namespace DataBase.Repository.Repositories
 					Capacity = a.Capacity,
 					Providers = a.Providers,
 					AssociationId = a.AssociationID,
+					AssociationName = a.association != null ? (a.association.Name) : ("")
 				}).ToList();
 			//var res = new GeneralPaginationModel<GetForUserEventDto>(total, entities);
 			return (entities);
@@ -255,7 +259,8 @@ namespace DataBase.Repository.Repositories
 					Providers = a.Providers,
 					AssociationId = a.AssociationID,
 					IsPublic = a.IsPublic,
-					IsConfirm = a.IsConfirm
+					IsConfirm = a.IsConfirm,
+					AssociationName = a.association != null ? (a.association.Name) : ("")
 				}).ToList();
 			var res = new GeneralPaginationModel<GetEventDto>(total, entities);
 			return (res);
@@ -307,7 +312,8 @@ namespace DataBase.Repository.Repositories
 					Capacity = a.Capacity,
 					Providers = a.Providers,
 					AssociationId = a.AssociationID,
-					IsPublic = a.IsPublic
+					IsPublic = a.IsPublic,
+					AssociationName =a.association != null ?( a.association.Name):("")
 				}).ToList();
 			var res = new GeneralPaginationModel<GetEventDto>(total, entities);
 			return (res);
