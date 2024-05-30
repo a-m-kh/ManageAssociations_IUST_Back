@@ -24,6 +24,7 @@ namespace DataBase.Repository.Repositories
 			if (Model == null)
 				return 0;
 			var entity = _mapper.Map<News>(Model);
+			entity.RegistrationDate = DateTime.UtcNow;
 			if (entity == null)
 				return 0;
 			var DbEntity = TEntity.Add(entity);
@@ -123,9 +124,9 @@ namespace DataBase.Repository.Repositories
 		{
 			var Finally = new GeneralPaginationModel<GetNewsDto>();
 
-			var total =  TEntity.Where(a => a.Association.ID == AssociationId && a.IsDelete && !a.Association.IsDelete).Count();
+			var total =  TEntity.Where(a => a.Association.ID == AssociationId && !a.IsDelete && !a.Association.IsDelete).Count();
 			
-			var entities = TEntity.Where(a => a.Association.ID == AssociationId && a.IsDelete && !a.Association.IsDelete)
+			var entities = TEntity.Where(a => a.Association.ID == AssociationId && !a.IsDelete && !a.Association.IsDelete)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
 				.Take(4).Select(a => new GetNewsDto()

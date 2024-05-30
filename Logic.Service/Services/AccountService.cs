@@ -14,6 +14,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using DataBase.Repository.Repositories.Interface;
+using OfficeOpenXml.FormulaParsing.LexicalAnalysis;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace Logic.Service.Services;
 
@@ -32,12 +34,20 @@ public class AccountService:IAccountService
 	public async Task<GeneralResponse<LoginResponse>> Login(LoginViewModel VModel)
 	{
 		var response = new GeneralResponse<LoginResponse>();
-
+		response.Data = new LoginResponse()
+		{
+			UserName = VModel.UserName,
+			IsSuperAdmin = false
+		};
 		var user = await _userManager.FindByNameAsync(VModel.UserName);
 		if(user != null && await _userManager.CheckPasswordAsync(user,VModel.Password))
 		{
 			var claims = _userManager.GetClaimsAsync(user).Result.ToList();
 			var roles = _userManager.GetRolesAsync(user).Result.ToList();
+			if( roles.Find(a=>a == "SuperAdmin") != null)
+			{
+				response.Data.IsSuperAdmin = true;
+			}
 			foreach (var role in roles)
 			{
 				claims.Add(new Claim(ClaimTypes.Role, role));
@@ -53,11 +63,7 @@ public class AccountService:IAccountService
 			}
 
 			var token = GenerateToken(user, claimsDto);
-			response.Data = new LoginResponse()
-			{
-				UserName = VModel.UserName,
-				Token = token
-			};
+			response.Data.Token = token;
 			return response;
 		}
 

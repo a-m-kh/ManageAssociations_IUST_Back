@@ -19,7 +19,8 @@ namespace DataBase.Configuration.Dtos
 
 	public class CreateNewsDto: NewsDtoBase
 	{
-
+		public int StatusId { get; set; }
+		public int AssociationId { get; set; }
 	}
 
 	public class GetNewsDto: NewsDtoBase

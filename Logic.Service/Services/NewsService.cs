@@ -15,6 +15,7 @@ using DataBase.Configuration.Dtos;
 using DataBase.Repository.Repositories;
 using Utility;
 using System.IO;
+using Utility.Enums;
 
 namespace Logic.Service.Services
 {
@@ -65,6 +66,7 @@ namespace Logic.Service.Services
 				return res;
 			}*/
 			var entity = _mapper.Map<CreateNewsDto>(Model);
+			entity.StatusId = (int)BaseInfoEnum.Waiting;
 			var entityId = _newsRepository.Create(entity);
 			if (entityId == 0)
 			{

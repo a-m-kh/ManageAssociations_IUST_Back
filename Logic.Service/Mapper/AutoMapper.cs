@@ -98,6 +98,12 @@ namespace Logic.Service.Mapper
 			CreateMap<UpdateNewsViewModel, UpdateNewsDto>();
 			CreateMap<GetNewsResponse, GetNewsDto>();
 			CreateMap<GetNewsDto, GetNewsResponse>();
+			CreateMap<GetNewsForAdminResponse, GetNewsDto>();
+			CreateMap<GetNewsDto, GetNewsForAdminResponse>();
+			CreateMap<GeneralPaginationModel<GetNewsForAdminResponse>, GeneralPaginationModel<GetNewsDto>>();
+			CreateMap<GeneralPaginationModel<GetNewsDto>, GeneralPaginationModel<GetNewsForAdminResponse>>();
+
+
 
 			CreateMap<GuestLicense, CreateGuestLicenseDto>();
 			CreateMap<CreateGuestLicenseDto, GuestLicense>();
