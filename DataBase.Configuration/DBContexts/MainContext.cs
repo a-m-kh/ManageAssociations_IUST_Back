@@ -43,5 +43,6 @@ public class MainContext : BaseDBContext , IMainUnitOfWork
 		modelBuilder.ApplyConfiguration(new CompetitiveFieldConfiguration());
 		modelBuilder.ApplyConfiguration(new PositionConfiguration());
 		modelBuilder.ApplyConfiguration(new SliderImageConfiguration());
+		modelBuilder.ApplyConfiguration(new FormConfiguration());
 	}
 }
