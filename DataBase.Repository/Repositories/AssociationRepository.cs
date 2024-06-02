@@ -73,7 +73,10 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 				ID= a.ID,
 				LogoUrl = a.LogoUrl,
 				Name = a.Name,
-				AdminId = a.AdminID
+				AdminId = a.AdminID,
+				Address = a.Address,
+				Email = a.Email,
+				Phone = a.Phone
 			})
 			.FirstOrDefaultAsync();
 		return (entity);

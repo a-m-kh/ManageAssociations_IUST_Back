@@ -72,7 +72,18 @@ namespace WebApi_BackEnd.Controllers
 				response.Message = errors;
 				return Ok(response);
 			}
-			return Ok(await _associationService.Update(Model, _environment.WebRootPath));
+
+			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+			//var userId = _userManager.GetUserId(User);
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null)
+			{
+				response.IsSuccess = false;
+				response.Message = "همچین کاربری یافت نشد";
+				return Ok(response);
+			}
+
+			return Ok(await _associationService.Update(Model, _environment.WebRootPath,user));
 		}
 
 		[HttpGet("Get/{id}")]

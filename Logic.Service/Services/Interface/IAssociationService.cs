@@ -12,7 +12,7 @@ namespace Logic.Service.Services.Interface
 	public interface IAssociationService
 	{
 		Task<GeneralResponse<GetAssociationResponse>> GetByIdAsync(int id);
-		Task<GeneralResponse<bool>> Update(UpdateAssociationViewModel VModel, string WrPath);
+		Task<GeneralResponse<bool>> Update(UpdateAssociationViewModel VModel, string WrPath, User user);
 		Task<GeneralResponse<int>> CreateAsync(CreateAssociationViewModel VModel, string WrPath);
 		Task<GeneralResponse<bool>> DeleteByIdAsync(int id);
 		Task<GeneralResponse<List<GetAssociationResponse>>> GetAll();

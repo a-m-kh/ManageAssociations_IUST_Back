@@ -53,10 +53,16 @@ namespace Logic.Service.Services
 			return res;
 		}
 
-		public async Task<GeneralResponse<bool>> Update(UpdateAssociationViewModel VModel, string WrPath)
+		public async Task<GeneralResponse<bool>> Update(UpdateAssociationViewModel VModel, string WrPath, User user)
 		{
 			var res = new GeneralResponse<bool>();
 			var findModel = await _associationRepository.GetAsync(VModel.Id);
+			var statusOfUser = GeneralFunctions.CheckPermission(VModel.Id, user, _userManager, _associationRepository);
+			if (!statusOfUser.Item1)
+			{
+				res.Message = statusOfUser.Item2;
+				return res;
+			}
 			if (findModel == null)
 			{
 				res.IsSuccess = false;

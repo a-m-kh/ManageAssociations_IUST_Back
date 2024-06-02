@@ -30,11 +30,15 @@ public class CreateAssociationViewModel : AssociationViewModelBase
 	public string Password { get; set; }
 }
 
-public class UpdateAssociationViewModel : AssociationViewModelBase
+public class UpdateAssociationViewModel
 {
-
+	public string? Name { get; set; }
+	public IFormFile? Logo { get; set; }
+	public string? Phone { get; set; }
+	public string? Email { get; set; }
+	public string? Address { get; set; }
+	[Required(ErrorMessage = "لطفا آیدی انجمن را وارد نمایید.")]
 	public int Id { get; set; }
-	public override string? Name { get; set; }
 }
 
 
