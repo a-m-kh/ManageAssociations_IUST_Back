@@ -45,6 +45,32 @@ namespace WebApi_BackEnd.Controllers
 		}
 
 
+
+		[HttpGet("CheckAdmin")]
+		[Authorize]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<LoginResponse>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> Index()
+		{
+
+			return Ok();
+		}
+
+		[HttpGet("CheckSuperAdmin")]
+		[Authorize(Roles ="SuperAdmin")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<LoginResponse>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> CheckSuperAdmin()
+		{
+			return Ok();
+		}
+
+
+
 		[HttpPost("edit_profile")]
 		[Authorize]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<EditProfileResponse>))]
