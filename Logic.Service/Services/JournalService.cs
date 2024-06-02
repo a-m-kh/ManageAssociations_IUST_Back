@@ -150,8 +150,8 @@ namespace Logic.Service.Services
 
 
 			var entity = _mapper.Map<UpdateJournalDto>(vm);
-			journalDto.PdfUrl = pdfUrl;
-			journalDto.ImageUrl = imageUrl;
+			entity.PdfUrl = pdfUrl;
+			entity.ImageUrl = imageUrl;
 			var status = _journalRepository.Update(entity);
 			if (status)
 			{

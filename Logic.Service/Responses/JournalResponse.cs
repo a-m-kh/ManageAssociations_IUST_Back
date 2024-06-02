@@ -20,5 +20,7 @@ namespace Logic.Service.Responses
 	public class GetJournalResponse : JournalResponseBase
 	{
 		public int Id { get; set; }
+		public string? ImageUrl { get; set; }
+
 	}
 }
