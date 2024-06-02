@@ -48,7 +48,6 @@ namespace WebApi_BackEnd.Controllers
 		}
 
 		[HttpGet("GetAll_User/{EventId}")]
-		[Authorize]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<List<GetGuestResponse>>))]
 		[ProducesDefaultResponseType]
 		public IActionResult GetAll_User(int EventId)

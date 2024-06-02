@@ -118,8 +118,7 @@ namespace WebApi_BackEnd.Controllers
 		}
 
 		[HttpGet("Get/{EventId}")]
-		[Authorize]
-		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<EventGetResponse>))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
