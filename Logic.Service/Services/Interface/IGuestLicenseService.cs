@@ -18,5 +18,6 @@ namespace Logic.Service.Services.Interface
 		GeneralResponse<GetGuestLicenseResponse> Get(int id, User user);
 		GeneralResponse<GeneralPaginationModel<GetListGuestLicenseResponse>> GetAll(int Page, User user, int AssociationId);
 		GeneralResponse<bool> ChangeStatus(int GuestLicenseId, int StatusId);
+		GeneralResponse<GeneralPaginationModel<GetListGuestLicenseResponse>> GetAllForAdmin(int Page);
 	}
 }

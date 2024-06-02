@@ -133,6 +133,20 @@ namespace WebApi_BackEnd.Controllers
 		}
 
 
+		[HttpGet("GetAllForSuperAdmin/{Page}")]
+		[Authorize(Roles ="SuperAdmin")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GeneralPaginationModel<GetListGuestLicenseResponse>>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> GetAllForSuperAdmin(int Page)
+		{
+			var response = new GeneralResponse<GeneralPaginationModel<GetListGuestLicenseResponse>>();
+			return Ok(_guestLicenseService.GetAllForAdmin(Page));
+		}
+
+
+
 		[HttpPost("ChangeStatus")]
 		[Authorize(Roles ="SuperAdmin")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<bool>))]

@@ -115,6 +115,10 @@ namespace Logic.Service.Mapper
 			CreateMap<GetGuestLicenseDto, GetGuestLicenseResponse>();
 			CreateMap<GetListGuestLicenseResponse, GetGuestLicenseDto>();
 			CreateMap<GetGuestLicenseDto, GetListGuestLicenseResponse>();
+			CreateMap<GeneralPaginationModel<GetListGuestLicenseResponse>, GeneralPaginationModel<GetGuestLicenseDto>>();
+			CreateMap<GeneralPaginationModel<GetGuestLicenseDto>, GeneralPaginationModel<GetListGuestLicenseResponse>>();
+
+
 
 			CreateMap<CertificateOfAbsence, CreateCertificateOfAbsenceDto>();
 			CreateMap<CreateCertificateOfAbsenceDto, CertificateOfAbsence>();

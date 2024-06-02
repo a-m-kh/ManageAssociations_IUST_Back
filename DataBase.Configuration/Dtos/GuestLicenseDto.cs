@@ -24,6 +24,7 @@ namespace DataBase.Configuration.Dtos
 		public int StatusId { get; set; }
 		public bool? IsGuest { get; set; }
 		public bool? IsFromIust { get; set; }
+		public int AssociationId { get; set; }
 	}
 
 	public class UpdateGuestLicenseDto : GuestLicenseDtoBase

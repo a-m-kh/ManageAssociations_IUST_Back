@@ -63,6 +63,7 @@ builder.Services.AddScoped<ICertificateOfAbsenceService, CertificateOfAbsenceSer
 builder.Services.AddScoped<IMovementFestivalService, MovementFestivalService>();
 builder.Services.AddScoped<ISliderImageService, SliderImageService>();
 builder.Services.AddScoped<IFormService, FormService>();
+builder.Services.AddScoped<IGuestLicenseService, GuestLicenseService>();
 //builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddAutoMapper(typeof(Logic.Service.Mapper.AutoMapper));

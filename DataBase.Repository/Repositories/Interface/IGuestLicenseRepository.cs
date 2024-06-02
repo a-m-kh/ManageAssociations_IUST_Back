@@ -15,6 +15,7 @@ namespace DataBase.Repository.Repositories.Interface
 		GetGuestLicenseDto GetGuestLicense(int Id);
 		bool ChangeStatus(int Id, int StatusId);
 		GeneralPaginationModel<GetGuestLicenseDto> GetAll(int Page, int AssociationId);
+		GeneralPaginationModel<GetGuestLicenseDto> GetAllForSuperAdmin(int Page);
 
 	}
 }

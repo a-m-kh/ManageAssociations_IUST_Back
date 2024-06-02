@@ -47,13 +47,15 @@ namespace Logic.Service.Services
 			}
 			
 			var entity = _mapper.Map<CreateGuestLicenseDto>(Model);
+			entity.StatusId =(int)BaseInfoEnum.Waiting;
 			var entityId = _guestLicenseRepository.Create(entity);
 			if (entityId == 0)
 			{
 				res.Message = "مشکلی پیش آمده، لطفا مجددا اقدام نمایید";
 				return res;
 			}
-			res.Message = "عکس ها ذخیره نشدند. عکس ها را دوباره آپلود کنید ";
+			res.IsSuccess = true;
+			//res.Message = "عکس ها ذخیره نشدند. عکس ها را دوباره آپلود کنید ";
 			return res;
 		}
 
@@ -146,7 +148,7 @@ namespace Logic.Service.Services
 
 			res.Data = _mapper.Map<GetGuestLicenseResponse>(guestLicenseDto);
 			res.IsSuccess = true;
-			res.Message = "مشکلی پیش امده، مجددا اقدام نمایید.";
+			//res.Message = "مشکلی پیش امده، مجددا اقدام نمایید.";
 			return res;
 		}
 
@@ -174,9 +176,35 @@ namespace Logic.Service.Services
 			
 			res.Data = _mapper.Map<GeneralPaginationModel<GetListGuestLicenseResponse>> (guestLicenseDto);
 			res.IsSuccess = true;
-			res.Message = "مشکلی پیش امده، مجددا اقدام نمایید.";
+			//res.Message = "مشکلی پیش امده، مجددا اقدام نمایید.";
 			return res;
 		}
+
+
+		public GeneralResponse<GeneralPaginationModel<GetListGuestLicenseResponse>> GetAllForAdmin(int Page)
+		{
+			var res = new GeneralResponse<GeneralPaginationModel<GetListGuestLicenseResponse>>()
+			{
+				IsSuccess = false
+			};
+
+			var guestLicenseDto = _guestLicenseRepository.GetAllForSuperAdmin(Page);
+
+			if (guestLicenseDto == null)
+			{
+				res.Message = "همچین مجوز مدعویی وجود ندارد";
+				return res;
+			}
+
+
+			res.Data = _mapper.Map<GeneralPaginationModel<GetListGuestLicenseResponse>>(guestLicenseDto);
+			res.IsSuccess = true;
+			//res.Message = "مشکلی پیش امده، مجددا اقدام نمایید.";
+			return res;
+		}
+
+
+
 
 		public GeneralResponse<bool> ChangeStatus(int GuestLicenseId, int StatusId)
 		{
