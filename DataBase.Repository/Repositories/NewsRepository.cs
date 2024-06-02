@@ -85,6 +85,7 @@ namespace DataBase.Repository.Repositories
 				IsPublic = a.IsActive,
 				RegistrationDate = a.RegistrationDate,
 				Views = a.Views,
+				AssociationId = a.AssociationId
 			}).FirstOrDefault();
 
 
