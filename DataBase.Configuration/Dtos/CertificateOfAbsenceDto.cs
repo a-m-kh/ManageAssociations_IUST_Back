@@ -32,6 +32,8 @@ namespace DataBase.Configuration.Dtos
 	public class CreateCertificateOfAbsenceDto : CertificateOfAbsenceDtoBase
 	{
 		public int StatusId { get; set; }
+		public int AssociationId { get; set; }
+
 	}
 
 	public class UpdateCertificateOfAbsenceDto : CertificateOfAbsenceDtoBase

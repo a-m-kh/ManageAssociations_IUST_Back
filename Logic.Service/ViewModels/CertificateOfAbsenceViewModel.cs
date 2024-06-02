@@ -15,7 +15,7 @@ namespace Logic.Service.ViewModels
 	public class CreateCertificateOfAbsenceViewModel
 	{
 		[Required(ErrorMessage ="لطفا آیدی انجمن مد نظر را وارد نمایید")]
-		public int AssoiciationId { get; set; }
+		public int AssociationId { get; set; }
 
 		[Required(ErrorMessage ="عنوان گواهی را وارد نمایید")]
 		public string Title { get; set; }

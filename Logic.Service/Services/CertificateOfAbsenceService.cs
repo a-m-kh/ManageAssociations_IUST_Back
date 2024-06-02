@@ -45,7 +45,7 @@ namespace Logic.Service.Services
 			{
 				IsSuccess = false
 			};
-			var association = _associationRepository.Get(vm.AssoiciationId);
+			var association = _associationRepository.Get(vm.AssociationId);
 			if (association == null)
 			{
 				res.Message = "همچین انجمنی وجود ندارد";
