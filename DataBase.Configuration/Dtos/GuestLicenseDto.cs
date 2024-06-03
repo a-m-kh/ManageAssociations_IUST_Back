@@ -36,6 +36,7 @@ namespace DataBase.Configuration.Dtos
 
 	public class GetGuestLicenseDto: GuestLicenseDtoBase
 	{
+		public int Id { get; set; }
 		public DateTime RegistrationDate { get; set; } = DateTime.Now;
 		public string? Status { get; set; }
 		public bool? IsGuest { get; set; }
