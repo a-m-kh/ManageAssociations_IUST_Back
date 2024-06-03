@@ -236,6 +236,36 @@ namespace DataBase.Repository.Repositories
 		}
 
 
+		public List<GetForUserEventDto> GetAllEventsForUser()
+		{
+			//var total = TEntity.Where(a => a.IsConfirm && a.IsDelete && a.IsPublic && a.AssociationID == AssociationId).Count();
+			var entities = TEntity.Where(a => a.IsConfirm == true && !a.IsDelete && a.IsPublic)
+				.OrderByDescending(a => a.ID)
+				.Select(a => new GetForUserEventDto()
+				{
+					Description = a.Description,
+					EndTime = a.EndTime,
+					Id = a.ID,
+					StartTime = a.StartTime,
+					ImageUrl = a.ImageUrl,
+					Issue = a.Issue == null ? ("") : (a.Issue.Title),
+					Period = a.Period == null ? ("") : (a.Period.Title),
+					TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
+					Price = a.Price,
+					Title = a.Title,
+					Place = a.Place,
+					Capacity = a.Capacity,
+					Providers = a.Providers,
+					AssociationId = a.AssociationID,
+					AssociationName = a.association != null ? (a.association.Name) : ("")
+				}).ToList();
+			//var res = new GeneralPaginationModel<GetForUserEventDto>(total, entities);
+			return (entities);
+		}
+
+
+
+
 		public GeneralPaginationModel<GetEventDto> GetAllEventsForAdmin(int AssociationId, int Page = 1)
 		{
 			var total = TEntity.Where(a =>  !a.IsDelete && a.AssociationID == AssociationId).Count();

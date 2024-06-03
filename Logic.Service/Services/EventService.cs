@@ -185,6 +185,17 @@ namespace Logic.Service.Services
 			res.IsSuccess = true;
 			return res;
 		}
+		public async Task<GeneralResponse<List<GetForUserEventDto>>> GetAllForUser()
+		{
+			var res = new GeneralResponse<List<GetForUserEventDto>>();
+			res.IsSuccess = false;			
+			var data = _eventRepository.GetAllEventsForUser();
+			res.Data = data;
+			return res;
+		}
+
+
+
 		public async Task<GeneralResponse<List<GetForUserEventDto>>> GetAllForUser(int AssociationId)
 		{
 			var res = new GeneralResponse<List<GetForUserEventDto>>();
@@ -192,7 +203,7 @@ namespace Logic.Service.Services
 			//var roles = _userManager.GetRolesAsync(user).Result.ToList();
 			var association = await _associationRepository.GetAsync(AssociationId);
 
-			if(association == null)
+			if (association == null)
 			{
 				res.Message = "همچین انجمنی وجود ندارد";
 				return res;
@@ -201,6 +212,7 @@ namespace Logic.Service.Services
 			res.Data = data;
 			return res;
 		}
+
 
 		public GeneralResponse<GeneralPaginationModel<GetEventDto>> GetAllForSuperAdmin(int Page=1)
 		{

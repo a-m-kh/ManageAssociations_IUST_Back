@@ -154,6 +154,22 @@ namespace WebApi_BackEnd.Controllers
 
 
 
+
+		[HttpGet("GetAllForUser")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<List<GetForUserEventDto>>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> GetAllForUser()
+		{
+			return Ok(await _eventService.GetAllForUser());
+		}
+
+
+
+
+
+
 		[HttpGet("GetAllForAdmin/{AssociationId}/{Page}")]
 		[Authorize]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GeneralPaginationModel<GetEventDto>>))]
