@@ -124,6 +124,25 @@ namespace WebApi_BackEnd.Controllers
 
 		}
 
+
+
+		[HttpGet("GetAll")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<List<GetNewsResponse>>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> GetAll()
+		{
+
+			var response = new GeneralResponse<List<GetNewsResponse>>();
+			return Ok(_newsService.GetAll());
+
+		}
+
+
+
+
+
 		[HttpGet("GetAllForAdmin/{AssociationId}/{Page}")]
 		[Authorize]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<LoginResponse>))]

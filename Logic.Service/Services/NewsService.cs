@@ -178,6 +178,25 @@ namespace Logic.Service.Services
 			return res;
 		}
 
+
+
+
+		public GeneralResponse<List<GetNewsResponse>> GetAll()
+		{
+			var res = new GeneralResponse<List<GetNewsResponse>>()
+			{
+				IsSuccess = false
+			};
+			var newsDto = _newsRepository.GetAll();
+			var data = _mapper.Map<List<GetNewsResponse>>(newsDto);
+			res.IsSuccess = true;
+			res.Data = data;
+			return res;
+		}
+
+
+
+
 		public GeneralResponse<GeneralPaginationModel<GetNewsForAdminResponse>> GetForAdmin(int Page,int AssociationId ,User user)
 		{
 			var res = new GeneralResponse<GeneralPaginationModel<GetNewsForAdminResponse>>()

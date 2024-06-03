@@ -19,6 +19,7 @@ namespace DataBase.Repository.Repositories.Interface
 		bool ChangeStatus(int Id, int StatusId);
 		bool ChangePublic(int Id);
 		GetNewsDto Get_NotViews(int Id);
+		List<GetNewsDto> GetAll();
 
 
 	}

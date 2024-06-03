@@ -94,6 +94,37 @@ namespace DataBase.Repository.Repositories
 		}
 
 
+
+		public List<GetNewsDto> GetAll()
+		{
+			
+
+			var res = TEntity.Where(a => !a.IsDelete && !a.Association.IsDelete).Select(a => new GetNewsDto()
+			{
+				Id = a.ID,
+				Description = a.Description,
+				Title = a.Title,
+				Images = a.Images.Select(I => new ImageDto()
+				{
+					Id = I.ID,
+					Url = I.Url
+				}).ToList(),
+				Status = a.Status != null ? a.Status.Title : (""),
+				IsPublic = a.IsActive,
+				RegistrationDate = a.RegistrationDate,
+				Views = a.Views,
+				AssociationId = a.AssociationId
+			}).ToList();
+
+
+
+			return res;
+		}
+
+
+
+
+
 		public GetNewsDto Get_NotViews(int Id)
 		{
 			

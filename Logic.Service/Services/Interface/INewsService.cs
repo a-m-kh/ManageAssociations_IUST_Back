@@ -22,5 +22,6 @@ namespace Logic.Service.Services.Interface
 		GeneralResponse<bool> ChangePublic(int Id);
 		GeneralResponse<bool>AddImage(int NewsId,IFormFile image,User user,string WrPath);
 		GeneralResponse<bool> DeleteImage(int NewsId, User user, int ImageId,string WrPath);
+		GeneralResponse<List<GetNewsResponse>> GetAll();
 	}
 }
