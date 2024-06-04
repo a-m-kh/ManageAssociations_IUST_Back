@@ -42,6 +42,7 @@ public class AccountService:IAccountService
 		var user = await _userManager.FindByNameAsync(VModel.UserName);
 		if(user != null && await _userManager.CheckPasswordAsync(user,VModel.Password))
 		{
+			response.Data.AssociationId = user.Association != null ?(user.Association.ID):(null);
 			var claims = _userManager.GetClaimsAsync(user).Result.ToList();
 			var roles = _userManager.GetRolesAsync(user).Result.ToList();
 			if( roles.Find(a=>a == "SuperAdmin") != null)
