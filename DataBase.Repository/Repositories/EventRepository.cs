@@ -56,7 +56,8 @@ namespace DataBase.Repository.Repositories
 			entity.EndTime = Model.EndTime == null ? (entity.EndTime) : (Model.EndTime ?? DateTime.Now);
 			entity.ImageUrl = Model.ImageUrl == null ? (entity.ImageUrl) : (Model.ImageUrl);
 			entity.Description = Model.Description == null ? (entity.Description) : (Model.Description);
-
+			entity.Place = Model.Place == null ? (entity.Place) : (Model.Place);
+			entity.Capacity = Model.Capacity == null ? (entity.Capacity) : (Model.Capacity);
 			var IsUpdate = await _uow.SaveChangesAsync();
 
 			return(IsUpdate > 0);

@@ -21,7 +21,14 @@ namespace Logic.Service.Mapper
 			CreateMap<Association, AssociationCreateDto>().ReverseMap();
 			CreateMap<EventGetResponse, EventViewDto >().ReverseMap();
 			CreateMap<EventCreateViewModel, EventCreateDto>();
-			CreateMap<EventCreateDto, Event>();
+			CreateMap<EventUpdateViewModel, EventUpdateDto>();
+			CreateMap<EventUpdateDto, EventUpdateViewModel>();
+			//CreateMap<EventCreateDto, Event>();
+			//CreateMap<EventCreateDto, Event>();
+
+
+
+
 			CreateMap<GetAssociationResponse, AssociationViewDto>().ReverseMap();
 			CreateMap<BaseInfoDto, BaseInfoResponse>();
 			CreateMap<BaseInfoResponse, BaseInfoDto>();

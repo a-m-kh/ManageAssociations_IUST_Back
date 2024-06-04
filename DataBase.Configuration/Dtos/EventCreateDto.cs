@@ -63,9 +63,12 @@ namespace DataBase.Configuration.Dtos
 		public int? IssueID { get;set; }
 	}
 
-	public class EventUpdateDto : EventCreateDto
+	public class EventUpdateDto : EventBase
 	{
 		public int ID { get; set; }
+		public int? PeriodID { get; set; }
+		public int? TypeOfEventID { get; set; }
+		public int? IssueID { get; set; }
 	}
 
 	public class EventViewDto : EventBase
