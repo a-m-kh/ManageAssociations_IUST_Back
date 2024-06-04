@@ -20,6 +20,7 @@ namespace DataBase.Repository.Repositories.Interface
 		bool ChangePublic(int Id);
 		GetNewsDto Get_NotViews(int Id);
 		List<GetNewsDto> GetAll();
+		GeneralPaginationModel<GetNewsDto> GetAllForSuperAdmin(int Page);
 
 
 	}

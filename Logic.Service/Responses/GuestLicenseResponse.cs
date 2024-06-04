@@ -18,6 +18,7 @@ namespace Logic.Service.Responses
 		public DateTime RegistrationDate { get; set; }
 		public string Status { get; set; }
 		public string AssociationName { get; set; }
+		public int StatusId { get; set; }
 
 
 	}

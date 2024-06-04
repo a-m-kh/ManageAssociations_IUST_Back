@@ -116,7 +116,8 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 	}
 	public async Task<GeneralPaginationModel<AssociationViewDto>> GetAllAsync(int Page = 1)
 	{
-		var total = TEntity.Where( a=> a.IsDelete).Count();
+		var entityTotal = TEntity.Where( a=> a.IsDelete).Count();
+		var total = entityTotal / 4 + (entityTotal % 4 == 0 ? (0) : (1));
 		var entities = await TEntity.Where(a => !a.IsDelete)
 			.OrderByDescending(a => a.ID)
 			.Skip((Page - 1) * 4)
@@ -135,7 +136,6 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 
 	public async Task<List<AssociationViewDto>> GetAll()
 	{
-		var total = TEntity.Where(a => a.IsDelete).Count();
 		var entities =  TEntity.Where(a => !a.IsDelete)
 			.OrderByDescending(a => a.ID)
 			.Select(a => new AssociationViewDto()

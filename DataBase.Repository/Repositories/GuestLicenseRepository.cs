@@ -90,7 +90,9 @@ namespace DataBase.Repository.Repositories
 
 		public GeneralPaginationModel<GetGuestLicenseDto> GetAll(int Page, int AssociationId)
 		{
-			var total = TEntity.Where(a => a.AssociationId == AssociationId && !a.IsDelete).Count();
+			var entityTotal = TEntity.Where(a => a.AssociationId == AssociationId && !a.IsDelete).Count();
+			var total = entityTotal / 4 + (entityTotal % 4 == 0 ? (0) : (1));
+
 			var entities = TEntity.Where(a => !a.IsDelete && a.AssociationId == AssociationId)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
@@ -100,7 +102,9 @@ namespace DataBase.Repository.Repositories
 					Name = a.Name,
 					RegistrationDate = a.RegistrationDate,
 					Status = a.Status != null ?(a.Status.Title):(""),
-					Id = a.ID
+					AssociationName = a.Association != null ?(a.Association.Name):(""),
+					Id = a.ID,
+					StatusId = a.StatusId
 				}).ToList();
 			var res = new GeneralPaginationModel<GetGuestLicenseDto>(total, entities);
 			return (res);
@@ -110,7 +114,9 @@ namespace DataBase.Repository.Repositories
 
 		public GeneralPaginationModel<GetGuestLicenseDto> GetAllForSuperAdmin(int Page)
 		{
-			var total = TEntity.Where(a =>   !a.IsDelete).Count();
+			var entityTotal = TEntity.Where(a =>   !a.IsDelete).Count();
+			var total = entityTotal / 4 + (entityTotal % 4 == 0 ? (0) : (1));
+
 			var entities = TEntity.Where(a => !a.IsDelete )
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)

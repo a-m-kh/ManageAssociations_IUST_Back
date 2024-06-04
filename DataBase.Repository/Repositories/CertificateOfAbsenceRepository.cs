@@ -85,7 +85,9 @@ namespace DataBase.Repository.Repositories
 
 		public GeneralPaginationModel<GetCertificateOfAbsenceDto> GetAll(int AssociationId, int Page = 1)
 		{
-			var total = TEntity.Where(a => !a.IsDelete && a.AssociationId == AssociationId).Count();
+			var entityTotal = TEntity.Where(a => !a.IsDelete && a.AssociationId == AssociationId).Count();
+			var total = entityTotal / 4 + (entityTotal % 4 == 0 ? (0) : (1));
+
 			var entities =  TEntity.Where(a => !a.IsDelete)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
@@ -101,6 +103,7 @@ namespace DataBase.Repository.Repositories
 					RegistrationDate = a.RegistrationDate,
 					Status = a.Status != null ? (a.Status.Title) : (""),
 					StatusId = a.StatusId,
+					AssociationName = a.Association != null ? (a.Association.Name) : (""),
 					AssociationId = a.AssociationId
 				}).ToList();
 			var res = new GeneralPaginationModel<GetCertificateOfAbsenceDto>(total, entities);
@@ -121,7 +124,9 @@ namespace DataBase.Repository.Repositories
 
 		public GeneralPaginationModel<GetCertificateOfAbsenceDto> GetAllForAdmin(int Page = 1)
 		{
-			var total = TEntity.Where(a => !a.IsDelete).Count();
+			var entityTotal = TEntity.Where(a => !a.IsDelete).Count();
+			var total = entityTotal / 4 + (entityTotal % 4 == 0 ? (0) : (1));
+
 			var entities = TEntity.Where(a => !a.IsDelete)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)

@@ -27,6 +27,7 @@ namespace DataBase.Configuration.Domain
 		public int? PeriodID { get; set; }
 		public bool IsDelete { get; set; }=false;
 		public bool IsPublic { get; set; } = false;
+		public DateTime? RegistrationDate { get; set; }
 		public Association association { get; set; }
 
 

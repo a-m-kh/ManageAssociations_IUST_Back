@@ -176,6 +176,45 @@ namespace WebApi_BackEnd.Controllers
 			return Ok(_newsService.GetForAdmin(Page, AssociationId,user));
 		}
 
+
+
+
+		[HttpGet("GetAllForSuperAdmin/{Page}")]
+		[Authorize]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<LoginResponse>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> GetAllForSuperAdmin(int Page)
+		{
+
+			var response = new GeneralResponse<GeneralPaginationModel<GetNewsForAdminResponse>>();
+			if (!ModelState.IsValid)
+			{
+				var errors = string.Join(" | ", ModelState.Values
+					.SelectMany(v => v.Errors)
+					.Select(e => e.ErrorMessage));
+				response.IsSuccess = false;
+				response.Message = errors;
+				return Ok(response);
+			}
+
+			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null)
+			{
+				response.IsSuccess = false;
+				response.Message = "همچین کاربری یافت نشد";
+				return Ok(response);
+			}
+
+
+			return Ok(_newsService.GetForSuperAdmin(Page));
+		}
+
+
+
+
 		[HttpPost("ChangeStatus")]
 		[Authorize(Roles ="SuperAdmin")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<bool>))]

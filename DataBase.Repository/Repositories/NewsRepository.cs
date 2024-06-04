@@ -99,7 +99,7 @@ namespace DataBase.Repository.Repositories
 		{
 			
 
-			var res = TEntity.Where(a => !a.IsDelete && !a.Association.IsDelete).Select(a => new GetNewsDto()
+			var res = TEntity.Where(a => !a.IsDelete && a.IsActive && !a.Association.IsDelete).Select(a => new GetNewsDto()
 			{
 				Id = a.ID,
 				Description = a.Description,
@@ -109,8 +109,8 @@ namespace DataBase.Repository.Repositories
 					Id = I.ID,
 					Url = I.Url
 				}).ToList(),
-				Status = a.Status != null ? a.Status.Title : (""),
-				IsPublic = a.IsActive,
+				//Status = a.Status != null ? a.Status.Title : (""),
+				//IsPublic = a.IsActive,
 				RegistrationDate = a.RegistrationDate,
 				Views = a.Views,
 				AssociationId = a.AssociationId
@@ -156,8 +156,9 @@ namespace DataBase.Repository.Repositories
 		{
 			var Finally = new GeneralPaginationModel<GetNewsDto>();
 
-			var total =  TEntity.Where(a => a.Association.ID == AssociationId && !a.IsDelete && !a.Association.IsDelete).Count();
-			
+			var totalEntity =  TEntity.Where(a => a.Association.ID == AssociationId && !a.IsDelete && !a.Association.IsDelete).Count();
+			var total = totalEntity / 4 + (totalEntity % 4 == 0 ? (0) : (1));
+
 			var entities = TEntity.Where(a => a.Association.ID == AssociationId && !a.IsDelete && !a.Association.IsDelete)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
@@ -172,15 +173,54 @@ namespace DataBase.Repository.Repositories
 					}).ToList(),
 					IsPublic = a.IsActive,
 					Status = a.Status.Title,
+					StatusId = a.StatusId,
 					RegistrationDate = a.RegistrationDate == null ? (DateTime.Now) : a.RegistrationDate,
 					Views = a.Views,
 					Title = a.Title,
+					
 					AssociationName = a.Association != null ?(a.Association.Name) :("")
 				}).ToList();
 			Finally.Total = total;
 			Finally.Values = entities;
 			return Finally;
 		}
+
+
+
+		public GeneralPaginationModel<GetNewsDto> GetAllForSuperAdmin(int Page)
+		{
+			var Finally = new GeneralPaginationModel<GetNewsDto>();
+
+			var totalEntity = TEntity.Where(a => !a.IsDelete && !a.Association.IsDelete).Count();
+			var total = totalEntity /4 + (totalEntity %4 == 0 ?(0):(1));
+
+			var entities = TEntity.Where(a => !a.IsDelete && !a.Association.IsDelete)
+				.OrderByDescending(a => a.ID)
+				.Skip((Page - 1) * 4)
+				.Take(4).Select(a => new GetNewsDto()
+				{
+					Description = a.Description,
+					Id = a.ID,
+					Images = a.Images.Select(I => new ImageDto()
+					{
+						Id = I.ID,
+						Url = I.Url
+					}).ToList(),
+					IsPublic = a.IsActive,
+					Status = a.Status.Title,
+					RegistrationDate = a.RegistrationDate == null ? (DateTime.Now) : a.RegistrationDate,
+					Views = a.Views,
+					Title = a.Title,
+					AssociationName = a.Association != null ? (a.Association.Name) : ("")
+				}).ToList();
+			Finally.Total = total;
+			Finally.Values = entities;
+			return Finally;
+		}
+
+
+
+
 
 		public bool ChangeStatus(int Id, int StatusId)
 		{

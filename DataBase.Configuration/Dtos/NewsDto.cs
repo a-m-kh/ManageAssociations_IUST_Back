@@ -31,6 +31,7 @@ namespace DataBase.Configuration.Dtos
 		public int AssociationId { get; set; }
 		public int Views { get; set; }
 		public string Status { get; set; }
+		public int StatusId { get; set; }
 		public bool IsPublic { get; set; }
 		public DateTime RegistrationDate { get; set; }
 		public List<ImageDto>? Images { get; set; }

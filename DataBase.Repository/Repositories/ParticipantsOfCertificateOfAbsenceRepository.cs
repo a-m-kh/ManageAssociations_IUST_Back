@@ -25,5 +25,11 @@ namespace DataBase.Repository.Repositories
 			}
 			return false;
 		}
+
+		public List<ParticipantOfCertificateOfAbsence> Get(int CertificateId)
+		{
+			var entities = TEntity.Where(a=>a.CertificationId == CertificateId).ToList();
+			return entities;
+		}
 	}
 }

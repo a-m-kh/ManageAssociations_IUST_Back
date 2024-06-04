@@ -32,10 +32,15 @@ namespace Logic.Service.Responses
 		public int? IssueID { get; set; }
 		public string? ImageUrl { get; set; }
 		public int? PeriodID { get; set; }
+		public int? AssociationId { get; set; }
+		public DateTime? RegistrationDate { get; set; }
+
+
 	}
 
 	public class EventGetForAdminResponse : EventGetResponse
 	{
 		public bool IsConfirm { get; set; }
+
 	}
 }

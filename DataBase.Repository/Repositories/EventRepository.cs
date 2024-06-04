@@ -26,6 +26,7 @@ namespace DataBase.Repository.Repositories
 				return 0; 
 
 			var newEvent = _mapper.Map<Event>(Model);
+			newEvent.RegistrationDate = DateTime.Now;
 			if (newEvent == null)
 				return 0;
 
@@ -88,7 +89,8 @@ namespace DataBase.Repository.Repositories
 				Title = a.Title,
 				Place = a.Place,
 				Capacity = a.Capacity,
-				Providers = a.Providers
+				Providers = a.Providers,
+				RegistrationDate = a.RegistrationDate,
 			}).FirstOrDefaultAsync();
 			if (entity == null)
 				return null;
@@ -116,6 +118,7 @@ namespace DataBase.Repository.Repositories
 					Capacity = a.Capacity,
 					Providers = a.Providers,
 					IsConfirm = a.IsConfirm,
+					RegistrationDate = a.RegistrationDate,
 					AssociationName = a.association != null ? (a.association.Name) : (""),
 					ReportDto = new GetReportDto()
 					{
@@ -136,7 +139,9 @@ namespace DataBase.Repository.Repositories
 		public async Task<GeneralPaginationModel<EventViewDto>> GetByAssociationIdAsync(int Id, int Page = 1)
 		{
 			
-			var total =  TEntity.Where(a => a.association.ID == Id && a.IsDelete).Count();
+			var entityTotal =  TEntity.Where(a => a.association.ID == Id && a.IsDelete).Count();
+			var total = entityTotal / 4 + (entityTotal % 4 == 0 ? (0) : (1));
+
 			var entities = TEntity.Where(a => !a.IsDelete && a.association.ID == Id)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
@@ -155,6 +160,7 @@ namespace DataBase.Repository.Repositories
 					Place = a.Place,
 					Capacity = a.Capacity,
 					Providers = a.Providers,
+					RegistrationDate = a.RegistrationDate,
 					AssociationName = a.association != null ? (a.association.Name) : ("")
 				}).ToList();
 			var res = new GeneralPaginationModel<EventViewDto>(total,entities);
@@ -163,7 +169,9 @@ namespace DataBase.Repository.Repositories
 
 		public async Task<GeneralPaginationModel<EventViewDto>> GetLastEvent(int Page = 1)
 		{
-			var total = TEntity.Where(a => a.IsPublic && a.IsDelete).Count();
+			var entityTotal = TEntity.Where(a => a.IsPublic && a.IsDelete).Count();
+			var total = entityTotal / 4 + (entityTotal % 4 == 0 ? (0) : (1));
+
 			var entities = TEntity.Where(a => !a.IsDelete && a.IsPublic)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
@@ -182,6 +190,7 @@ namespace DataBase.Repository.Repositories
 				Place = a.Place,
 				Capacity = a.Capacity,
 				Providers = a.Providers,
+				RegistrationDate =a.RegistrationDate,
 				AssociationName = a.association != null ? (a.association.Name) : ("")
 				}).ToList();
 			var res = new GeneralPaginationModel<EventViewDto>(total, entities);
@@ -268,7 +277,8 @@ namespace DataBase.Repository.Repositories
 
 		public GeneralPaginationModel<GetEventDto> GetAllEventsForAdmin(int AssociationId, int Page = 1)
 		{
-			var total = TEntity.Where(a =>  !a.IsDelete && a.AssociationID == AssociationId).Count();
+			var entityTotal = TEntity.Where(a =>  !a.IsDelete && a.AssociationID == AssociationId).Count();
+			var total = entityTotal / 4 + (entityTotal % 4 == 0 ? (0) : (1));
 			var entities = TEntity.Where(a => !a.IsDelete && a.AssociationID == AssociationId)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
@@ -290,6 +300,7 @@ namespace DataBase.Repository.Repositories
 					AssociationId = a.AssociationID,
 					IsPublic = a.IsPublic,
 					IsConfirm = a.IsConfirm,
+					RegistrationDate = a.RegistrationDate,
 					AssociationName = a.association != null ? (a.association.Name) : ("")
 				}).ToList();
 			var res = new GeneralPaginationModel<GetEventDto>(total, entities);
@@ -322,7 +333,9 @@ namespace DataBase.Repository.Repositories
 
 		public GeneralPaginationModel<GetEventDto> GetAllEventsForSuperAdmin(int Page = 1)
 		{
-			var total = TEntity.Where(a => !a.IsDelete).Count();
+			var entityTotal = TEntity.Where(a => !a.IsDelete).Count();
+			var total = entityTotal / 4 + (entityTotal % 4 == 0 ? (0) : (1));
+
 			var entities = TEntity.Where(a => !a.IsDelete )
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
@@ -343,6 +356,7 @@ namespace DataBase.Repository.Repositories
 					Providers = a.Providers,
 					AssociationId = a.AssociationID,
 					IsPublic = a.IsPublic,
+					RegistrationDate =a.RegistrationDate,
 					AssociationName =a.association != null ?( a.association.Name):("")
 				}).ToList();
 			var res = new GeneralPaginationModel<GetEventDto>(total, entities);

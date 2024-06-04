@@ -218,6 +218,27 @@ namespace Logic.Service.Services
 			return res;
 		}
 
+
+
+		public GeneralResponse<GeneralPaginationModel<GetNewsForAdminResponse>> GetForSuperAdmin(int Page)
+		{
+			var res = new GeneralResponse<GeneralPaginationModel<GetNewsForAdminResponse>>()
+			{
+				IsSuccess = false
+			};
+			
+
+			var PageData = _mapper.Map<GeneralPaginationModel<GetNewsForAdminResponse>>(_newsRepository.GetAllForSuperAdmin(Page));
+
+
+			res.IsSuccess = true;
+			res.Data = PageData;
+			return res;
+		}
+
+
+
+
 		public GeneralResponse<bool> ChangeStatus(int Id, int StatusId)
 		{
 			var res = new GeneralResponse<bool>()

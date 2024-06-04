@@ -83,7 +83,9 @@ namespace DataBase.Repository.Repositories
 
 		public async Task<GeneralPaginationModel<GetCertificationDto>> GetAllAsync(int AssociationId, int Page = 1)
 		{
-			var total = TEntity.Where(a => a.IsDelete && a.AssociationId == AssociationId).Count();
+			var entityTotal = TEntity.Where(a => a.IsDelete && a.AssociationId == AssociationId).Count();
+			var total = entityTotal / 4 + (entityTotal % 4 == 0 ? (0) : (1));
+
 			var entities = await TEntity.Where(a => !a.IsDelete)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)
@@ -106,7 +108,9 @@ namespace DataBase.Repository.Repositories
 
 		public async Task<GeneralPaginationModel<GetCertificationDto>> GetAllForAdminAsync(int Page = 1)
 		{
-			var total = TEntity.Where(a => a.IsDelete).Count();
+			var entityTotal = TEntity.Where(a => a.IsDelete).Count();
+			var total = entityTotal / 4 + (entityTotal % 4 == 0 ? (0) : (1));
+
 			var entities = await TEntity.Where(a => !a.IsDelete)
 				.OrderByDescending(a => a.ID)
 				.Skip((Page - 1) * 4)

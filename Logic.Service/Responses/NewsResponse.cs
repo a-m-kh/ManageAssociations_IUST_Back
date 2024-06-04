@@ -29,6 +29,8 @@ namespace Logic.Service.Responses
 		public bool IsPublic { get; set; }
 		public DateTime RegistrationDate { get; set; }
 		public string AssociationName { get; set; }
+		public int StatusId { get; set; }
+
 
 	}
 }

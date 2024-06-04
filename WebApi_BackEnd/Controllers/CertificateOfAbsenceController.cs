@@ -201,6 +201,40 @@ namespace WebApi_BackEnd.Controllers
 
 
 
+
+		[HttpGet("Download/{CertificateId}")]
+		[Authorize]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GeneralPaginationModel<GetCertificateOfAbsenceDto>>))]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> Download(int CertificateId)
+		{
+			var response = new GeneralResponse<bool>();
+
+			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null)
+			{
+				response.IsSuccess = false;
+				response.Message = "همچین کاربری یافت نشد";
+				return Ok(response);
+			}
+
+			var editedPdf = await _certificateOfAbsenceService.Downlaod(CertificateId, _environment.WebRootPath,user);
+
+			if (editedPdf.IsSuccess)
+			{
+				return File(editedPdf.Data, "application/pdf", "Certificate.pdf");
+			}
+			response.IsSuccess = false;
+			response.Message = editedPdf.Message;
+			return Ok(response);
+		}
+
+
+
+
+
 		[HttpPost("ChangeState")]
 		[Authorize(Roles = "SuperAdmin")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<bool>))]

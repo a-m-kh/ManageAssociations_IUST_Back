@@ -33,6 +33,8 @@ namespace DataBase.Configuration.Dtos
 		public string? Issue { get; set; }
 		public bool? IsConfirm { get; set; }
 		public string AssociationName { get; set; }
+		public DateTime? RegistrationDate { get; set; }
+
 	}
 
 	public class GetForUserEventDto
@@ -75,5 +77,8 @@ namespace DataBase.Configuration.Dtos
 		public bool? IsConfirm { get; set; }
 		public GetReportDto ReportDto { get; set; }
 		public string? AssociationName { get; set; }
+		public DateTime? RegistrationDate { get; set; }
+
+
 	}
 }

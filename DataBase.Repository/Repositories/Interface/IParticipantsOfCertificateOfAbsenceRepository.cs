@@ -10,5 +10,6 @@ namespace DataBase.Repository.Repositories.Interface
     public interface IParticipantsOfCertificateOfAbsenceRepository
     {
 	    public bool Create(List<ParticipantOfCertificateOfAbsence> participantsOfCertificates);
+		List<ParticipantOfCertificateOfAbsence> Get(int CertificateId);
 	}
 }
