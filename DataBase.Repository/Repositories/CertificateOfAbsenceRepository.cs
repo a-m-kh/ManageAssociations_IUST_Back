@@ -137,7 +137,8 @@ namespace DataBase.Repository.Repositories
 					RegistrationDate = a.RegistrationDate,
 					Status = a.Status != null ? (a.Status.Title) : (""),
 					StatusId = a.StatusId,
-					AssociationId = a.AssociationId
+					AssociationId = a.AssociationId,
+					AssociationName = a.Association != null ?(a.Association.Name):("")
 				}).ToList();
 			var res = new GeneralPaginationModel<GetCertificateOfAbsenceDto>(total, entities);
 			return (res);

@@ -175,6 +175,7 @@ namespace DataBase.Repository.Repositories
 					RegistrationDate = a.RegistrationDate == null ? (DateTime.Now) : a.RegistrationDate,
 					Views = a.Views,
 					Title = a.Title,
+					AssociationName = a.Association != null ?(a.Association.Name) :("")
 				}).ToList();
 			Finally.Total = total;
 			Finally.Values = entities;

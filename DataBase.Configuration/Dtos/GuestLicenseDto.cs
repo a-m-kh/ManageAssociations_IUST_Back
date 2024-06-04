@@ -43,5 +43,7 @@ namespace DataBase.Configuration.Dtos
 		public bool? IsFromIust { get; set; }
 		public int AssociationId { get; set; }
 		public int StatusId { get; set; }
+		public string AssociationName { get; set; }
+
 	}
 }

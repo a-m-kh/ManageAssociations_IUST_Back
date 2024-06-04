@@ -120,7 +120,8 @@ namespace DataBase.Repository.Repositories
 					Name = a.Name,
 					RegistrationDate = a.RegistrationDate,
 					Status = a.Status != null ? (a.Status.Title) : (""),
-					Id = a.ID
+					Id = a.ID,
+					AssociationName = a.Association != null ?(a.Association.Name):("")
 				}).ToList();
 			var res = new GeneralPaginationModel<GetGuestLicenseDto>(total, entities);
 			return (res);

@@ -190,12 +190,11 @@ namespace WebApi_BackEnd.Controllers
 
 		[HttpGet("GetAllForAdmin/{Page}")]
 		[Authorize(Roles = "SuperAdmin")]
-		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GeneralPaginationModel<GetListCertificateOfAbsenceResponse>>))]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GeneralPaginationModel<GetCertificateOfAbsenceDto>>))]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
 		public async Task<IActionResult> GetAllForAdmin(int Page)
 		{
-			var response = new GeneralResponse<GeneralPaginationModel<GetListCertificateOfAbsenceResponse>>();
 			return Ok(_certificateOfAbsenceService.GetAllForAdmin(Page));
 		}
 

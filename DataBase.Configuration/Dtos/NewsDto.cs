@@ -34,6 +34,7 @@ namespace DataBase.Configuration.Dtos
 		public bool IsPublic { get; set; }
 		public DateTime RegistrationDate { get; set; }
 		public List<ImageDto>? Images { get; set; }
+		public string AssociationName { get; set; }
 
 	}
 
