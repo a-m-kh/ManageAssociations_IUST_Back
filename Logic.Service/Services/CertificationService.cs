@@ -81,7 +81,7 @@ namespace Logic.Service.Services
 			{
 				entity.Organizer = association.Name;
 			}
-			entity.RegistrationDate = DateTime.UtcNow;
+			entity.RegistrationDate = DateTime.Now;
 			entity.Number = excelStatus.Item3;
 			entity.StatusId =(int)BaseInfoEnum.Waiting;
 			entity.ExcelUrl = excelUrl;

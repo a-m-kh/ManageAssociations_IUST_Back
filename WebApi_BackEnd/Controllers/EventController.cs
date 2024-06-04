@@ -194,6 +194,35 @@ namespace WebApi_BackEnd.Controllers
 		}
 
 
+		[HttpGet("PastEvent/{AssociationId}/{Page}")]
+		[Authorize]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GeneralPaginationModel<GetEventDto>>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> PastEvent(int AssociationId, int Page)
+		{
+			var res = new GeneralResponse<GeneralPaginationModel<GetEventDto>>();
+
+			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null)
+			{
+				res.IsSuccess = false;
+				res.Message = "همچین کاربری یافت نشد";
+				return Ok(res);
+			}
+
+
+			return Ok(_eventService.GetAllPastEventt(AssociationId, Page));
+		}
+
+
+
+
+
+
+
 		[HttpGet("GetAllForSuperAdmin/{Page}")]
 		[Authorize(Roles = "SuperAdmin")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GeneralPaginationModel<GetEventDto>>))]

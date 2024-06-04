@@ -25,5 +25,6 @@ namespace DataBase.Repository.Repositories.Interface
 		bool ChangePublic(int Id);
 		bool ChangeConfirm(int Id, bool? ConfirmStatus);
 		List<GetForUserEventDto> GetAllEventsForUser();
+		GeneralPaginationModel<GetEventDto> PastEvent(int AssociationId, int Page = 1);
 	}
 }

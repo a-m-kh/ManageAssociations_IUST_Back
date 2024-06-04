@@ -24,7 +24,7 @@ namespace DataBase.Repository.Repositories
 			if (Model == null)
 				return 0;
 			var entity = _mapper.Map<News>(Model);
-			entity.RegistrationDate = DateTime.UtcNow;
+			entity.RegistrationDate = DateTime.Now;
 			if (entity == null)
 				return 0;
 			var DbEntity = TEntity.Add(entity);

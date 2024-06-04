@@ -224,6 +224,17 @@ namespace Logic.Service.Services
 
 
 
+
+		public GeneralResponse<GeneralPaginationModel<GetEventDto>> GetAllPastEventt(int AssociationId, int Page = 1)
+		{
+			var res = new GeneralResponse<GeneralPaginationModel<GetEventDto>>();
+			var data = _eventRepository.PastEvent(AssociationId,Page);
+			res.Data = data;
+			return res;
+		}
+
+
+
 		public async Task<GeneralResponse<bool>> ChangePublic(int Id, User user, int AssociationId)
 		{
 			var res = new GeneralResponse<bool>();

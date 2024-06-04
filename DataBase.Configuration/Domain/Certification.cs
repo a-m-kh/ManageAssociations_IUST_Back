@@ -11,7 +11,7 @@ namespace DataBase.Configuration.Domain
 	public class Certification : EntityWithTypedId<int>
 	{
 		public string Title { get; set; }
-		public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
+		public DateTime RegistrationDate { get; set; } = DateTime.Now;
 		public string? ExcelUrl { get; set; }
 		public string? Organizer { get; set; }
 		public bool IsDelete { get; set; } = false;

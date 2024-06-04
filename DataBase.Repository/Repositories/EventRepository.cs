@@ -363,5 +363,40 @@ namespace DataBase.Repository.Repositories
 			return (res);
 		}
 
+
+		public GeneralPaginationModel<GetEventDto> PastEvent(int AssociationId,int Page = 1)
+		{
+			var date = DateTime.Now;
+			var entityTotal = TEntity.Where(a => !a.IsDelete && a.AssociationID == AssociationId && a.EndTime < date).Count();
+			var total = entityTotal / 4 + (entityTotal % 4 == 0 ? (0) : (1));
+
+			var entities = TEntity.Where(a => !a.IsDelete && a.AssociationID == AssociationId && a.EndTime < date)
+				.OrderByDescending(a => a.ID)
+				.Skip((Page - 1) * 4)
+				.Take(4).Select(a => new GetEventDto()
+				{
+					Description = a.Description,
+					EndTime = a.EndTime,
+					ID = a.ID,
+					StartTime = a.StartTime,
+					ImageUrl = a.ImageUrl,
+					Issue = a.Issue == null ? ("") : (a.Issue.Title),
+					Period = a.Period == null ? ("") : (a.Period.Title),
+					TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
+					Price = a.Price,
+					Title = a.Title,
+					Place = a.Place,
+					Capacity = a.Capacity,
+					Providers = a.Providers,
+					AssociationId = a.AssociationID,
+					IsPublic = a.IsPublic,
+					RegistrationDate = a.RegistrationDate,
+					AssociationName = a.association != null ? (a.association.Name) : ("")
+				}).ToList();
+			var res = new GeneralPaginationModel<GetEventDto>(total, entities);
+			return (res);
+		}
+
+
 	}
 }
