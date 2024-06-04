@@ -19,6 +19,7 @@ namespace Logic.Service.Responses
 
 	public class GetGuestResponse : GuestResponseBase
 	{
+		public int Id { get; set; }
 
 	}
 }
