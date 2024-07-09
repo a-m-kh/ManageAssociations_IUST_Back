@@ -30,11 +30,9 @@ namespace Logic.Service.Services
 			IEventRepository eventRepository,
 			IMapper mapper,
 			UserManager<User> userManager,
-			INewsRepository newsRepository,
 			IAssociationRepository associationRepository)
 		{
 			_eventRepository = eventRepository;
-			_newsRepository = newsRepository;
 			_mapper = mapper;
 			_userManager = userManager;
 			_associationRepository = associationRepository;
