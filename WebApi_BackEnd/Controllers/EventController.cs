@@ -8,6 +8,7 @@ using Logic.Service.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebApi_BackEnd.Controllers
 {
@@ -230,7 +231,20 @@ namespace WebApi_BackEnd.Controllers
 		}
 
 
-
+		[HttpGet("search")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<searchViewModel>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> serch([FromQuery] string word)
+		{
+			if(word.IsNullOrEmpty() || word.Length < 2 )
+			{
+				return Ok();
+			}
+			var res = _eventService.search(word);
+			return Ok(res);
+		}
 
 
 

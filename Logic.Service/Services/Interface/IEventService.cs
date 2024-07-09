@@ -25,5 +25,6 @@ namespace Logic.Service.Services.Interface
 		Task<GeneralResponse<List<GetForUserEventDto>>> GetAllForUser();
 		GeneralResponse<GeneralPaginationModel<GetEventDto>> GetAllPastEventt(int AssociationId, int Page = 1);
 		GeneralResponse<List<GetEventDto>> GetAllPastEventForUser();
+		GeneralResponse<searchViewModel> search(string search);
 	}
 }

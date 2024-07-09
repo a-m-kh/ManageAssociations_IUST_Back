@@ -13,6 +13,8 @@ using Utility;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using DataBase.Configuration.Dtos;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
+using static Microsoft.IO.RecyclableMemoryStreamManager;
 
 namespace Logic.Service.Services
 {
@@ -21,6 +23,7 @@ namespace Logic.Service.Services
 
 		private readonly IEventRepository _eventRepository;
 		private readonly IAssociationRepository _associationRepository;
+		private readonly INewsRepository _newsRepository;
 		private readonly IMapper _mapper;
 		private readonly UserManager<User> _userManager;
 
@@ -28,9 +31,11 @@ namespace Logic.Service.Services
 			IEventRepository eventRepository,
 			IMapper mapper,
 			UserManager<User> userManager,
+			INewsRepository newsRepository,
 			IAssociationRepository associationRepository)
 		{
 			_eventRepository = eventRepository;
+			_newsRepository = newsRepository;
 			_mapper = mapper;
 			_userManager = userManager;
 			_associationRepository = associationRepository;
@@ -240,6 +245,24 @@ namespace Logic.Service.Services
 			res.Data = data;
 			return res;
 		}
+
+
+
+		public GeneralResponse<searchViewModel> search(string search)
+		{
+			var res = new GeneralResponse<searchViewModel>();
+			var eventData = _eventRepository.GetByName(search);
+			var associationData = _associationRepository.GetByName(search);
+			var newData = _newsRepository.GetByName(search);
+			res.Data = new searchViewModel();
+			res.Data.events = eventData;
+			res.Data.associations = associationData;
+			res.Data.news= newData;
+			return res;
+		}
+
+
+
 
 		public async Task<GeneralResponse<bool>> ChangePublic(int Id, User user, int AssociationId)
 		{

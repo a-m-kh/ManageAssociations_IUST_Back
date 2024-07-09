@@ -116,16 +116,35 @@ namespace DataBase.Repository.Repositories
 				AssociationId = a.AssociationId
 			}).ToList();
 
+			
 
-
-			return res;
+				return res;
 		}
 
 
+		public List<GetNewsDto> GetByName(string name)
+		{
 
 
+			var res = TEntity.Where(a => !a.IsDelete && a.IsActive && !a.Association.IsDelete && a.Title.Contains(name)).Select(a => new GetNewsDto()
+			{
+				Id = a.ID,
+				Description = a.Description,
+				Title = a.Title,
+				Images = a.Images.Select(I => new ImageDto()
+				{
+					Id = I.ID,
+					Url = I.Url
+				}).ToList(),
+				RegistrationDate = a.RegistrationDate,
+				Views = a.Views,
+				AssociationId = a.AssociationId
+			}).ToList();
+			return res;
+		}
+		
 
-		public GetNewsDto Get_NotViews(int Id)
+			public GetNewsDto Get_NotViews(int Id)
 		{
 			
 			var res = TEntity.Where(a => a.ID == Id && !a.IsDelete && !a.Association.IsDelete).Select(a => new GetNewsDto()

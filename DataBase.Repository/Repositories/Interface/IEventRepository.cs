@@ -27,5 +27,6 @@ namespace DataBase.Repository.Repositories.Interface
 		List<GetForUserEventDto> GetAllEventsForUser();
 		GeneralPaginationModel<GetEventDto> PastEvent(int AssociationId, int Page = 1);
 		List<GetEventDto> PastEventForUser();
+		List<GetEventDto> GetByName(string name);
 	}
 }

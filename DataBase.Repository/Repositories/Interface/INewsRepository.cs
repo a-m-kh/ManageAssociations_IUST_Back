@@ -21,6 +21,7 @@ namespace DataBase.Repository.Repositories.Interface
 		GetNewsDto Get_NotViews(int Id);
 		List<GetNewsDto> GetAll();
 		GeneralPaginationModel<GetNewsDto> GetAllForSuperAdmin(int Page);
+		List<GetNewsDto> GetByName(string name);
 
 
 	}

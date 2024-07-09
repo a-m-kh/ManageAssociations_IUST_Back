@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DataBase.Configuration.Dtos;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace DataBase.Repository.Repositories;
 
@@ -35,6 +36,24 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 
 		return DbEntity.Entity.ID;
 	}
+
+
+	public List<AssociationViewDto> GetByName(string name)
+	{
+		var entity = TEntity.Where(a => a.Name.Contains(name) && !a.IsDelete)
+			.Select(a => new AssociationViewDto()
+			{
+				ID = a.ID,
+				LogoUrl = a.LogoUrl,
+				Name = a.Name,
+				Address = a.Address,
+				Email = a.Email,
+				Phone = a.Phone
+			})
+			.ToList();
+		return (entity);
+	}
+
 
 	public async Task<bool> UpdateAsync(AssociationUpdateDto Model)
 	{

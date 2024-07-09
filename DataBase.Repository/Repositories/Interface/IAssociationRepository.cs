@@ -20,6 +20,7 @@ namespace DataBase.Repository.Repositories.Interface
 		Task<AssociationViewDto> GetByNameAsync(string Name);
 		Task<List<AssociationViewDto>> GetAll();
 		AssociationViewDto Get(int Id);
+		List<AssociationViewDto> GetByName(string name);
 
 	}
 }

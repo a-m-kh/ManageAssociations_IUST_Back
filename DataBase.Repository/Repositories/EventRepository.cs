@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DataBase.Configuration.Dtos;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace DataBase.Repository.Repositories
 {
@@ -97,6 +98,33 @@ namespace DataBase.Repository.Repositories
 				return null;
 			return (entity);
 
+		}
+
+		public List<GetEventDto> GetByName(string name)
+		{
+			var entity = TEntity.Where(a => !a.IsDelete && a.IsPublic == true && a.IsConfirm == true && a.Title.Contains(name)).Select(a => new GetEventDto()
+			{
+				Description = a.Description,
+				EndTime = a.EndTime,
+				ID = a.ID,
+				StartTime = a.StartTime,
+				ImageUrl = a.ImageUrl,
+				Issue = a.Issue == null ? ("") : (a.Issue.Title),
+				Period = a.Period == null ? ("") : (a.Period.Title),
+				TypeOfEvent = a.TypeOfEvent == null ? ("") : (a.TypeOfEvent.Title),
+				AssociationId = a.AssociationID,
+				Price = a.Price,
+				Title = a.Title,
+				Place = a.Place,
+				Capacity = a.Capacity,
+				Providers = a.Providers,
+				IsConfirm = a.IsConfirm,
+				RegistrationDate = a.RegistrationDate,
+				AssociationName = a.association != null ? (a.association.Name) : (""),
+			}).ToList();
+			if (entity == null)
+				return null;
+			return (entity);
 		}
 		public EventViewDto GetById(int Id)
 		{
@@ -404,7 +432,7 @@ namespace DataBase.Repository.Repositories
 		public List<GetEventDto> PastEventForUser()
 		{
 			var date = DateTime.Now;
-			var entityTotal = TEntity.Where(a => !a.IsDelete && a.EndTime < date).Count();
+			var entityTotal = TEntity.Where(a => !a.IsDelete && a.EndTime < date && a.IsPublic && a.IsConfirm == true).Count();
 			var entities = TEntity.Where(a => !a.IsDelete && a.EndTime < date)
 				.OrderByDescending(a => a.ID).Select(a => new GetEventDto()
 				{
