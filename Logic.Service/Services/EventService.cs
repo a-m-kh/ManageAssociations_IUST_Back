@@ -23,7 +23,6 @@ namespace Logic.Service.Services
 
 		private readonly IEventRepository _eventRepository;
 		private readonly IAssociationRepository _associationRepository;
-		private readonly INewsRepository _newsRepository;
 		private readonly IMapper _mapper;
 		private readonly UserManager<User> _userManager;
 
@@ -253,11 +252,9 @@ namespace Logic.Service.Services
 			var res = new GeneralResponse<searchViewModel>();
 			var eventData = _eventRepository.GetByName(search);
 			var associationData = _associationRepository.GetByName(search);
-			var newData = _newsRepository.GetByName(search);
 			res.Data = new searchViewModel();
 			res.Data.events = eventData;
 			res.Data.associations = associationData;
-			res.Data.news= newData;
 			return res;
 		}
 

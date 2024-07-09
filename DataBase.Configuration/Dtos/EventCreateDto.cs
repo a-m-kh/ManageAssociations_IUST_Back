@@ -88,7 +88,6 @@ namespace DataBase.Configuration.Dtos
 	public class searchViewModel
 	{
 		public List<GetEventDto>? events { get; set; } = new List<GetEventDto>();
-		public List<GetNewsDto>? news { get; set; } = new List<GetNewsDto>();
 		public List<AssociationViewDto>? associations { get; set; } = new List<AssociationViewDto>(); 
 	}
 }
