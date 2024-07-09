@@ -24,5 +24,6 @@ namespace Logic.Service.Services.Interface
 		GeneralResponse<bool> ChangeConfirm(EventChangeConfirmViewModel Vm);
 		Task<GeneralResponse<List<GetForUserEventDto>>> GetAllForUser();
 		GeneralResponse<GeneralPaginationModel<GetEventDto>> GetAllPastEventt(int AssociationId, int Page = 1);
+		GeneralResponse<List<GetEventDto>> GetAllPastEventForUser();
 	}
 }

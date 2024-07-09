@@ -233,7 +233,13 @@ namespace Logic.Service.Services
 			return res;
 		}
 
-
+		public GeneralResponse<List<GetEventDto>> GetAllPastEventForUser()
+		{
+			var res = new GeneralResponse<List<GetEventDto>>();
+			var data = _eventRepository.PastEventForUser();
+			res.Data = data;
+			return res;
+		}
 
 		public async Task<GeneralResponse<bool>> ChangePublic(int Id, User user, int AssociationId)
 		{

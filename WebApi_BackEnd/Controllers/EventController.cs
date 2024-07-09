@@ -218,6 +218,18 @@ namespace WebApi_BackEnd.Controllers
 		}
 
 
+		[HttpGet("PastEventForUser")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<List<GetEventDto>>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> PastEventForUser()
+		{
+
+			return Ok(_eventService.GetAllPastEventForUser());
+		}
+
+
 
 
 
