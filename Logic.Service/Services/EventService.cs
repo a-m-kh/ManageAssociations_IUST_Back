@@ -14,7 +14,29 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using DataBase.Configuration.Dtos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
+using System.IO;
+//using Xceed.Words.NET; // Install-Package DocX -Version 1.6.0
+//using PdfSharp.Pdf;
+//using Aspose.Words;
+//using DocumentFormat.OpenXml.Packaging;
+//using DocumentFormat.OpenXml.Wordprocessing;
+//using PdfSharp.Drawing;
+using Spire.Doc;
+using Spire.Doc.Documents;
+using Spire.Doc.Fields;
+// using PdfSharp.Xps; // Install-Package PdfSharp
+
+
+
 using static Microsoft.IO.RecyclableMemoryStreamManager;
+using Microsoft.VisualBasic;
+using Aspose.Words.Replacing;
+using Microsoft.AspNetCore.Http.HttpResults;
+using DocumentFormat.OpenXml.Packaging;
+using PdfSharp.Drawing;
+using Spire.Doc.Fields;
+using System.Drawing.Text;
+using Spire.Doc.Interface;
 
 namespace Logic.Service.Services
 {
@@ -37,6 +59,67 @@ namespace Logic.Service.Services
 			_userManager = userManager;
 			_associationRepository = associationRepository;
 		}
+
+
+		public void createPdf()
+		{
+			string templatePath = @"C:\Users\AlMahdi\Downloads\گواهی انجمن علمی.docx";
+			string outputPath = @"C:\Users\AlMahdi\output.docx";
+			string pdfPath = @"C:\Users\AlMahdi\output.pdf";
+			string fontPath = @"C:\Users\AlMahdi\Desktop\IranNastaliq\New_folder\IranNastaliq.ttf";
+
+			Document doc = new Document();
+
+			doc.LoadFromFile(templatePath);
+
+			doc.EmbedFontsInFile = true;
+			doc.PrivateFontList.Add(new PrivateFontPath("IranNastaliq", fontPath));
+
+
+			// Replace placeholders
+			string title = "جناب آقای"; // or "سرکار خانم"
+			string name = "";
+			string nationalCode = "کد ملی ";
+			string eventDetails = "توضیحات جدید";
+			string duration = "مدت جدید";
+			string association = "نام انجمن جدید";
+			string participation = "نوع مشارکت جدید";
+
+			doc.Replace("جناب آقای رضا فرهنگی", $"{title} {name}", true, true);
+			doc.Replace("2130587771", nationalCode, true, true);
+			doc.Replace("برگزاری نمایشگاه یازدهمین جشنواره دانشگاهی حرکت دانشگاه علم و صنعت ایران در اسفندماه سال 1401", eventDetails, true, true);
+			doc.Replace("3 روز", duration, true, true);
+			doc.Replace("انجمن علمی دانشجویی مهندسی کامپیوتر", association, true, true);
+			doc.Replace("شرکت یا همکاری", participation, true, true);
+
+			//var sections = doc.Sections;
+			foreach (Section section in doc.Sections)
+			{
+				foreach (Paragraph paragraph in section.Paragraphs)
+				{
+					paragraph.Format.IsBidi = true;
+					foreach (DocumentObject obj in paragraph.ChildObjects)
+					{
+						if (obj is TextRange)
+						{
+							TextRange textRange = obj as TextRange;
+							textRange.CharacterFormat.Bidi = true;
+							textRange.CharacterFormat.FontNameBidi = "Arial"; // Ensure to use a proper font that supports Persian
+						}
+					}
+				}
+			}
+
+			doc.SaveToFile(outputPath, FileFormat.Docx);
+			doc.SaveToFile(pdfPath, FileFormat.PDF);
+
+			// Save the modified document
+			//doc.SaveToFile(outputPath, FileFormat.Docx);
+
+			// Convert the modified document to PDF
+			//doc.SaveToFile(pdfPath, FileFormat.PDF);
+		}
+
 
 
 		public async Task<GeneralResponse<EventGetResponse>> GetEventsAsync(int EventId)
@@ -247,6 +330,7 @@ namespace Logic.Service.Services
 
 		public GeneralResponse<searchViewModel> search(string search)
 		{
+		//	createPdf();
 			var res = new GeneralResponse<searchViewModel>();
 			var eventData = _eventRepository.GetByName(search);
 			var associationData = _associationRepository.GetByName(search);

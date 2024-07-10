@@ -48,14 +48,21 @@ namespace WebApi_BackEnd.Controllers
 
 		[HttpGet("CheckAdmin")]
 		[Authorize]
-		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<LoginResponse>))]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<CheckAdmin>))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
 		public async Task<IActionResult> Index()
 		{
-
-			return Ok();
+			var res = new GeneralResponse<CheckAdmin>();
+			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+			var userId = _userManager.GetUserId(User);
+			var user = await _userManager.FindByIdAsync(userId);
+			if(user != null && user.Association != null)
+			{
+				res.Data.AssociationId = user.Association.ID;
+			}
+			return Ok(res);
 		}
 
 		[HttpGet("CheckSuperAdmin")]

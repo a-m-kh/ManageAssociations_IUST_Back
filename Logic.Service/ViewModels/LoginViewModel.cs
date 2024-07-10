@@ -14,3 +14,8 @@ public class LoginViewModel
 	[Required(ErrorMessage ="رمز را وارد نمایید")]
 	public string Password { get; set; }
 }
+
+public class CheckAdmin
+{
+	public int AssociationId { get; set; }
+}
