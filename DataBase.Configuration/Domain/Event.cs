@@ -28,8 +28,8 @@ namespace DataBase.Configuration.Domain
 		public bool IsDelete { get; set; }=false;
 		public bool IsPublic { get; set; } = false;
 		public DateTime? RegistrationDate { get; set; }
+		[ForeignKey(nameof(Event.AssociationID))]
 		public Association association { get; set; }
-
 
 		[ForeignKey(nameof(Event.PeriodID))]
 		public BaseInfo? Period { get; set; }

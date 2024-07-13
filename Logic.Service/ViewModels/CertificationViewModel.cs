@@ -16,7 +16,7 @@ namespace Logic.Service.ViewModels
 	{
 		[Required(ErrorMessage ="لطفا عنوان گواهی را وارد نمایید")]
 		public virtual string Title { get;set; }
-		public virtual string? Organizer { get; set; }
+		public virtual string Organizer { get; set; }
 		[Required(ErrorMessage = "لطفا فایل شرکت کننده ها را وارد نمایید")]
 		public virtual IFormFile File { get; set; }
 	}
@@ -25,6 +25,8 @@ namespace Logic.Service.ViewModels
 	{
 		[Required(ErrorMessage ="لطفا آیدی انجمن را وارد نمایید")]
 		public int AssociationId { get; set; }
+		public int DayCount { get; set; }
+		public string Tarikh { get; set; }
 	}
 
 	public class UpdateCertificationViewModel 
@@ -36,6 +38,8 @@ namespace Logic.Service.ViewModels
 		public  string? Title { get; set; }
 		public  string? Organizer { get; set; }
 		public  IFormFile? File { get; set; }
+		public int? DayCount { get; set; }
+		public string? Tarikh { get; set; }
 	}
 
 

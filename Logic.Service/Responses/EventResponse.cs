@@ -34,6 +34,10 @@ namespace Logic.Service.Responses
 		public int? PeriodID { get; set; }
 		public int? AssociationId { get; set; }
 		public DateTime? RegistrationDate { get; set; }
+		public string? Period { get; set; }
+		public string? TypeOfEvent { get; set; }
+		public string? Issue { get; set; }
+		public string? AssociationLogo { get; set; }
 
 
 	}

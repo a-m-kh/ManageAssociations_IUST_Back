@@ -152,7 +152,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseCors("test");
-
+app.UseStaticFiles();
 app.MapControllers();
 
 app.Run();

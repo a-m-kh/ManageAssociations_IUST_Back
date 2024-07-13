@@ -20,4 +20,6 @@ namespace Logic.Service.Responses
 		public string Status { get; set; }
 		public int AssociationId { get; set; }
 	}
+
+	
 }

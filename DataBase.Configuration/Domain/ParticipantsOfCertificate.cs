@@ -15,7 +15,9 @@ namespace DataBase.Configuration.Domain
 		public string Email { get; set; }
 		public string Phone { get; set; }
 		public int CertificationId { get; set; }
-
+		public string NationalCode { get; set; }
+		public string Sex { get; set; }
+		public string TypeOfCooperation { get; set; }
 		[ForeignKey(nameof(ParticipantsOfCertificate.CertificationId))]
 		public Certification Certification { get; set; }
 	}

@@ -1,4 +1,5 @@
-﻿using Logic.Service.Responses;
+﻿using DataBase.Configuration.Domain;
+using Logic.Service.Responses;
 using Logic.Service.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,4 +15,5 @@ public interface IAccountService
 	Task<GeneralResponse<SignUpResponse>>SignUp(SignUpViewModel VModel);
 	Task<GeneralResponse<EditProfileResponse>> EditProfile(EditProfileViewModel VModel, string userId);
 	Task<GeneralResponse<bool>> Assign(string userId, int AssociationId);
+	Task<GeneralResponse<bool>> changePass(ChangePassword VModel, User user);
 }

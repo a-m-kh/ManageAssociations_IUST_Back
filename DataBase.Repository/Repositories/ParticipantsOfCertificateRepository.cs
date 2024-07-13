@@ -1,4 +1,5 @@
 ﻿using DataBase.Configuration.Domain;
+using DataBase.Configuration.Dtos;
 using DataBase.Repository.Repositories.Interface;
 using Repository;
 using Repository.Models;
@@ -25,6 +26,30 @@ namespace DataBase.Repository.Repositories
 				return true;
 			}
 			return false;
+		}
+
+
+		public List<ParticipantsOfCertificate> Get(int certificationId)
+		{
+			return (TEntity.Where(a => a.CertificationId == certificationId).ToList());
+		}
+
+
+
+		public List<CreateParticipantsOfCertificateDto> GetById(int Id)
+		{
+			return TEntity.Where(a => a.ID == Id).Select(a => new CreateParticipantsOfCertificateDto()
+			{
+				CertificationId = a.CertificationId,
+				Sex = a.Sex,
+				Email = a.Email,
+				FirstName = a.FirstName,
+				LastName = a.LastName,
+				NationalCode = a.NationalCode,
+				Phone = a.Phone,
+				TitleOfCertificate = a.Certification.Title,
+				TypeOfCooperation = a.TypeOfCooperation
+			}).ToList();
 		}
 	}
 }

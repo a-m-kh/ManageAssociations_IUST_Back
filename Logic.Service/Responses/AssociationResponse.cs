@@ -17,11 +17,20 @@ public class AssociationResponseBase
 	public string? Phone { get; set; }
 	public string? Email { get; set; }
 	public string? Address { get; set; }
+	public string? Description { get; set; }
+
 }
 
 public class GetAssociationResponse: AssociationResponseBase
 {
 	public string AdminUserName{ get; set; }
+	public string Name { get; set; }
+
+}
+
+
+public class GetAssociationResponseForUser: AssociationResponseBase
+{
 	public string Name { get; set; }
 
 }

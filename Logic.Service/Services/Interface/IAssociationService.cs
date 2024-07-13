@@ -22,6 +22,7 @@ namespace Logic.Service.Services.Interface
 		GeneralResponse<bool> DeleteCommunication(int Id, User user);
 		GeneralResponse<GetCommunicationResponse> GetCommunication(int Id);
 		GeneralResponse<List<GetCommunicationResponse>> GetAllCommunication(int Id);
+		Task<GeneralResponse<GetAssociationResponseForUser>> GetByIdAsyncForUser(int id);
 
 	}
 }

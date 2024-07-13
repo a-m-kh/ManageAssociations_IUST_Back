@@ -11,7 +11,7 @@ namespace Logic.Service.Services.Interface
 {
 	public interface IGuestService
 	{
-		GeneralResponse<int> Create(CreateGuestViewModel vm, User user, string WrPath);
+		Task<GeneralResponse<int>> Create(CreateGuestViewModel vm, User user, string WrPath);
 		GeneralResponse<bool> Update(UpdateGuestViewModel vm, User user, string WrPath);
 		GeneralResponse<bool> Delete(int id, User user, string WrPath);
 		GeneralResponse<GetGuestResponse> GetGuest(int id);

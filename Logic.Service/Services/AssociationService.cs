@@ -53,6 +53,25 @@ namespace Logic.Service.Services
 			return res;
 		}
 
+
+
+		public async Task<GeneralResponse<GetAssociationResponseForUser>> GetByIdAsyncForUser(int id)
+		{
+			var res = new GeneralResponse<GetAssociationResponseForUser>();
+			var model = await _associationRepository.GetAsync(id);
+			if (model == null)
+			{
+				res.IsSuccess = false;
+				res.Message = "همچین انجمنی وجود ندارد.";
+				return res;
+			}
+			var resDate = _mapper.Map<GetAssociationResponseForUser>(model);
+			res.Data = resDate;
+			return res;
+		}
+
+
+
 		public async Task<GeneralResponse<bool>> Update(UpdateAssociationViewModel VModel, string WrPath, User user)
 		{
 			var res = new GeneralResponse<bool>();

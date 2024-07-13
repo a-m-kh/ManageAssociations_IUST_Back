@@ -44,13 +44,13 @@ namespace Logic.Service.Services
 			_eventRepository = eventRepository;
 		}
 
-		public GeneralResponse<int> Create(CreateReportViewModel vm, User user, string WrPath)
+		public async Task<GeneralResponse<int>> Create(CreateReportViewModel vm, User user, string WrPath)
 		{
 			var res = new GeneralResponse<int>()
 			{
 				IsSuccess = false
 			};
-			var eventDto = _eventRepository.GetById(vm.EventId);
+			var eventDto = await _eventRepository.GetById(vm.EventId);
 			if (eventDto == null)
 			{
 				res.Message = "همچین رویدادی وجود ندارد";

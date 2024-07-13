@@ -28,6 +28,8 @@ public class CreateAssociationViewModel : AssociationViewModelBase
 	public string UserName { get; set; }
 	[Required(ErrorMessage = "لطفا رمز را وارد نمایید.")]
 	public string Password { get; set; }
+	public string? Description { get; set; }
+
 }
 
 public class UpdateAssociationViewModel
@@ -39,6 +41,8 @@ public class UpdateAssociationViewModel
 	public string? Address { get; set; }
 	[Required(ErrorMessage = "لطفا آیدی انجمن را وارد نمایید.")]
 	public int Id { get; set; }
+	public string? Description { get; set; }
+
 }
 
 

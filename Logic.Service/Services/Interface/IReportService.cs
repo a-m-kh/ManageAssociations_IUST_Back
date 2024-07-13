@@ -12,7 +12,7 @@ namespace Logic.Service.Services.Interface
 {
 	public interface IReportService
 	{
-		GeneralResponse<int> Create(CreateReportViewModel vm, User user, string WrPath);
+		Task<GeneralResponse<int>> Create(CreateReportViewModel vm, User user, string WrPath);
 		GeneralResponse<bool> Update(UpdateReportViewModel vm, User user, string WrPath);
 		GeneralResponse<bool> AddImage(AddImageViewModel vm, User user, string WrPath);
 		GeneralResponse<bool> Delete(int ReportId, User user, string WrPath);

@@ -173,7 +173,7 @@ namespace Utility
 					total = rowCount - 1;
 					for(int i = 1; i <= rowCount; i++)
 					{
-						if((i != rowCount) && (worksheet.Cells[i, 1].Value == null || worksheet.Cells[i, 2].Value == null || worksheet.Cells[i, 3].Value == null || worksheet.Cells[i, 4].Value == null))
+						if((i != rowCount) && (worksheet.Cells[i, 1].Value == null || worksheet.Cells[i, 2].Value == null || worksheet.Cells[i, 3].Value == null || worksheet.Cells[i, 4].Value == null || worksheet.Cells[i, 5].Value == null || worksheet.Cells[i, 6].Value == null))
 						{
 							return ($"سطر{i} مقدار خالی دارد", false,0);
 						}
@@ -207,8 +207,11 @@ namespace Utility
 						{
 							FirstName = worksheet.Cells[i, 1].Value.ToString(),
 							LastName = worksheet.Cells[i, 2].Value.ToString(),
-							Email = worksheet.Cells[i, 3].Value.ToString(),
-							Phone = worksheet.Cells[i, 4].Value.ToString(),
+							Phone = worksheet.Cells[i, 3].Value.ToString(),
+							Email = worksheet.Cells[i, 4].Value.ToString(),
+							NationalCode = worksheet.Cells[i, 5].Value.ToString(),
+							Sex = worksheet.Cells[i,6].Value.ToString(),
+							TypeOfCooperation = worksheet.Cells[i,7].Value.ToString(),
 							CertificationId = CertificationId
 						});
 					}

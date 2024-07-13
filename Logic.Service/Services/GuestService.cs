@@ -39,13 +39,13 @@ namespace Logic.Service.Services
 			_eventRepository = eventRepository;
 			_mapper = mapper;
 		}
-		public GeneralResponse<int> Create(CreateGuestViewModel vm, User user, string WrPath)
+		public async Task<GeneralResponse<int>> Create(CreateGuestViewModel vm, User user, string WrPath)
 		{
 			var res = new GeneralResponse<int>()
 			{
 				IsSuccess = false
 			};
-			var Event =  _eventRepository.GetById(vm.EventId);
+			var Event =  await _eventRepository.GetById(vm.EventId);
 			if(Event == null )
 			{
 				res.Message = "همچین رویدادی وجود ندارد";

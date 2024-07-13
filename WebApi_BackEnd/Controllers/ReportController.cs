@@ -50,7 +50,7 @@ namespace WebApi_BackEnd.Controllers
 			}
 
 
-			return Ok(_reportService.Create(Model, user, _environment.WebRootPath));
+			return Ok( await _reportService.Create(Model, user, _environment.WebRootPath));
 		}
 
 		[HttpPost("Update")]

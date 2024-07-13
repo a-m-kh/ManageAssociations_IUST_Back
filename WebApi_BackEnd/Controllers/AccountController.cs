@@ -78,6 +78,40 @@ namespace WebApi_BackEnd.Controllers
 
 
 
+		[HttpPost("change_password")]
+		[Authorize(Roles = "SuperAdmin")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<bool>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> edit_profile([FromBody] ChangePassword Model)
+		{
+
+			var response = new GeneralResponse<bool>();
+			if (!ModelState.IsValid)
+			{
+				var errors = string.Join(" | ", ModelState.Values
+					.SelectMany(v => v.Errors)
+					.Select(e => e.ErrorMessage));
+				response.IsSuccess = false;
+				response.Message = errors;
+				return Ok(response);
+			}
+			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+			var user = await _userManager.GetUserAsync(User);
+
+			if (user == null)
+			{
+				response.IsSuccess = false;
+				response.Message = "همچین کاربری یافت نشد";
+				return Ok(response);
+			}
+			return Ok(await _accountService.changePass(Model, user));
+		}
+
+
+
+
 		[HttpPost("edit_profile")]
 		[Authorize]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<EditProfileResponse>))]

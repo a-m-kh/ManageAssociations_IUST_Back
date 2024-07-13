@@ -47,6 +47,8 @@ namespace DataBase.Repository.Repositories
 			entity.Title = Model.Title == null ? (entity.Title) : (Model.Title);
 			entity.ExcelUrl = Model.ExcelUrl == null ? (entity.ExcelUrl) : (Model.ExcelUrl);
 			entity.Number = Model.Number ?? entity.Number;
+			entity.Tarikh = Model.Tarikh == null ? (entity.Tarikh) : (Model.Tarikh);
+			entity.DayCount = Model.DayCount == null ? (entity.DayCount ) : ((int)Model.DayCount);
 			var IsUpdate = _uow.SaveChanges();
 			return (IsUpdate > 0);
 		}
@@ -75,11 +77,25 @@ namespace DataBase.Repository.Repositories
 					AssociationId = a.AssociationId,
 					Number = a.Number,
 					Organizer = a.Organizer,
-					StatusId = a.StatusId
+					StatusId = a.StatusId,
+					Tarikh = a.Tarikh,
+					DayCount = a.DayCount
 				})
 				.FirstOrDefault();
 			return (entity);
 		}
+
+
+		public Certification GetPrivate(int Id)
+		{
+			var entity = TEntity.Where(a => a.ID == Id && !a.IsDelete)
+				.FirstOrDefault();
+			return (entity);
+		}
+
+
+
+
 
 		public async Task<GeneralPaginationModel<GetCertificationDto>> GetAllAsync(int AssociationId, int Page = 1)
 		{
@@ -99,7 +115,9 @@ namespace DataBase.Repository.Repositories
 					Number = a.Number,
 					Organizer = a.Organizer,
 					StatusId = a.StatusId,
-					RegistrationDate = a.RegistrationDate
+					RegistrationDate = a.RegistrationDate,
+					Tarikh = a.Tarikh,
+					DayCount = a.DayCount
 				}).ToListAsync();
 			var res = new GeneralPaginationModel<GetCertificationDto>(total, entities);
 			return (res);
@@ -124,8 +142,10 @@ namespace DataBase.Repository.Repositories
 					Number = a.Number,
 					Organizer = a.Organizer,
 					StatusId = a.StatusId,
-					RegistrationDate = a.RegistrationDate
-					
+					RegistrationDate = a.RegistrationDate,
+					Tarikh = a.Tarikh,
+					DayCount = a.DayCount
+
 				}).ToListAsync();
 			var res = new GeneralPaginationModel<GetCertificationDto>(total, entities);
 			return (res);

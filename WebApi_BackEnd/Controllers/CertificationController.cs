@@ -60,6 +60,44 @@ namespace WebApi_BackEnd.Controllers
 		}
 
 
+
+
+
+		[HttpGet("Participation/{Id}")]
+		[Authorize(Roles = "SuperAdmin")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<List<ParticipantsOfCertificate>>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> Participation(int Id)
+		{
+			var response = new GeneralResponse<List<ParticipantsOfCertificate>>();
+			if (!ModelState.IsValid)
+			{
+				var errors = string.Join(" | ", ModelState.Values
+					.SelectMany(v => v.Errors)
+					.Select(e => e.ErrorMessage));
+				response.IsSuccess = false;
+				response.Message = errors;
+				return Ok(response);
+			}
+
+			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null)
+			{
+				response.IsSuccess = false;
+				response.Message = "همچین کاربری یافت نشد";
+				return Ok(response);
+			}
+
+
+			return Ok(_certificationService.GetParticipation(Id));
+		}
+
+
+
+
 		[HttpPost("Update")]
 		[Authorize]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<bool>))]
@@ -187,6 +225,51 @@ namespace WebApi_BackEnd.Controllers
 
 			return Ok(await _certificationService.GetAll(AssociationId, user, Page));
 		}
+
+
+
+
+
+		[HttpGet("Download/{certificateId}")]
+		[Authorize]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<bool>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> download(int certificateId)
+		{
+			var response = new GeneralResponse<byte[]>();
+			if (!ModelState.IsValid)
+			{
+				var errors = string.Join(" | ", ModelState.Values
+					.SelectMany(v => v.Errors)
+					.Select(e => e.ErrorMessage));
+				response.IsSuccess = false;
+				response.Message = errors;
+				return Ok(response);
+			}
+
+			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+			var user = await _userManager.GetUserAsync(User);
+			if (user == null)
+			{
+				response.IsSuccess = false;
+				response.Message = "همچین کاربری یافت نشد";
+				return Ok(response);
+			}
+
+			var pdfStream = _certificationService.download(certificateId, user);
+
+			return File(pdfStream.Data.ToArray(), "application/pdf", "Certificates.pdf");
+
+		}
+
+
+
+
+
+
+
 
 
 

@@ -93,6 +93,9 @@ namespace DataBase.Repository.Repositories
 				Capacity = a.Capacity,
 				Providers = a.Providers,
 				RegistrationDate = a.RegistrationDate,
+				AssociationName = a.association.Name,
+				Name = a.Title,
+				AssociationLogo = a.association.LogoUrl
 			}).FirstOrDefaultAsync();
 			if (entity == null)
 				return null;
@@ -126,11 +129,11 @@ namespace DataBase.Repository.Repositories
 				return null;
 			return (entity);
 		}
-		public EventViewDto GetById(int Id)
+		public async Task<EventViewDto> GetById(int Id)
 		{
 			try
 			{
-				var entity = TEntity.Where(a => a.ID == Id && !a.IsDelete).Select(a => new EventViewDto()
+				var entity = await TEntity.Where(a => a.ID == Id && !a.IsDelete).Select(a => new EventViewDto()
 				{
 					Description = a.Description,
 					EndTime = a.EndTime,
@@ -153,7 +156,7 @@ namespace DataBase.Repository.Repositories
 					{
 						Id= a.Report == null ? (0) : (a.Report.ID)
 					},
-				}).FirstOrDefault();
+				}).FirstOrDefaultAsync();
 				if (entity == null)
 					return null;
 				return (entity);
@@ -338,7 +341,7 @@ namespace DataBase.Repository.Repositories
 
 		public bool ChangePublic(int Id)
 		{
-			var entity  = TEntity.Where(a => !a.IsDelete).FirstOrDefault();
+			var entity  = TEntity.Where(a => !a.IsDelete && a.ID == Id).FirstOrDefault();
 			if(entity == null)
 			{
 				return false;
@@ -350,7 +353,7 @@ namespace DataBase.Repository.Repositories
 
 		public bool ChangeConfirm(int Id, bool? ConfirmStatus)
 		{
-			var entity = TEntity.Where(a => !a.IsDelete).FirstOrDefault();
+			var entity = TEntity.Where(a => !a.IsDelete && a.ID == Id).FirstOrDefault();
 			if (entity == null)
 			{
 				return false;
@@ -386,6 +389,7 @@ namespace DataBase.Repository.Repositories
 					AssociationId = a.AssociationID,
 					IsPublic = a.IsPublic,
 					RegistrationDate =a.RegistrationDate,
+					IsConfirm = a.IsConfirm,
 					AssociationName =a.association != null ?( a.association.Name):("")
 				}).ToList();
 			var res = new GeneralPaginationModel<GetEventDto>(total, entities);

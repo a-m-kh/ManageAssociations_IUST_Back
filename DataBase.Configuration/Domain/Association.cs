@@ -16,11 +16,14 @@ namespace DataBase.Configuration.Domain
 		public bool IsDelete { get; set; } = false;
 		public string? Phone { get; set; }
 		public string? Email { get; set; }
+		public string? Description { get; set; }
 		public string? Address { get; set; }
 		public string? AdminID { get; set; }
 		[ForeignKey(nameof(Association.AdminID))]
 		public User? Admin { get; set; }
-		public List<Event>? Events { get;set;}
+
+		[InverseProperty(nameof(Event.association))]
+		public virtual ICollection<Event>? Events { get;set;}
 
 		[InverseProperty(nameof(Communication.Association))]
 		public virtual ICollection<Communication> Communications { get; set; }

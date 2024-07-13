@@ -8,6 +8,8 @@ using Logic.Service.Services.Interface;
 using Logic.Service.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Repository;
+using Spire.Doc.Fields;
+using Spire.Doc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +18,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Utility;
 using Utility.Enums;
+using Spire.Doc;
+using Spire.Doc.Documents;
+using Spire.Doc.Fields;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Org.BouncyCastle.Ocsp;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Logic.Service.Services
 {
@@ -41,6 +49,127 @@ namespace Logic.Service.Services
 			_mapper = mapper;
 			_participantsOfCertificateRepository = participantsOfCertificateRepository;
 		}
+
+
+
+
+		public MemoryStream createPdf(List<ParticipantsOfCertificate> participants, Certification certification)
+		{
+			string templatePath = @"C:\Users\AlMahdi\Downloads\گواهی انجمن علمی.docx";
+			string outputPath = @"C:\Users\AlMahdi\output.docx";
+			string pdfPath = @"C:\Users\AlMahdi\output.pdf";
+			string fontPath = @"C:\Users\AlMahdi\Desktop\IranNastaliq\New_folder\IranNastaliq.ttf";
+
+			Document doc = new Document();
+
+			doc.LoadFromFile(templatePath);
+
+			doc.EmbedFontsInFile = true;
+			doc.PrivateFontList.Add(new PrivateFontPath("IranNastaliq", fontPath));
+
+
+			var newDoc = new Document();
+
+
+			foreach (var participant in participants)
+			{
+				// Clone the template document
+				Document docClone = doc.Clone();
+
+				// Replace placeholders
+				docClone.Replace("جنسیت", $"{participant.Sex}", true, true);
+				docClone.Replace("نام", $"{participant.FirstName}‌{participant.LastName}", true, true);
+				docClone.Replace("0000000000", participant.NationalCode, true, true);
+				docClone.Replace("عنوان", certification.Title, true, true);
+				docClone.Replace("روز", $"{ certification.DayCount.ToString()} روز" , true, true);
+				docClone.Replace("برگزار کننده ", certification.Organizer, true, true);
+				docClone.Replace("زمان", certification.Tarikh, true, true);
+				docClone.Replace("2002", certification.Tarikh, true, true);
+				docClone.Replace("1000", participant.ID.ToString(),true,true);
+				docClone.Replace("نوع همکاری ", participant.TypeOfCooperation, true, true);
+
+				// Append the cloned document to the new document
+				foreach (Section section in docClone.Sections)
+				{
+					Section newSection = section.Clone();
+					newDoc.Sections.Add(newSection);
+				}
+
+				
+			}
+
+
+
+
+
+			// Replace placeholders
+			
+			//var sections = doc.Sections;
+			foreach (Section section in newDoc.Sections)
+			{
+				foreach (Paragraph paragraph in section.Paragraphs)
+				{
+					paragraph.Format.IsBidi = true;
+					foreach (DocumentObject obj in paragraph.ChildObjects)
+					{
+						if (obj is TextRange)
+						{
+							TextRange textRange = obj as TextRange;
+							textRange.CharacterFormat.Bidi = true;
+							textRange.CharacterFormat.FontNameBidi = "B Nazanin"; // Ensure to use a proper font that supports Persian
+						}
+					}
+				}
+			}
+
+			using (MemoryStream memoryStream = new MemoryStream())
+			{
+				newDoc.SaveToStream(memoryStream, FileFormat.PDF);
+				memoryStream.Position = 0; // Reset stream position
+				return memoryStream;
+			}
+		}
+
+
+
+		public GeneralResponse<MemoryStream> download(int CertificateId, User user)
+		{
+			var res = new GeneralResponse<MemoryStream>()
+			{
+				IsSuccess = false
+			};
+
+
+			var certificationDto = _certificationRepository.GetPrivate(CertificateId);
+			if (certificationDto == null)
+			{
+				res.Message = "همچین گواهی ای وجود ندارد";
+				return res;
+			}
+
+			var statusOfUser = GeneralFunctions.CheckPermission(certificationDto.AssociationId, user, _userManager, _associationRepository);
+			if (!statusOfUser.Item1)
+			{
+				res.Message = statusOfUser.Item2;
+				return res;
+			}
+
+			if(certificationDto.StatusId != (int)BaseInfoEnum.Accept)
+			{
+				res.Message = "گواهی باید در شرایط تایید شده باشد.";
+				return res;
+			}
+
+
+			var participants = _participantsOfCertificateRepository.Get(CertificateId);
+			res.IsSuccess = true;
+			res.Data = createPdf(participants, certificationDto);
+
+			return res;
+		}
+
+
+
 
 		public GeneralResponse<int> Create(CreateCertificationViewModel vm, User user, string WrPath)
 		{
@@ -171,6 +300,29 @@ namespace Logic.Service.Services
 			res.Message = "مشکلی پیش آمده است، لطفا مجددا اقدام نمایید";
 			return res;
 		}
+
+
+
+
+		public GeneralResponse<List<CreateParticipantsOfCertificateDto>> GetParticipation(int id)
+		{
+			var res = new GeneralResponse<List<CreateParticipantsOfCertificateDto>>()
+			{
+				IsSuccess = true
+			};
+
+
+			res.Data = _participantsOfCertificateRepository.GetById(id);
+			return res;
+		}
+
+
+
+
+
+
+
+
 
 
 		public GeneralResponse<bool>Delete(int Id, User user, string WrPath)

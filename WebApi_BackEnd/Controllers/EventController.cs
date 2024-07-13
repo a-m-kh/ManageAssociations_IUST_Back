@@ -196,7 +196,7 @@ namespace WebApi_BackEnd.Controllers
 
 
 		[HttpGet("PastEvent/{AssociationId}/{Page}")]
-		[Authorize]
+		//[Authorize]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GeneralPaginationModel<GetEventDto>>))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -205,14 +205,14 @@ namespace WebApi_BackEnd.Controllers
 		{
 			var res = new GeneralResponse<GeneralPaginationModel<GetEventDto>>();
 
-			System.Security.Claims.ClaimsPrincipal currentUser = this.User;
-			var user = await _userManager.GetUserAsync(User);
-			if (user == null)
-			{
-				res.IsSuccess = false;
-				res.Message = "همچین کاربری یافت نشد";
-				return Ok(res);
-			}
+			//System.Security.Claims.ClaimsPrincipal currentUser = this.User;
+			//var user = await _userManager.GetUserAsync(User);
+			//if (user == null)
+			//{
+			//	res.IsSuccess = false;
+			//	res.Message = "همچین کاربری یافت نشد";
+			//	return Ok(res);
+			//}
 
 
 			return Ok(_eventService.GetAllPastEventt(AssociationId, Page));
@@ -268,10 +268,10 @@ namespace WebApi_BackEnd.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
-		public IActionResult ChangeCofirm([FromBody] EventChangeConfirmViewModel Vm)
+		public async Task<IActionResult> ChangeCofirm([FromBody] EventChangeConfirmViewModel Vm)
 		{
 			var res = new GeneralResponse<bool>();
-			return Ok(_eventService.ChangeConfirm(Vm));
+			return Ok( await _eventService.ChangeConfirm(Vm));
 		}
 
 		[HttpPut("ChangePublic")]
@@ -301,7 +301,7 @@ namespace WebApi_BackEnd.Controllers
 				response.Message = "همچین کاربری یافت نشد";
 				return Ok(response);
 			}
-			return Ok(_eventService.ChangePublic(Vm.Id,user, Vm.AssociationId));
+			return Ok(await _eventService.ChangePublic(Vm.Id, user, Vm.AssociationId));
 		}
 
 

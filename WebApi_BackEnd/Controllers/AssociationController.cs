@@ -107,6 +107,30 @@ namespace WebApi_BackEnd.Controllers
 			return Ok(await _associationService.GetByIdAsync(id));
 		}
 
+
+
+		[HttpGet("GetForUser/{id}")]
+		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GetAssociationResponse>))]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
+		public async Task<IActionResult> GetForUser(int id)
+		{
+			var response = new GeneralResponse<int>();
+			if (!ModelState.IsValid)
+			{
+				var errors = string.Join(" | ", ModelState.Values
+					.SelectMany(v => v.Errors)
+					.Select(e => e.ErrorMessage));
+				response.IsSuccess = false;
+				response.Message = errors;
+				return Ok(response);
+			}
+			return Ok(await _associationService.GetByIdAsyncForUser(id));
+		}
+
+
+
 		[HttpDelete("Delete/{id}")]
 		[Authorize(Roles = "SuperAdmin")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GeneralResponse<GetAssociationResponse>))]

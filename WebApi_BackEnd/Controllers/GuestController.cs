@@ -83,7 +83,7 @@ namespace WebApi_BackEnd.Controllers
 			}
 
 
-			return Ok( _guestService.Create(Vm, user, _environment.WebRootPath));
+			return Ok(await _guestService.Create(Vm, user, _environment.WebRootPath));
 		}
 
 		[HttpPost("Update")]

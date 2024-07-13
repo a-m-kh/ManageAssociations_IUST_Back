@@ -25,6 +25,8 @@ namespace DataBase.Configuration.Dtos
 		public string Status { get; set; }
 		public int StatusId { get; set; }
 		public DateTime RegistrationDate { get; set; }
+		public int DayCount { get; set; }
+		public string Tarikh { get; set; }
 	}
 
 	public class CreateCertificationDto 
@@ -36,11 +38,15 @@ namespace DataBase.Configuration.Dtos
 		public  DateTime RegistrationDate { get; set; }
 		public  string ExcelUrl { get; set; }
 		public  int Number { get; set; }
+		public int DayCount { get; set; }
+		public string Tarikh { get; set; }
 	}
 
 	public class UpdateCertificationDto : CertificationDtoBase
 	{
 		public int Id { get; set; }
+		public int? DayCount { get; set; }
+		public string? Tarikh { get; set; }
 		//public int? StatusId { get; set; }
 	}
 

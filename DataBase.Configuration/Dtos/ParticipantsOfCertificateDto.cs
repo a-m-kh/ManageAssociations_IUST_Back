@@ -17,6 +17,11 @@ namespace DataBase.Configuration.Dtos
 		public string Email { get; set; }
 		public string Phone { get; set; }
 		public int CertificationId { get; set; }
+		public string NationalCode { get; set; }
+		public string Sex { get; set; }
+		public string TypeOfCooperation { get; set; }
+
+		public string TitleOfCertificate { get; set; }
 	}
 
 	public class CreateParticipantsOfCertificateDto : ParticipantsOfCertificateDtoBase

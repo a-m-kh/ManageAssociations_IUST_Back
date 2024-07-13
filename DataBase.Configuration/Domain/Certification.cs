@@ -18,6 +18,8 @@ namespace DataBase.Configuration.Domain
 		public int Number { get; set; }
 		public int StatusId { get; set; }
 		public int AssociationId { get; set; }
+		public int DayCount { get; set; }
+		public string Tarikh { get; set; }
 
 		[ForeignKey(nameof(Certification.AssociationId))]
 		public Association Association { get; set; }

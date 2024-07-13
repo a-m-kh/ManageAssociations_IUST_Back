@@ -48,7 +48,8 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 				Name = a.Name,
 				Address = a.Address,
 				Email = a.Email,
-				Phone = a.Phone
+				Phone = a.Phone,
+				Description =a.Description
 			})
 			.ToList();
 		return (entity);
@@ -66,7 +67,7 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 		entity.Address = Model.Address == null ? (entity.Address) : (Model.Address);
 		entity.Phone = Model.Phone == null ? (entity.Phone) : (Model.Phone);
 		entity.Email = Model.Email == null ? (entity.Email) : (Model.Email);
-
+		entity.Description = Model.Description==null ?(entity.Description):(Model.Description);
 		var IsUpdate = await _uow.SaveChangesAsync();
 		return (IsUpdate > 0);
 
@@ -95,7 +96,8 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 				AdminId = a.AdminID,
 				Address = a.Address,
 				Email = a.Email,
-				Phone = a.Phone
+				Phone = a.Phone,
+				Description = a.Description
 			})
 			.FirstOrDefaultAsync();
 		return (entity);
@@ -111,7 +113,8 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 				AdminId = a.AdminID,
 				Address = a.Address,
 				Email = a.Email,
-				Phone = a.Phone
+				Phone = a.Phone,
+				Description= a.Description
 			})
 			.FirstOrDefault();
 		return (entity);
@@ -128,7 +131,8 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 				Name = a.Name,
 				Address = a.Address,
 				Email = a.Email,
-				Phone = a.Phone
+				Phone = a.Phone,
+				Description=a.Description
 			})
 			.FirstOrDefaultAsync();
 		return (entity);
@@ -147,7 +151,8 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 				Name = a.Name,
 				Address = a.Address,
 				Email = a.Email,
-				Phone = a.Phone
+				Phone = a.Phone,
+				Description=a.Description
 			}).ToListAsync();
 		var res = new GeneralPaginationModel<AssociationViewDto>(total, entities);
 		return(res);
@@ -164,7 +169,8 @@ public class AssociationRepository: GeneralRepository<Association> , IAssociatio
 				Name = a.Name,
 				Address = a.Address,
 				Email = a.Email,
-				Phone = a.Phone
+				Phone = a.Phone,
+				Description=a.Description
 			}).ToList();
 		return (entities);
 	}

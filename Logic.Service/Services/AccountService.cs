@@ -130,6 +130,44 @@ public class AccountService:IAccountService
 	}
 
 
+
+
+
+
+
+
+	public async Task<GeneralResponse<bool>> changePass(ChangePassword VModel, User user)
+	{
+		var response = new GeneralResponse<bool>();
+
+		//var user = await _userManager.FindByIdAsync(userId);
+		if (user != null)
+		{
+			var result = await _userManager.ChangePasswordAsync(user, VModel.CurrentPassword, VModel.NewPassword);
+			if(result.Succeeded)
+			{
+				response.IsSuccess = true;
+				return response;
+			}
+			response.IsSuccess=false;
+			response.Message = string.Join("," , result.Errors.Select(a => a.Description));
+			return response;
+		}
+		response.IsSuccess = false;
+		response.Message = "همچین کاربری پیدا نشد";
+		return response;
+	}
+
+
+
+
+
+
+
+
+
+
+
 	public async Task<GeneralResponse<EditProfileResponse>> EditProfile(EditProfileViewModel VModel,string userId)
 	{
 		var response = new GeneralResponse<EditProfileResponse>();

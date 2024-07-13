@@ -40,6 +40,11 @@ namespace Logic.Service.Mapper
 				.ForMember(res => res.LogoUrl, m => m
 					.MapFrom(u =>(string)null));
 
+
+			CreateMap<GetAssociationResponseForUser, AssociationViewDto>();
+			CreateMap<AssociationViewDto, GetAssociationResponseForUser>();
+
+
 			CreateMap<Communication, CreateCommunicationDto>();
 			CreateMap<CreateCommunicationDto, Communication>();
 			CreateMap<CreateCommunicationDto, CreateCommunicationViewModel>();
